@@ -1,30 +1,30 @@
 import { type AsyncComponentLoader } from 'vue'
 import { last, pascal } from 'radash'
-import type { MyColorPickerInstance, MyDividerTitleInstance, MyLabelInstance } from '.'
+import type { VsColorPickerInstance, VsDividerTitleInstance, VsLabelInstance } from '.'
 
-export * from './my-color-picker'
-export * from './my-divider-title'
-export * from './my-label'
-export * from './my-tree-select'
-export * from './my-search'
+export * from './vs-color-picker'
+export * from './vs-divider-title'
+export * from './vs-label'
+export * from './vs-tree-select'
+export * from './vs-search'
 
 // 生成动态组件对象
-export type MyComponentMap = {
-  MyColorPicker?: MyColorPickerInstance
-  MyDividerTitle?: MyDividerTitleInstance
-  MyLabel?: MyLabelInstance
+export type VsComponentMap = {
+  VsColorPicker?: VsColorPickerInstance
+  VsDividerTitle?: VsDividerTitleInstance
+  VsLabel?: VsLabelInstance
 }
-export type MyComponentKey = keyof MyComponentMap
+export type VsComponentKey = keyof VsComponentMap
 
 const matchFiles = import.meta.glob('./**/my-*.vue')
-const MyComponent: MyComponentMap = {}
+const VsComponent: VsComponentMap = {}
 
 for (const filePath in matchFiles) {
   const filePathArr = filePath.split('/')
-  const key = pascal(last(filePathArr)?.replace('.vue', '') ?? 'Unknown') as MyComponentKey
-  MyComponent[key] = defineAsyncComponent({
+  const key = pascal(last(filePathArr)?.replace('.vue', '') ?? 'Unknown') as VsComponentKey
+  VsComponent[key] = defineAsyncComponent({
     loader: matchFiles[filePath] as AsyncComponentLoader
   })
 }
 
-export { MyComponent }
+export { VsComponent }

@@ -1,2 +1,2 @@
-export { default as MyTreeSelectTest } from './my-tree-select-test.vue'
-export { default as MySearchTest } from './my-search-test.vue'
+export { default as VsTreeSelectTest } from './vs-tree-select-test.vue'
+export { default as VsSearchTest } from './vs-search-test.vue'

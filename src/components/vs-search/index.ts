@@ -1,6 +1,6 @@
-import MySearch from './my-search.vue'
+import VsSearch from './vs-search.vue'
 
-export interface MySearchOptionItem {
+export interface VsSearchOptionItem {
   // 唯一标识，与后端交互字段名称
   id: string
   // 组件类型
@@ -40,6 +40,6 @@ export interface MySearchOptionItem {
   // 自定义远程搜索方法
   remoteMethod?: (query: string, id: string) => void
 }
-export type MySearchOptions = MySearchOptionItem[]
-export type MySearchInstance = InstanceType<typeof MySearch>
-export { MySearch }
+export type VsSearchOptions = VsSearchOptionItem[]
+export type VsSearchInstance = InstanceType<typeof VsSearch>
+export { VsSearch }
