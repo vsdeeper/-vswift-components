@@ -8,6 +8,7 @@ import config from '../config'
 
 defineProps<{
   options?: VsSearchOptions
+  labelWidth?: string | number
 }>()
 
 const id = `mysearch${nanoid(5)}`
@@ -23,7 +24,7 @@ defineExpose({
 <template>
   <el-config-provider :locale="config.locale">
     <div :id="id" class="vs-search" :class="{ more: showMore }">
-      <el-form :model="form" label-width="80px">
+      <el-form :model="form" :label-width="labelWidth ?? '100px'">
         <el-row>
           <el-col
             v-for="(item, index) in options"

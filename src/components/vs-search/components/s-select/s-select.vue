@@ -19,9 +19,9 @@ const model = defineModel<SSelectValue>()
     >
       <el-option
         v-for="item in props?.options"
-        :key="item[props?.itemValue ?? 'value']"
+        :key="item[props?.itemValue ?? 'id']"
         :label="item[props?.itemLabel ?? 'label']"
-        :value="item[props?.itemValue ?? 'value']"
+        :value="item[props?.itemValue ?? 'id']"
       >
       </el-option>
     </el-select>

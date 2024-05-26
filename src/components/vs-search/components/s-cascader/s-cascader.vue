@@ -17,6 +17,7 @@ const model = defineModel<CascaderValue>()
       v-bind="props"
       :clearable="props?.clearable ?? true"
       :filterable="props?.filterable ?? true"
+      :props="{ ...props?.props, value: props?.props?.value ?? 'id' }"
     >
     </el-cascader>
   </el-config-provider>

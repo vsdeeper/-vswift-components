@@ -38,6 +38,7 @@ declare module 'vue' {
     SInput: typeof import('./src/components/vs-search/components/s-input/s-input.vue')['default']
     SSelect: typeof import('./src/components/vs-search/components/s-select/s-select.vue')['default']
     STime: typeof import('./src/components/vs-search/components/s-time/s-time.vue')['default']
+    STreeSelect: typeof import('./src/components/vs-search/components/s-tree-select/s-tree-select.vue')['default']
     VsColorPicker: typeof import('./src/components/vs-color-picker/vs-color-picker.vue')['default']
     VsDividerTitle: typeof import('./src/components/vs-divider-title/vs-divider-title.vue')['default']
     VsLabel: typeof import('./src/components/vs-label/vs-label.vue')['default']

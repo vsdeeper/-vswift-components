@@ -3,51 +3,28 @@ import { throttle } from 'radash'
 import { Close } from '@element-plus/icons-vue'
 import type { TreeKey, TreeNodeData } from 'element-plus/es/components/tree-v2/src/types'
 import { type InputInstance, ElTree as MyTree, ElTreeV2 as MyTreeV2 } from 'element-plus'
-import type { VsTreeSelectValue, VsTreeSelectValueItem } from '.'
+import type { VsTreeSelectProps, VsTreeSelectValue, VsTreeSelectValueItem } from '.'
 import { findArraryValueFromTreeData, isArraryObject } from '@vswift/utils'
 import config from '../config'
 
-const props = withDefaults(
-  defineProps<{
-    modelValue?: VsTreeSelectValue
-    data?: Record<string, any>[] // 可选数据
-    sourceData?: Record<string, any>[] // 全量数据，包含禁用状态
-    title?: string
-    lazy?: boolean
-    placeholder?: string
-    disabled?: boolean
-    multiple?: boolean
-    virtualized?: boolean // 是否使用虚拟tree组件
-    checkStrictly?: boolean
-    itemLabel?: string
-    itemValue?: string
-    itemChildren?: string
-    returnObject?: boolean // 返回TreeKey还是Record<string, any>
-    collapseTags?: boolean
-    collapseTagsTooltip?: boolean
-    appendToBody?: boolean
-    filterValue?: (data: Record<string, any>[]) => Record<string, any>[]
-    icon?: any
-  }>(),
-  {
-    modelValue: undefined,
-    data: () => [],
-    sourceData: undefined, // 未设置则以data为准
-    title: '请选择',
-    lazy: false,
-    disabled: undefined,
-    multiple: true,
-    placeholder: '请选择',
-    virtualized: true,
-    checkStrictly: false,
-    itemLabel: 'label',
-    itemValue: 'id',
-    itemChildren: 'children',
-    returnObject: true,
-    filterValue: undefined,
-    appendToBody: true
-  }
-)
+const props = withDefaults(defineProps<VsTreeSelectProps>(), {
+  modelValue: undefined,
+  options: () => [],
+  sourceOptions: undefined, // 未设置则以data为准
+  title: '请选择',
+  lazy: false,
+  disabled: undefined,
+  multiple: true,
+  placeholder: '请选择',
+  virtualized: true,
+  checkStrictly: false,
+  itemLabel: 'label',
+  itemValue: 'id',
+  itemChildren: 'children',
+  returnObject: true,
+  filterValue: undefined,
+  appendToBody: true
+})
 
 const emit = defineEmits<{
   (e: 'update:modelValue', v?: VsTreeSelectValue): void
@@ -63,8 +40,8 @@ const filterTextSelected = ref('')
 const treeRef = ref()
 const treeV2Ref = ref()
 const value = ref<VsTreeSelectValue>() // 接收modelValue的值，辅助渲染select框中的选中项，类型和modelValue保持一致
-const _sourceData = ref<Record<string, any>[]>([]) // 源数据，只用于做选项回显
-const renderData = ref<Record<string, any>[]>([]) // 弹框左侧选项渲染数据
+const copySourceOptions = ref<Record<string, any>[]>([]) // 源数据，只用于做选项回显
+const renderOptions = ref<Record<string, any>[]>([]) // 弹框左侧选项渲染数据
 const renderCheckedNodes = ref<TreeNodeData[]>() // 弹框右侧选中项渲染数据
 const filterInputRef = ref<InputInstance>()
 const allSelected = computed(
@@ -74,26 +51,26 @@ const allSelected = computed(
 )
 
 watch(
-  [() => props.modelValue, () => props.data, () => props.sourceData],
+  [() => props.modelValue, () => props.options, () => props.sourceOptions],
   (res) => {
-    const [val, data, sourceData] = res
-    if (!data?.length) return
+    const [val, options, sourceOptions] = res
+    if (!options?.length) return
     if (Array.isArray(val)) {
       value.value = val ?? []
     } else {
       value.value = val ? [val] : []
     }
     // 选项渲染数据
-    renderData.value = data
-    if (data.length) loading.value = false
+    renderOptions.value = options
+    loading.value = false
     // 备份源数据，仅用于外部回显
-    _sourceData.value = sourceData ?? JSON.parse(JSON.stringify(data))
+    copySourceOptions.value = sourceOptions ?? JSON.parse(JSON.stringify(options))
     // 设置选中项
     getTreeRef()?.setCheckedKeys(getTreeKeysByValue(value.value))
     renderCheckedNodes.value = getTreeRef()?.getCheckedNodes()
 
     // 虚拟渲染时，手动展开所有选项，防止异步数据延迟
-    if (props.virtualized) expandAllForTreeV2(renderData.value)
+    if (props.virtualized) expandAllForTreeV2(renderOptions.value)
   },
   { immediate: true }
 )
@@ -142,12 +119,12 @@ const operate = (type: string, data?: unknown) => {
       getTreeRef()?.setCheckedKeys(getTreeKeysByValue(value.value))
       renderCheckedNodes.value = getTreeRef()?.getCheckedNodes()
       /** 如果是虚拟渲染，则手动设置全部展开 */
-      if (props.virtualized) expandAllForTreeV2(renderData.value)
+      if (props.virtualized) expandAllForTreeV2(renderOptions.value)
       setTimeout(() => {
-        if (renderData.value.length) {
-          loading.value = false
+        if (renderOptions.value.length) {
           filterInputRef.value?.focus()
         }
+        loading.value = false
       }, 300)
       break
     }
@@ -317,8 +294,8 @@ function getRenderCheckedNodes(
 }
 
 function getAllKeys() {
-  const { data, itemValue, filterValue } = props
-  const validData = filterValue ? filterValue(toFlattenData(data)) : toFlattenData(data)
+  const { options, itemValue, filterValue } = props
+  const validData = filterValue ? filterValue(toFlattenData(options)) : toFlattenData(options)
   return validData.map((e) => e[itemValue]) as TreeKey[]
 }
 
@@ -357,7 +334,7 @@ defineExpose({
             @close="operate('delete.field', toArraryValue(value)[0])"
             @click.stop="operate('click.selectedTag', toArraryValue(value)[0])"
           >
-            {{ getLabel(toArraryValue(value)[0], _sourceData) }}
+            {{ getLabel(toArraryValue(value)[0], copySourceOptions) }}
           </el-tag>
           <el-tooltip
             v-if="toArraryValue(value).length > 1 && collapseTagsTooltip"
@@ -379,7 +356,7 @@ defineExpose({
                 @close="operate('delete.field', item)"
                 @click.stop="operate('click.selectedTag', item)"
               >
-                {{ getLabel(item, _sourceData) }}
+                {{ getLabel(item, copySourceOptions) }}
               </el-tag>
             </template>
           </el-tooltip>
@@ -402,7 +379,7 @@ defineExpose({
           @close="operate('delete.field', item)"
           @click.stop="operate('click.selectedTag', item)"
         >
-          {{ getLabel(item, _sourceData) }}
+          {{ getLabel(item, copySourceOptions) }}
         </el-tag>
       </div>
       <el-button
@@ -431,7 +408,7 @@ defineExpose({
             clearable
             placeholder="请输入关键词"
           />
-          <div class="toggle-all-selection">
+          <div v-if="renderOptions.length" class="toggle-all-selection">
             <el-checkbox :checked="allSelected" @change="operate('toggle.allSelection')">
               {{ allSelected ? '取消全选' : '全选' }}
             </el-checkbox>
@@ -439,7 +416,7 @@ defineExpose({
           <el-tree-v2
             v-if="virtualized"
             ref="treeV2Ref"
-            :data="renderData"
+            :data="renderOptions"
             highlight-current
             :filter-method="filterMethod"
             :props="{
@@ -455,7 +432,7 @@ defineExpose({
           <el-tree
             v-else
             ref="treeRef"
-            :data="renderData"
+            :data="renderOptions"
             :class="{ single: !multiple }"
             :lazy="lazy"
             show-checkbox

@@ -4,7 +4,8 @@ import type {
   SSelectInstance,
   SCascaderInstance,
   SDateInstance,
-  STimeInstance
+  STimeInstance,
+  STreeSelectInstance
 } from '.'
 import type { AsyncComponentLoader } from 'vue'
 
@@ -13,6 +14,7 @@ export * from './s-select'
 export * from './s-cascader'
 export * from './s-date'
 export * from './s-time'
+export * from './s-tree-select'
 
 // 生成动态组件对象
 export type SComponentMap = {
@@ -21,6 +23,7 @@ export type SComponentMap = {
   Cascader?: SCascaderInstance
   Date?: SDateInstance
   Time?: STimeInstance
+  TreeSelect?: STreeSelectInstance
 }
 export type SComponentKey = keyof SComponentMap
 

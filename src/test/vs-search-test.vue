@@ -4,7 +4,9 @@ import type {
   SCascaderProps,
   SDateProps,
   SInputProps,
-  SSelectProps
+  SSelectProps,
+  STimeProps,
+  STreeSelectProps
 } from '@/components/vs-search/components'
 
 const options = ref<VsSearchOptions>([
@@ -79,6 +81,19 @@ const options = ref<VsSearchOptions>([
       endPlaceholder: '结束日期',
       type: 'daterange'
     } as SDateProps
+  },
+  { id: 'sj', type: 'time', label: '时间', props: { placeholder: '请选择' } as STimeProps },
+  {
+    id: 'sjfw',
+    type: 'time',
+    label: '时间范围',
+    props: { startPlaceholder: '开始时间', endPlaceholder: '结束时间', isRange: true } as STimeProps
+  },
+  {
+    id: 'sxxz',
+    type: 'tree-select',
+    label: '树形选择',
+    props: { placeholder: '请选择', options: [{ id: '1', label: '选项1' }] } as STreeSelectProps
   },
   { id: 'custom', label: '自定义' }
 ])
