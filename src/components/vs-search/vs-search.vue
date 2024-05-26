@@ -40,11 +40,14 @@ defineExpose({
             }"
           >
             <el-form-item :label="item.label" :prop="item.id">
-              <component
-                :is="SComponent[pascal(item.type) as SComponentKey]"
-                v-model="form[item.id]"
-                :props="item.props"
-              />
+              <slot :name="item.id" :data="form">
+                <component
+                  v-if="item.type"
+                  :is="SComponent[pascal(item.type) as SComponentKey]"
+                  v-model="form[item.id]"
+                  :props="item.props"
+                />
+              </slot>
             </el-form-item>
           </el-col>
           <el-col :lg="6" :md="8" :sm="12" :xs="24">

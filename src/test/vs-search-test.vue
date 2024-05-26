@@ -79,10 +79,15 @@ const options = ref<VsSearchOptions>([
       endPlaceholder: '结束日期',
       type: 'daterange'
     } as SDateProps
-  }
+  },
+  { id: 'custom', label: '自定义' }
 ])
 </script>
 
 <template>
-  <VsSearch :options="options" />
+  <VsSearch :options="options">
+    <template #custom="{ data }">
+      <el-input v-model="data.custom" placeholder="自定义条件" clearable></el-input>
+    </template>
+  </VsSearch>
 </template>

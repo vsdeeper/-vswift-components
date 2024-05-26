@@ -4,7 +4,7 @@ export interface VsSearchOptionItem {
   // 唯一标识，与后端交互字段名称
   id: string
   // 组件类型
-  type: 'input' | 'select' | 'cascader' | 'date' | 'time' | 'tree-select'
+  type?: 'input' | 'select' | 'cascader' | 'date' | 'time' | 'tree-select'
   label?: string
   // el组件的props设置
   props?: Record<string, any>
