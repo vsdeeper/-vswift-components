@@ -2,13 +2,13 @@
 import { throttle } from 'radash'
 import { Close } from '@element-plus/icons-vue'
 import type { TreeKey, TreeNodeData } from 'element-plus/es/components/tree-v2/src/types'
-import { type InputInstance, ElTree as MyTree,  ElTreeV2 as MyTreeV2 } from 'element-plus'
-import type { MyTreeSelectValue, MyTreeSelectValueItem } from '.'
+import { type InputInstance, ElTree as MyTree, ElTreeV2 as MyTreeV2 } from 'element-plus'
+import type { VsTreeSelectValue, VsTreeSelectValueItem } from '.'
 import { findArraryValueFromTreeData, isArraryObject } from '@vswift/utils'
 
 const props = withDefaults(
   defineProps<{
-    modelValue?: MyTreeSelectValue
+    modelValue?: VsTreeSelectValue
     data?: Record<string, any>[] // 可选数据
     sourceData?: Record<string, any>[] // 全量数据，包含禁用状态
     title?: string
@@ -44,12 +44,12 @@ const props = withDefaults(
     itemChildren: 'children',
     returnObject: true,
     filterValue: undefined,
-    appendToBody: true,
-  },
+    appendToBody: true
+  }
 )
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', v?: MyTreeSelectValue): void
+  (e: 'update:modelValue', v?: VsTreeSelectValue): void
   (e: 'click-selected-tag', v: TreeKey): void
 }>()
 
@@ -61,18 +61,20 @@ const filterText = ref('')
 const filterTextSelected = ref('')
 const treeRef = ref()
 const treeV2Ref = ref()
-const value = ref<MyTreeSelectValue>() // 接收modelValue的值，辅助渲染select框中的选中项，类型和modelValue保持一致
+const value = ref<VsTreeSelectValue>() // 接收modelValue的值，辅助渲染select框中的选中项，类型和modelValue保持一致
 const _sourceData = ref<Record<string, any>[]>([]) // 源数据，只用于做选项回显
 const renderData = ref<Record<string, any>[]>([]) // 弹框左侧选项渲染数据
 const renderCheckedNodes = ref<TreeNodeData[]>() // 弹框右侧选中项渲染数据
 const filterInputRef = ref<InputInstance>()
 const allSelected = computed(
-  () => getRenderCheckedNodes(renderCheckedNodes.value, props.filterValue).length === getAllKeys().length,
+  () =>
+    getRenderCheckedNodes(renderCheckedNodes.value, props.filterValue).length ===
+    getAllKeys().length
 )
 
 watch(
   [() => props.modelValue, () => props.data, () => props.sourceData],
-  res => {
+  (res) => {
     const [val, data, sourceData] = res
     if (!data?.length) return
     if (Array.isArray(val)) {
@@ -92,7 +94,7 @@ watch(
     // 虚拟渲染时，手动展开所有选项，防止异步数据延迟
     if (props.virtualized) expandAllForTreeV2(renderData.value)
   },
-  { immediate: true },
+  { immediate: true }
 )
 
 const confirm = () => {
@@ -101,13 +103,21 @@ const confirm = () => {
     emit(
       'update:modelValue',
       props.multiple
-        ? checkedNodes.map(e => ({ [props.itemValue]: e[props.itemValue], [props.itemLabel]: e[props.itemLabel] }))
-        : checkedNodes.map(e => ({ [props.itemValue]: e[props.itemValue], [props.itemLabel]: e[props.itemLabel] }))[0],
+        ? checkedNodes.map((e) => ({
+            [props.itemValue]: e[props.itemValue],
+            [props.itemLabel]: e[props.itemLabel]
+          }))
+        : checkedNodes.map((e) => ({
+            [props.itemValue]: e[props.itemValue],
+            [props.itemLabel]: e[props.itemLabel]
+          }))[0]
     )
   } else {
     emit(
       'update:modelValue',
-      props.multiple ? checkedNodes.map(e => e[props.itemValue]) : checkedNodes.map(e => e[props.itemValue])[0],
+      props.multiple
+        ? checkedNodes.map((e) => e[props.itemValue])
+        : checkedNodes.map((e) => e[props.itemValue])[0]
     )
   }
   show.value = false
@@ -162,16 +172,16 @@ const operate = (type: string, data?: unknown) => {
     }
     case 'delete.dialog': {
       const findIndex1 = renderCheckedNodes.value!.findIndex(
-        node => node[props.itemValue] === (data as TreeNodeData)[props.itemValue],
+        (node) => node[props.itemValue] === (data as TreeNodeData)[props.itemValue]
       )
       findIndex1 > -1 && renderCheckedNodes.value!.splice(findIndex1, 1)
 
       const checkedNodes = getTreeRef()?.getCheckedNodes() || []
       const findIndex2 = checkedNodes.findIndex(
-        node => node[props.itemValue] === (data as TreeNodeData)[props.itemValue],
+        (node) => node[props.itemValue] === (data as TreeNodeData)[props.itemValue]
       )
       findIndex2 > -1 && checkedNodes.splice(findIndex2, 1)
-      getTreeRef()?.setCheckedKeys(checkedNodes.map(node => node[props.itemValue]))
+      getTreeRef()?.setCheckedKeys(checkedNodes.map((node) => node[props.itemValue]))
       break
     }
     case 'delete.field': {
@@ -179,11 +189,11 @@ const operate = (type: string, data?: unknown) => {
       if (Array.isArray(value.value)) {
         if (isArraryObject(value.value)) {
           const findIndex = (value.value as Record<string, any>[])!.findIndex(
-            e => e[props.itemValue] === (data as Record<string, any>)[props.itemValue],
+            (e) => e[props.itemValue] === (data as Record<string, any>)[props.itemValue]
           )
           findIndex > -1 && (value.value as Record<string, any>[])!.splice(findIndex, 1)
         } else {
-          const findIndex = (value.value as TreeKey[])!.findIndex(e => e === (data as TreeKey))
+          const findIndex = (value.value as TreeKey[])!.findIndex((e) => e === (data as TreeKey))
           findIndex > -1 && (value.value as TreeKey[])!.splice(findIndex, 1)
         }
       } else {
@@ -218,17 +228,17 @@ const onCheck = (item: TreeNodeData) => {
 
 watch(
   filterText,
-  throttle({ interval: 500 }, val => {
+  throttle({ interval: 500 }, (val) => {
     getTreeRef()?.filter(val)
-  }),
+  })
 )
 
 watch(
   filterTextSelected,
-  throttle({ interval: 500}, val => {
+  throttle({ interval: 500 }, (val) => {
     const checkedNodes = getCheckedNodes()
-    renderCheckedNodes.value = checkedNodes.filter(node => node[props.itemLabel].includes(val))
-  }),
+    renderCheckedNodes.value = checkedNodes.filter((node) => node[props.itemLabel].includes(val))
+  })
 )
 
 function getCheckedNodes() {
@@ -239,12 +249,12 @@ function getTreeRef<T = InstanceType<typeof MyTree>>(): T | undefined {
   return props.virtualized ? treeV2Ref.value : treeRef.value
 }
 
-function getTreeKeysByValue(data?: MyTreeSelectValue) {
+function getTreeKeysByValue(data?: VsTreeSelectValue) {
   if (!data) return []
   if (Array.isArray(data)) {
     if (isArraryObject(data)) {
-      return (data as MyTreeSelectValueItem[]).map(
-        (e: MyTreeSelectValueItem) => (e as Record<string, any>)[props.itemValue] as TreeKey,
+      return (data as VsTreeSelectValueItem[]).map(
+        (e: VsTreeSelectValueItem) => (e as Record<string, any>)[props.itemValue] as TreeKey
       )
     } else return data as TreeKey[]
   } else {
@@ -253,30 +263,30 @@ function getTreeKeysByValue(data?: MyTreeSelectValue) {
   }
 }
 
-function getTreeKey(data: MyTreeSelectValueItem) {
+function getTreeKey(data: VsTreeSelectValueItem) {
   if (typeof data === 'object') {
     return data[props.itemValue] as TreeKey
   } else return data
 }
 
-function toArraryValue(value?: MyTreeSelectValue): MyTreeSelectValueItem[] {
+function toArraryValue(value?: VsTreeSelectValue): VsTreeSelectValueItem[] {
   if (typeof value === 'undefined') return []
   return Array.isArray(value) ? value : [value]
 }
 
-function getLabel(item: MyTreeSelectValueItem, data: Record<string, any>[]) {
+function getLabel(item: VsTreeSelectValueItem, data: Record<string, any>[]) {
   if (typeof item === 'object') {
     const finds = findArraryValueFromTreeData(item[props.itemValue], data, {
       id: props.itemValue,
       label: props.itemLabel,
-      returnType: 'labels',
+      returnType: 'labels'
     })
     return finds?.length ? finds.join('/') : '未知'
   } else {
     const finds = findArraryValueFromTreeData(item, data, {
       id: props.itemValue,
       label: props.itemLabel,
-      returnType: 'labels',
+      returnType: 'labels'
     })
     return finds ? finds.join('/') : '未知'
   }
@@ -287,7 +297,9 @@ function expandAllForTreeV2(data: Record<string, any>[]) {
     return arr.reduce((pre: TreeKey[], cur: Record<string, any>) => {
       return [
         ...pre,
-        ...(cur[props.itemChildren]?.length ? [cur[props.itemValue], ...looper(cur[props.itemChildren])] : []),
+        ...(cur[props.itemChildren]?.length
+          ? [cur[props.itemValue], ...looper(cur[props.itemChildren])]
+          : [])
       ]
     }, [])
   }
@@ -296,17 +308,17 @@ function expandAllForTreeV2(data: Record<string, any>[]) {
 
 function getRenderCheckedNodes(
   renderCheckedNodes?: TreeNodeData[],
-  filterValue?: (data: Record<string, any>[]) => Record<string, any>[],
+  filterValue?: (data: Record<string, any>[]) => Record<string, any>[]
 ) {
   if (!renderCheckedNodes) return []
-  if (!filterValue) return renderCheckedNodes.filter(e => !e.disabled)
-  return filterValue(renderCheckedNodes.filter(e => !e.disabled))
+  if (!filterValue) return renderCheckedNodes.filter((e) => !e.disabled)
+  return filterValue(renderCheckedNodes.filter((e) => !e.disabled))
 }
 
 function getAllKeys() {
   const { data, itemValue, filterValue } = props
   const validData = filterValue ? filterValue(toFlattenData(data)) : toFlattenData(data)
-  return validData.map(e => e[itemValue]) as TreeKey[]
+  return validData.map((e) => e[itemValue]) as TreeKey[]
 }
 
 function toFlattenData(data: Record<string, any>[]) {
@@ -315,175 +327,182 @@ function toFlattenData(data: Record<string, any>[]) {
     return [
       ...prev,
       ...(cur.disabled ? [] : [cur]),
-      ...(cur[itemChildren]?.length ? toFlattenData(cur[itemChildren]) : []),
+      ...(cur[itemChildren]?.length ? toFlattenData(cur[itemChildren]) : [])
     ]
   }, [])
 }
 
 defineExpose({
-  getTreeRef,
+  getTreeRef
 })
 </script>
 
 <template>
-    <div
-      class="my-tree-select"
-      :class="{ disabled: _disabled, 'collapse-tags': collapseTags }"
-      @click="operate('click.field')"
-    >
-      <div class="inner">
-        <span v-if="!toArraryValue(value).length" class="placeholder">{{ placeholder }}</span>
-        <template v-if="collapseTags">
-          <el-tag
-            v-if="toArraryValue(value).length"
-            class="link-tag"
-            closable
-            disable-transitions
-            :type="_disabled ? 'info' : undefined"
-            @close="operate('delete.field', toArraryValue(value)[0])"
-            @click.stop="operate('click.selectedTag', toArraryValue(value)[0])"
-          >
-            {{ getLabel(toArraryValue(value)[0], _sourceData) }}
-          </el-tag>
-          <el-tooltip
-            v-if="toArraryValue(value).length > 1 && collapseTagsTooltip"
-            placement="bottom"
-            effect="light"
-            popper-class="tag-tooltip-popper"
-          >
-            <el-tag disable-transitions :type="_disabled ? 'info' : undefined">
-              +{{ toArraryValue(value).length - 1 }}
-            </el-tag>
-            <template #content>
-              <el-tag
-                v-for="item in toArraryValue(value).slice(1)"
-                :key="getTreeKey(item)"
-                class="link-tag"
-                closable
-                disable-transitions
-                :type="_disabled ? 'info' : undefined"
-                @close="operate('delete.field', item)"
-                @click.stop="operate('click.selectedTag', item)"
-              >
-                {{ getLabel(item, _sourceData) }}
-              </el-tag>
-            </template>
-          </el-tooltip>
-          <el-tag
-            v-if="toArraryValue(value).length > 1 && !collapseTagsTooltip"
-            disable-transitions
-            :type="_disabled ? 'info' : undefined"
-          >
-            +{{ toArraryValue(value).length - 1 }}
-          </el-tag>
-        </template>
+  <div
+    class="my-tree-select"
+    :class="{ disabled: _disabled, 'collapse-tags': collapseTags }"
+    @click="operate('click.field')"
+  >
+    <div class="inner">
+      <span v-if="!toArraryValue(value).length" class="placeholder">{{ placeholder }}</span>
+      <template v-if="collapseTags">
         <el-tag
-          v-for="item in toArraryValue(value)"
-          v-else
-          :key="getTreeKey(item)"
+          v-if="toArraryValue(value).length"
           class="link-tag"
           closable
           disable-transitions
           :type="_disabled ? 'info' : undefined"
-          @close="operate('delete.field', item)"
-          @click.stop="operate('click.selectedTag', item)"
+          @close="operate('delete.field', toArraryValue(value)[0])"
+          @click.stop="operate('click.selectedTag', toArraryValue(value)[0])"
         >
-          {{ getLabel(item, _sourceData) }}
+          {{ getLabel(toArraryValue(value)[0], _sourceData) }}
         </el-tag>
-      </div>
-      <el-button
-        v-if="toArraryValue(value).length"
-        class="clear"
-        :icon="Close"
-        link
-        :disabled="_disabled"
-        @click.stop="operate('clear.field')"
-      ></el-button>
+        <el-tooltip
+          v-if="toArraryValue(value).length > 1 && collapseTagsTooltip"
+          placement="bottom"
+          effect="light"
+          popper-class="tag-tooltip-popper"
+        >
+          <el-tag disable-transitions :type="_disabled ? 'info' : undefined">
+            +{{ toArraryValue(value).length - 1 }}
+          </el-tag>
+          <template #content>
+            <el-tag
+              v-for="item in toArraryValue(value).slice(1)"
+              :key="getTreeKey(item)"
+              class="link-tag"
+              closable
+              disable-transitions
+              :type="_disabled ? 'info' : undefined"
+              @close="operate('delete.field', item)"
+              @click.stop="operate('click.selectedTag', item)"
+            >
+              {{ getLabel(item, _sourceData) }}
+            </el-tag>
+          </template>
+        </el-tooltip>
+        <el-tag
+          v-if="toArraryValue(value).length > 1 && !collapseTagsTooltip"
+          disable-transitions
+          :type="_disabled ? 'info' : undefined"
+        >
+          +{{ toArraryValue(value).length - 1 }}
+        </el-tag>
+      </template>
+      <el-tag
+        v-for="item in toArraryValue(value)"
+        v-else
+        :key="getTreeKey(item)"
+        class="link-tag"
+        closable
+        disable-transitions
+        :type="_disabled ? 'info' : undefined"
+        @close="operate('delete.field', item)"
+        @click.stop="operate('click.selectedTag', item)"
+      >
+        {{ getLabel(item, _sourceData) }}
+      </el-tag>
     </div>
-    <el-dialog
-      v-model="show"
-      class="my-tree-select-dialog"
-      :class="{ virtualized }"
-      :title="title"
-      :append-to-body="appendToBody"
-      @opened="operate('opened.dialog')"
-      @closed="operate('closed.dialog')"
-    >
-      <el-row v-loading="loading">
-        <el-col :span="14">
-          <el-input ref="filterInputRef" v-model="filterText" clearable placeholder="请输入关键词" />
-          <div class="toggle-all-selection">
-            <el-button type="primary" link @click="operate('toggle.allSelection')">
-              {{ allSelected ? '取消全选' : '全选' }}
+    <el-button
+      v-if="toArraryValue(value).length"
+      class="clear"
+      :icon="Close"
+      link
+      :disabled="_disabled"
+      @click.stop="operate('clear.field')"
+    ></el-button>
+  </div>
+  <el-dialog
+    v-model="show"
+    class="my-tree-select-dialog"
+    :class="{ virtualized }"
+    :title="title"
+    :append-to-body="appendToBody"
+    @opened="operate('opened.dialog')"
+    @closed="operate('closed.dialog')"
+  >
+    <el-row v-loading="loading">
+      <el-col :span="14">
+        <el-input ref="filterInputRef" v-model="filterText" clearable placeholder="请输入关键词" />
+        <div class="toggle-all-selection">
+          <el-checkbox :checked="allSelected" @change="operate('toggle.allSelection')">
+            {{ allSelected ? '取消全选' : '全选' }}
+          </el-checkbox>
+        </div>
+        <el-tree-v2
+          v-if="virtualized"
+          ref="treeV2Ref"
+          :data="renderData"
+          highlight-current
+          :filter-method="filterMethod"
+          :props="{
+            label: itemLabel,
+            value: itemValue,
+            children: itemChildren
+          }"
+          show-checkbox
+          :check-strictly="checkStrictly"
+          :height="380"
+          @check="onCheck"
+        />
+        <el-tree
+          v-else
+          ref="treeRef"
+          :data="renderData"
+          :class="{ single: !multiple }"
+          :lazy="lazy"
+          show-checkbox
+          default-expand-all
+          :node-key="itemValue"
+          highlight-current
+          :check-strictly="checkStrictly"
+          :filter-node-method="filterMethod"
+          :props="{
+            label: itemLabel,
+            children: itemChildren
+          }"
+          @check="onCheck"
+        />
+      </el-col>
+      <el-col :span="10">
+        <el-input v-model="filterTextSelected" clearable placeholder="请输入关键词" />
+        <div class="topbar">
+          <div class="text">
+            已选：{{ getRenderCheckedNodes(getCheckedNodes(), filterValue).length }} 个
+          </div>
+          <div class="btns">
+            <el-button
+              type="primary"
+              link
+              :disabled="!getRenderCheckedNodes(getCheckedNodes(), filterValue).length"
+              @click="operate('clear.dialog')"
+            >
+              清空
             </el-button>
           </div>
-          <el-tree-v2
-            v-if="virtualized"
-            ref="treeV2Ref"
-            :data="renderData"
-            highlight-current
-            :filter-method="filterMethod"
-            :props="{
-              label: itemLabel,
-              value: itemValue,
-              children: itemChildren,
-            }"
-            show-checkbox
-            :check-strictly="checkStrictly"
-            :height="380"
-            @check="onCheck"
-          />
-          <el-tree
-            v-else
-            ref="treeRef"
-            :data="renderData"
-            :class="{ single: !multiple }"
-            :lazy="lazy"
-            show-checkbox
-            default-expand-all
-            :node-key="itemValue"
-            highlight-current
-            :check-strictly="checkStrictly"
-            :filter-node-method="filterMethod"
-            :props="{
-              label: itemLabel,
-              children: itemChildren,
-            }"
-            @check="onCheck"
-          />
-        </el-col>
-        <el-col :span="10">
-          <el-input v-model="filterTextSelected" clearable placeholder="请输入关键词" />
-          <div class="topbar">
-            <div class="text">已选：{{ getRenderCheckedNodes(getCheckedNodes(), filterValue).length }} 个</div>
-            <div class="btns">
-              <el-button
-                type="primary"
-                link
-                :disabled="!getRenderCheckedNodes(getCheckedNodes(), filterValue).length"
-                @click="operate('clear.dialog')"
-              >
-                清空
-              </el-button>
-            </div>
+        </div>
+        <div class="items">
+          <div
+            v-for="node in getRenderCheckedNodes(renderCheckedNodes, filterValue)"
+            :key="node[props.itemValue]"
+            class="item"
+          >
+            <span>{{ node[props.itemLabel] }}</span>
+            <el-button
+              link
+              circle
+              :icon="Close"
+              @click="operate('delete.dialog', node)"
+            ></el-button>
           </div>
-          <div class="items">
-            <div
-              v-for="node in getRenderCheckedNodes(renderCheckedNodes, filterValue)"
-              :key="node[props.itemValue]"
-              class="item"
-            >
-              <span>{{ node[props.itemLabel] }}</span>
-              <el-button link circle :icon="Close" @click="operate('delete.dialog', node)"></el-button>
-            </div>
-          </div>
-        </el-col>
-      </el-row>
-      <template #footer>
-        <el-button @click="show = false">取消</el-button>
-        <el-button type="primary" @click="confirm">确定</el-button>
-      </template>
-    </el-dialog>
+        </div>
+      </el-col>
+    </el-row>
+    <template #footer>
+      <el-button @click="show = false">取消</el-button>
+      <el-button type="primary" @click="confirm">确定</el-button>
+    </template>
+  </el-dialog>
 </template>
 
 <style lang="scss">
@@ -492,7 +511,10 @@ defineExpose({
   max-width: 710px;
   .toggle-all-selection {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
+    .el-checkbox {
+      margin-left: 24px;
+    }
   }
   .el-row {
     border: 1px solid #dcdfe6;
