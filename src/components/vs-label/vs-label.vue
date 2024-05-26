@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { InfoFilled } from '@element-plus/icons-vue';
+import { InfoFilled } from '@element-plus/icons-vue'
 
 withDefaults(
   defineProps<{
-    label: string;
-    tooltipEffect?: 'dark' | 'light';
+    label: string
+    tooltipEffect?: 'dark' | 'light'
     tooltipPlacement?:
       | 'top'
       | 'top-start'
@@ -17,25 +17,25 @@ withDefaults(
       | 'left-end'
       | 'right'
       | 'right-start'
-      | 'right-end';
-    tooltipIcon?: any;
-    tooltipContent?: string;
+      | 'right-end'
+    tooltipIcon?: any
+    tooltipContent?: string
   }>(),
   {
     tooltipEffect: undefined,
     tooltipPlacement: 'top',
     tooltipIcon: () => InfoFilled,
     tooltipContent: undefined
-  },
-);
+  }
+)
 
 const emit = defineEmits<{
-  (e: 'click-tooltip-icon'): void;
-}>();
+  (e: 'click-tooltip-icon'): void
+}>()
 </script>
 
 <template>
-  <div class="my-label">
+  <div class="vs-label">
     {{ label }}
     <el-tooltip v-if="tooltipContent" :effect="tooltipEffect" :placement="tooltipPlacement">
       <template #content>{{ tooltipContent }}</template>
@@ -47,7 +47,7 @@ const emit = defineEmits<{
 </template>
 
 <style lang="scss" scoped>
-.my-label {
+.vs-label {
   display: inline-flex;
   align-items: center;
   .el-icon {

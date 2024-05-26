@@ -6,7 +6,7 @@ export * from './s-input'
 
 // 生成动态组件对象
 export type SComponentMap = {
-  SInput?: SInputInstance
+  Input?: SInputInstance
 }
 export type SComponentKey = keyof SComponentMap
 
@@ -15,7 +15,9 @@ const SComponent: SComponentMap = {}
 
 for (const filePath in matchFiles) {
   const filePathArr = filePath.split('/')
-  const key = pascal(last(filePathArr)?.replace('.vue', '') ?? 'Unknown') as SComponentKey
+  const key = pascal(
+    last(filePathArr)?.replace('s-', '').replace('.vue', '') ?? 'Unknown'
+  ) as SComponentKey
   SComponent[key] = defineAsyncComponent({
     loader: matchFiles[filePath] as AsyncComponentLoader
   })

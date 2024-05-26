@@ -339,7 +339,7 @@ defineExpose({
 
 <template>
   <div
-    class="my-tree-select"
+    class="vs-tree-select"
     :class="{ disabled: _disabled, 'collapse-tags': collapseTags }"
     @click="operate('click.field')"
   >
@@ -414,7 +414,7 @@ defineExpose({
   </div>
   <el-dialog
     v-model="show"
-    class="my-tree-select-dialog"
+    class="vs-tree-select-dialog"
     :class="{ virtualized }"
     :title="title"
     :append-to-body="appendToBody"
@@ -506,7 +506,7 @@ defineExpose({
 </template>
 
 <style lang="scss">
-.my-tree-select-dialog {
+.vs-tree-select-dialog {
   min-width: 560px;
   max-width: 710px;
   .toggle-all-selection {
@@ -610,7 +610,7 @@ defineExpose({
 </style>
 
 <style lang="scss" scoped>
-.my-tree-select {
+.vs-tree-select {
   --border-color: #dcdfe6;
   --border-radius: 4px;
   --disabled-bg-color: #f5f7fa;

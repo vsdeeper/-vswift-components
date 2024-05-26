@@ -1,16 +1,16 @@
 <script setup lang="ts">
 defineProps<{
-  label: string;
-  suffixIcon?: any;
-}>();
+  label: string
+  suffixIcon?: any
+}>()
 
 const emit = defineEmits<{
-  (e: 'click-suffix-icon'): void;
-}>();
+  (e: 'click-suffix-icon'): void
+}>()
 </script>
 
 <template>
-  <div class="my-divider-title">
+  <div class="vs-divider-title">
     <el-divider content-position="left" border-style="dashed">
       {{ label }}
     </el-divider>
@@ -28,7 +28,7 @@ const emit = defineEmits<{
 </template>
 
 <style lang="scss" scoped>
-.my-divider-title {
+.vs-divider-title {
   display: flex;
   align-items: center;
   line-height: 1;

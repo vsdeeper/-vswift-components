@@ -12,7 +12,7 @@ export interface VsSearchOptionItem {
     | 'month'
     | 'daterange'
     | 'datetimerange'
-    | 'my-tree-select'
+    | 'tree-select'
   placeholder?: string
   // 选择范围使用
   startPlaceholder?: string
