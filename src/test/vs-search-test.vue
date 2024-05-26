@@ -1,14 +1,25 @@
 <script setup lang="ts">
 import { VsSearch, type VsSearchOptions } from '@/components'
-import type { SCascaderProps, SDateProps, SSelectProps } from '@/components/vs-search/components'
+import type {
+  SCascaderProps,
+  SDateProps,
+  SInputProps,
+  SSelectProps
+} from '@/components/vs-search/components'
 
 const options = ref<VsSearchOptions>([
-  { id: 'srk', type: 'input', label: '输入框' },
+  {
+    id: 'srk',
+    type: 'input',
+    label: '输入框',
+    sourceProps: { placeholder: '请输入' } as SInputProps
+  },
   {
     id: 'xzk',
     type: 'select',
     label: '选择框',
     sourceProps: {
+      placeholder: '请选择',
       options: [
         { id: '1', label: '选项1' },
         { id: '2', label: '选项2' },
@@ -22,6 +33,7 @@ const options = ref<VsSearchOptions>([
     type: 'cascader',
     label: '级联选择',
     sourceProps: {
+      placeholder: '请选择',
       options: [
         {
           id: '1',
@@ -51,9 +63,23 @@ const options = ref<VsSearchOptions>([
       props: { value: 'id', checkStrictly: true }
     } as SCascaderProps
   },
-  { id: 'rq', type: 'date', label: '日期', sourceProps: {} as SDateProps },
-  { id: 'rqsj', type: 'date', label: '日期时间', sourceProps: { type: 'datetime' } as SDateProps },
-  { id: 'rqfw', type: 'date', label: '日期范围', sourceProps: { type: 'daterange' } as SDateProps }
+  { id: 'rq', type: 'date', label: '日期', sourceProps: { placeholder: '请选择' } as SDateProps },
+  {
+    id: 'rqsj',
+    type: 'date',
+    label: '日期时间',
+    sourceProps: { placeholder: '请选择', type: 'datetime' } as SDateProps
+  },
+  {
+    id: 'rqfw',
+    type: 'date',
+    label: '日期范围',
+    sourceProps: {
+      startPlaceholder: '开始日期',
+      endPlaceholder: '结束日期',
+      type: 'daterange'
+    } as SDateProps
+  }
 ])
 </script>
 

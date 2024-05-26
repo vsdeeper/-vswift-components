@@ -14,7 +14,6 @@ const model = defineModel<SSelectValue>()
     <el-select
       v-model="model"
       v-bind="sourceProps"
-      :placeholder="sourceProps?.placeholder ?? '请选择'"
       :clearable="sourceProps?.clearable ?? true"
       :filterable="sourceProps?.filterable ?? true"
     >

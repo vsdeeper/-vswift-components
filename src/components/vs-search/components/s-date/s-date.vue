@@ -14,8 +14,8 @@ const model = defineModel<SDateValue>()
     <el-date-picker
       v-model="model"
       v-bind="sourceProps"
-      :placeholder="sourceProps?.placeholder ?? '请选择'"
       :value-format="sourceProps?.valueFormat ?? 'x'"
+      :clearable="sourceProps?.clearable ?? true"
     >
     </el-date-picker>
   </el-config-provider>

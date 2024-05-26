@@ -1,20 +1,22 @@
 <script setup lang="ts">
 import config from '@/components/config'
-import type { SInputProps } from '.'
+import type { STimeProps, STimeValue } from '.'
 
 defineProps<{
-  sourceProps?: SInputProps
+  sourceProps?: STimeProps
 }>()
 
-const model = defineModel<string>()
+const model = defineModel<STimeValue>()
 </script>
 
 <template>
   <el-config-provider :locale="config.locale">
-    <el-input
+    <el-time-picker
       v-model="model"
       v-bind="sourceProps"
+      :value-format="sourceProps?.valueFormat ?? 'x'"
       :clearable="sourceProps?.clearable ?? true"
-    ></el-input>
+    >
+    </el-time-picker>
   </el-config-provider>
 </template>

@@ -15,7 +15,6 @@ const model = defineModel<CascaderValue>()
     <el-cascader
       v-model="model"
       v-bind="sourceProps"
-      :placeholder="sourceProps?.placeholder ?? '请选择'"
       :clearable="sourceProps?.clearable ?? true"
       :filterable="sourceProps?.filterable ?? true"
     >
