@@ -11,7 +11,7 @@ import { globSync } from 'glob'
 
 const genEntry = () => {
   try {
-    const matchFiles = globSync('src/components/my-*/*.ts')
+    const matchFiles = globSync('src/components/vs-*/index.ts')
     const entryArr = matchFiles.map((filePath) => ({
       [filePath.split('/index.ts')[0].split('src/components/')[1]]: filePath
     }))

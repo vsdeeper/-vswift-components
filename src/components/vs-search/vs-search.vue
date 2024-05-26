@@ -19,20 +19,23 @@ defineExpose({
 
 <template>
   <div :id="id" class="vs-search">
-    <el-form ref="form" :model="form" label-width="80px">
+    <el-form :model="form" label-width="80px">
       <el-row>
         <el-col
           v-for="item in options"
           :key="item.id"
-          :span="24"
-          :xl="6"
-          :lg="8"
-          :md="12"
-          :sm="24"
+          :lg="6"
+          :md="8"
+          :sm="12"
+          :xs="24"
           :offset="0"
         >
-          <el-form-item :label="item.label">
-            <component :is="SComponent[pascal(item.type) as SComponentKey]"></component>
+          <el-form-item :label="item.label" :prop="item.id">
+            <component
+              :is="SComponent[pascal(item.type) as SComponentKey]"
+              v-model="form[item.id]"
+              :source-props="item.sourceProps"
+            />
           </el-form-item>
         </el-col>
       </el-row>
