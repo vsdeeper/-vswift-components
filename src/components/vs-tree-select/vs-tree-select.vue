@@ -409,7 +409,7 @@ defineExpose({
             placeholder="请输入关键词"
           />
           <div v-if="renderOptions.length" class="toggle-all-selection">
-            <el-checkbox :checked="allSelected" @change="operate('toggle.allSelection')">
+            <el-checkbox v-model="allSelected" @change="operate('toggle.allSelection')">
               {{ allSelected ? '取消全选' : '全选' }}
             </el-checkbox>
           </div>
@@ -456,9 +456,9 @@ defineExpose({
             </div>
             <div class="btns">
               <el-button
+                v-if="getRenderCheckedNodes(getCheckedNodes(), filterValue).length"
                 type="primary"
                 link
-                :disabled="!getRenderCheckedNodes(getCheckedNodes(), filterValue).length"
                 @click="operate('clear.dialog')"
               >
                 清空
