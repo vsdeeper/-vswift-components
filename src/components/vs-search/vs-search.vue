@@ -4,6 +4,7 @@ import type { VsSearchOptions } from '.'
 import { SComponent, type SComponentKey } from './components'
 import { pascal } from 'radash'
 import { ArrowDown, ArrowUp } from '@element-plus/icons-vue'
+import config from '../config'
 
 defineProps<{
   options?: VsSearchOptions
@@ -20,46 +21,48 @@ defineExpose({
 </script>
 
 <template>
-  <div :id="id" class="vs-search" :class="{ more: showMore }">
-    <el-form :model="form" label-width="80px">
-      <el-row>
-        <el-col
-          v-for="(item, index) in options"
-          :key="item.id"
-          :lg="6"
-          :md="8"
-          :sm="12"
-          :xs="24"
-          :class="{
-            'hidden-sm-and-down': !showMore && index > 0,
-            'hidden-md-and-down': !showMore && index > 1,
-            'hidden-lg-and-down': !showMore && index > 2,
-            'hidden-lg-and-up': !showMore && index > 2
-          }"
-        >
-          <el-form-item :label="item.label" :prop="item.id">
-            <component
-              :is="SComponent[pascal(item.type) as SComponentKey]"
-              v-model="form[item.id]"
-              :source-props="item.sourceProps"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :lg="6" :md="8" :sm="12" :xs="24">
-          <div class="btns">
-            <el-button class="more" type="primary" link @click="showMore = !showMore">
-              更多筛选条件
-              <el-icon class="el-icon--right">
-                <component :is="showMore ? ArrowUp : ArrowDown" />
-              </el-icon>
-            </el-button>
-            <el-button type="primary">查询</el-button>
-            <el-button>重置</el-button>
-          </div>
-        </el-col>
-      </el-row>
-    </el-form>
-  </div>
+  <el-config-provider :locale="config.locale">
+    <div :id="id" class="vs-search" :class="{ more: showMore }">
+      <el-form :model="form" label-width="80px">
+        <el-row>
+          <el-col
+            v-for="(item, index) in options"
+            :key="item.id"
+            :lg="6"
+            :md="8"
+            :sm="12"
+            :xs="24"
+            :class="{
+              'hidden-sm-and-down': !showMore && index > 0,
+              'hidden-md-and-down': !showMore && index > 1,
+              'hidden-lg-and-down': !showMore && index > 2,
+              'hidden-lg-and-up': !showMore && index > 2
+            }"
+          >
+            <el-form-item :label="item.label" :prop="item.id">
+              <component
+                :is="SComponent[pascal(item.type) as SComponentKey]"
+                v-model="form[item.id]"
+                :props="item.props"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :lg="6" :md="8" :sm="12" :xs="24">
+            <div class="btns">
+              <el-button class="more" type="primary" link @click="showMore = !showMore">
+                更多筛选条件
+                <el-icon class="el-icon--right">
+                  <component :is="showMore ? ArrowUp : ArrowDown" />
+                </el-icon>
+              </el-button>
+              <el-button type="primary">查询</el-button>
+              <el-button>重置</el-button>
+            </div>
+          </el-col>
+        </el-row>
+      </el-form>
+    </div>
+  </el-config-provider>
 </template>
 
 <style lang="scss" scoped>

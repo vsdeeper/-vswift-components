@@ -4,7 +4,7 @@ import type { SCascaderProps } from '.'
 import config from '@/components/config'
 
 defineProps<{
-  sourceProps?: SCascaderProps
+  props?: SCascaderProps
 }>()
 
 const model = defineModel<CascaderValue>()
@@ -14,9 +14,9 @@ const model = defineModel<CascaderValue>()
   <el-config-provider :locale="config.locale">
     <el-cascader
       v-model="model"
-      v-bind="sourceProps"
-      :clearable="sourceProps?.clearable ?? true"
-      :filterable="sourceProps?.filterable ?? true"
+      v-bind="props"
+      :clearable="props?.clearable ?? true"
+      :filterable="props?.filterable ?? true"
     >
     </el-cascader>
   </el-config-provider>

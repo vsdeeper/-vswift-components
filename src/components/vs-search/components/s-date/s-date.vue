@@ -3,7 +3,7 @@ import config from '@/components/config'
 import type { SDateProps, SDateValue } from '.'
 
 defineProps<{
-  sourceProps?: SDateProps
+  props?: SDateProps
 }>()
 
 const model = defineModel<SDateValue>()
@@ -13,9 +13,9 @@ const model = defineModel<SDateValue>()
   <el-config-provider :locale="config.locale">
     <el-date-picker
       v-model="model"
-      v-bind="sourceProps"
-      :value-format="sourceProps?.valueFormat ?? 'x'"
-      :clearable="sourceProps?.clearable ?? true"
+      v-bind="props"
+      :value-format="props?.valueFormat ?? 'x'"
+      :clearable="props?.clearable ?? true"
     >
     </el-date-picker>
   </el-config-provider>

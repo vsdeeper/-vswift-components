@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { type ColorPickerInstance } from 'element-plus'
+import config from '../config'
 
 withDefaults(
   defineProps<{
@@ -19,13 +20,15 @@ function clickInput() {
 </script>
 
 <template>
-  <dvi class="vs-color-picker">
-    <el-input v-model="model" :placeholder="placeholder" readonly @click="clickInput">
-      <template #append>
-        <el-color-picker ref="colorPickerRef" v-model="model" :show-alpha="showAlpha" />
-      </template>
-    </el-input>
-  </dvi>
+  <el-config-provider :locale="config.locale">
+    <dvi class="vs-color-picker">
+      <el-input v-model="model" :placeholder="placeholder" readonly @click="clickInput">
+        <template #append>
+          <el-color-picker ref="colorPickerRef" v-model="model" :show-alpha="showAlpha" />
+        </template>
+      </el-input>
+    </dvi>
+  </el-config-provider>
 </template>
 
 <style lang="scss" scoped>

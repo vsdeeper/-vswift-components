@@ -3,7 +3,7 @@ import config from '@/components/config'
 import type { STimeProps, STimeValue } from '.'
 
 defineProps<{
-  sourceProps?: STimeProps
+  props?: STimeProps
 }>()
 
 const model = defineModel<STimeValue>()
@@ -13,9 +13,9 @@ const model = defineModel<STimeValue>()
   <el-config-provider :locale="config.locale">
     <el-time-picker
       v-model="model"
-      v-bind="sourceProps"
-      :value-format="sourceProps?.valueFormat ?? 'x'"
-      :clearable="sourceProps?.clearable ?? true"
+      v-bind="props"
+      :value-format="props?.valueFormat ?? 'x'"
+      :clearable="props?.clearable ?? true"
     >
     </el-time-picker>
   </el-config-provider>

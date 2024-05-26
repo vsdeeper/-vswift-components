@@ -12,13 +12,13 @@ const options = ref<VsSearchOptions>([
     id: 'srk',
     type: 'input',
     label: '输入框',
-    sourceProps: { placeholder: '请输入' } as SInputProps
+    props: { placeholder: '请输入' } as SInputProps
   },
   {
     id: 'xzk',
     type: 'select',
     label: '选择框',
-    sourceProps: {
+    props: {
       placeholder: '请选择',
       options: [
         { id: '1', label: '选项1' },
@@ -32,7 +32,7 @@ const options = ref<VsSearchOptions>([
     id: 'jlxz',
     type: 'cascader',
     label: '级联选择',
-    sourceProps: {
+    props: {
       placeholder: '请选择',
       options: [
         {
@@ -63,18 +63,18 @@ const options = ref<VsSearchOptions>([
       props: { value: 'id', checkStrictly: true }
     } as SCascaderProps
   },
-  { id: 'rq', type: 'date', label: '日期', sourceProps: { placeholder: '请选择' } as SDateProps },
+  { id: 'rq', type: 'date', label: '日期', props: { placeholder: '请选择' } as SDateProps },
   {
     id: 'rqsj',
     type: 'date',
     label: '日期时间',
-    sourceProps: { placeholder: '请选择', type: 'datetime' } as SDateProps
+    props: { placeholder: '请选择', type: 'datetime' } as SDateProps
   },
   {
     id: 'rqfw',
     type: 'date',
     label: '日期范围',
-    sourceProps: {
+    props: {
       startPlaceholder: '开始日期',
       endPlaceholder: '结束日期',
       type: 'daterange'

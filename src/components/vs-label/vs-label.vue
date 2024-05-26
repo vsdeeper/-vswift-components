@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { InfoFilled } from '@element-plus/icons-vue'
+import config from '../config'
 
 withDefaults(
   defineProps<{
@@ -35,15 +36,17 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="vs-label">
-    {{ label }}
-    <el-tooltip v-if="tooltipContent" :effect="tooltipEffect" :placement="tooltipPlacement">
-      <template #content>{{ tooltipContent }}</template>
-      <el-icon @click="emit('click-tooltip-icon')">
-        <component :is="tooltipIcon"></component>
-      </el-icon>
-    </el-tooltip>
-  </div>
+  <el-config-provider :locale="config.locale">
+    <div class="vs-label">
+      {{ label }}
+      <el-tooltip v-if="tooltipContent" :effect="tooltipEffect" :placement="tooltipPlacement">
+        <template #content>{{ tooltipContent }}</template>
+        <el-icon @click="emit('click-tooltip-icon')">
+          <component :is="tooltipIcon"></component>
+        </el-icon>
+      </el-tooltip>
+    </div>
+  </el-config-provider>
 </template>
 
 <style lang="scss" scoped>

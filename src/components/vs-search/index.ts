@@ -6,8 +6,8 @@ export interface VsSearchOptionItem {
   // 组件类型
   type: 'input' | 'select' | 'cascader' | 'date' | 'time' | 'tree-select'
   label?: string
-  // 源组件的props
-  sourceProps?: Record<string, any>
+  // el组件的props设置
+  props?: Record<string, any>
   // placeholder?: string
   // // 选择范围使用
   // startPlaceholder?: string
