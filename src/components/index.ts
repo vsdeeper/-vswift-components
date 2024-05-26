@@ -1,7 +1,9 @@
 import { type AsyncComponentLoader } from 'vue'
 import { last, pascal } from 'radash'
 import type { VsColorPickerInstance, VsDividerTitleInstance, VsLabelInstance } from '.'
+import 'element-plus/theme-chalk/display.css'
 
+export * from './config'
 export * from './vs-color-picker'
 export * from './vs-divider-title'
 export * from './vs-label'

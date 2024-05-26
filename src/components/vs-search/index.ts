@@ -1,19 +1,10 @@
 import VsSearch from './vs-search.vue'
-import type { SInputProps, SSelectProps } from './components'
 
 export interface VsSearchOptionItem {
   // 唯一标识，与后端交互字段名称
   id: string
   // 组件类型
-  type:
-    | 'input'
-    | 'select'
-    | 'cascader'
-    | 'date'
-    | 'month'
-    | 'daterange'
-    | 'datetimerange'
-    | 'tree-select'
+  type: 'input' | 'select' | 'cascader' | 'date' | 'time' | 'tree-select'
   label?: string
   // 源组件的props
   sourceProps?: Record<string, any>

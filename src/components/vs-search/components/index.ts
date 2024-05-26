@@ -1,14 +1,18 @@
 import { last, pascal } from 'radash'
-import type { SInputInstance, SSelectInstance } from '.'
+import type { SInputInstance, SSelectInstance, SCascaderInstance, SDateInstance } from '.'
 import type { AsyncComponentLoader } from 'vue'
 
 export * from './s-input'
 export * from './s-select'
+export * from './s-cascader'
+export * from './s-date'
 
 // 生成动态组件对象
 export type SComponentMap = {
   Input?: SInputInstance
   Select?: SSelectInstance
+  Cascader?: SCascaderInstance
+  Date?: SDateInstance
 }
 export type SComponentKey = keyof SComponentMap
 
