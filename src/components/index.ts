@@ -9,6 +9,7 @@ export * from './vs-divider-title'
 export * from './vs-label'
 export * from './vs-tree-select'
 export * from './vs-search'
+export * from './vs-table'
 
 // 生成动态组件对象
 export type VsComponentMap = {
