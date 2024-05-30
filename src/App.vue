@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import { VsTreeSelectTest, VsSearchTest } from '@/test'
+import { VsTreeSelectTest, VsSearchTest, VsTableTest } from '@/test'
 </script>
 
 <template>
   <el-tabs tab-position="left">
-    <el-tab-pane label="VsTreeSelect">
+    <el-tab-pane label="TreeSelect">
       <VsTreeSelectTest />
     </el-tab-pane>
-    <el-tab-pane label="VsSearch">
+    <el-tab-pane label="Search">
       <VsSearchTest />
     </el-tab-pane>
-    <el-tab-pane label="Role" />
+    <el-tab-pane label="Table">
+      <VsTableTest />
+    </el-tab-pane>
     <el-tab-pane label="Task" />
   </el-tabs>
 </template>
