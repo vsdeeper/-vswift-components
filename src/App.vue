@@ -13,7 +13,6 @@ import { VsTreeSelectTest, VsSearchTest, VsTableTest } from '@/test'
     <el-tab-pane label="TreeSelect">
       <VsTreeSelectTest />
     </el-tab-pane>
-    <el-tab-pane label="Task" />
   </el-tabs>
 </template>
 

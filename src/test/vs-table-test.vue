@@ -4,6 +4,7 @@ import { sleep } from 'radash'
 import { format } from 'date-fns'
 
 const data = ref<Record<string, any>[]>([])
+const loading = ref(false)
 const columns = ref<VsTableColumnItem[]>([
   { label: '日期', prop: 'date' },
   {
@@ -23,7 +24,9 @@ const columns = ref<VsTableColumnItem[]>([
 ])
 
 async function getData() {
-  await sleep(1000)
+  loading.value = true
+  await sleep(2000)
+  loading.value = false
   return [
     {
       id: 1,
@@ -40,6 +43,14 @@ async function getData() {
       state: '中国',
       city: '上海',
       address: '浦东新区张江高科'
+    },
+    {
+      id: 3,
+      name: '杨桃',
+      date: +new Date(2024, 4, 9),
+      state: '中国',
+      city: '深圳',
+      address: '龙华区三和大神'
     }
   ]
 }
@@ -50,7 +61,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <VsTable :columns :data>
+  <VsTable :loading :columns :data :table-props="{ stripe: true }">
+    <template #table-operate>
+      <el-button type="primary">新增</el-button>
+      <el-button type="danger">删除</el-button>
+    </template>
     <template #date="{ row }">
       {{ format(row.date, 'yyyy-MM-dd HH:mm:ss') }}
     </template>
