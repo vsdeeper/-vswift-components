@@ -2,6 +2,7 @@
 import type { VsTableProps, VsTableColumnItem } from '.'
 import TableColumn from './table-column.vue'
 import config from '../config'
+import { getSlots } from './util'
 
 defineProps<{
   data?: Record<string, any>[]
@@ -18,23 +19,11 @@ defineProps<{
       <el-table :data="data" v-bind="tableProps">
         <el-table-column v-if="showSelection" type="selection" width="55" />
         <el-table-column v-if="showIndex" type="index" width="50" :index="(index) => index + 1" />
-        <template v-for="(col, index) in columns" :key="`${col.label}${col.prop}${index}`">
-          <TableColumn :col />
-        </template>
-        <!-- <template v-for="(col, index) in columns" :key="`${col.label}${col.prop}${index}`">
-          <template v-if="col.children?.length">
-            <TableColumn
-              v-for="(col1, index1) in col.children"
-              :key="`${col1.label}${col1.prop}${index1}`"
-              :col="col1"
-            />
+        <TableColumn v-for="(col, index) in columns" :key="`${col.label}${col.prop}${index}`" :col>
+          <template v-for="slot in getSlots(columns)" #[slot]="scope">
+            <slot :name="slot" v-bind="scope" />
           </template>
-          <TableColumn :col="col">
-            <template #[col.prop!]="scope">
-              <slot :name="col.prop" v-bind="scope" />
-            </template>
-          </TableColumn>
-        </template> -->
+        </TableColumn>
       </el-table>
     </div>
   </el-config-provider>

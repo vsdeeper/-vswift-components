@@ -4,14 +4,14 @@ import { VsTreeSelectTest, VsSearchTest, VsTableTest } from '@/test'
 
 <template>
   <el-tabs tab-position="left">
-    <el-tab-pane label="TreeSelect">
-      <VsTreeSelectTest />
+    <el-tab-pane label="Table">
+      <VsTableTest />
     </el-tab-pane>
     <el-tab-pane label="Search">
       <VsSearchTest />
     </el-tab-pane>
-    <el-tab-pane label="Table">
-      <VsTableTest />
+    <el-tab-pane label="TreeSelect">
+      <VsTreeSelectTest />
     </el-tab-pane>
     <el-tab-pane label="Task" />
   </el-tabs>
