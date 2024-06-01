@@ -3,7 +3,7 @@ import { VsTreeSelect } from '@/components'
 import type { TreeKey } from 'element-plus/es/components/tree/src/tree.type'
 import { sleep } from 'radash'
 
-const data = ref<Record<string, any>[]>([])
+const options = ref<Record<string, any>[]>([])
 const model = ref<TreeKey[]>([])
 
 async function getData() {
@@ -15,10 +15,10 @@ async function getData() {
 }
 
 onMounted(() => {
-  getData().then((res) => (data.value = res))
+  getData().then((res) => (options.value = res))
 })
 </script>
 
 <template>
-  <VsTreeSelect v-model="model" :data="data" item-label="name" />
+  <VsTreeSelect v-model="model" :options item-label="name" />
 </template>

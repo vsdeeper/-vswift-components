@@ -21,6 +21,7 @@ import { VsTreeSelectTest, VsSearchTest, VsTableTest } from '@/test'
   display: flex;
   :deep(.el-tabs__content) {
     flex: 1;
+    padding: 10px;
   }
 }
 </style>
