@@ -10,11 +10,9 @@ defineProps<{
 <template>
   <el-table-column
     v-if="col.children?.length"
+    v-bind="col.columnProps"
     :prop="col.prop"
     :label="col.label"
-    :width="col.width"
-    :min-width="col.minWidth"
-    v-bind="col.columnProps"
   >
     <TableColumn
       v-for="(col1, index1) in col.children"
@@ -26,14 +24,7 @@ defineProps<{
       </template>
     </TableColumn>
   </el-table-column>
-  <el-table-column
-    v-else
-    :prop="col.prop"
-    :label="col.label"
-    :width="col.width"
-    :min-width="col.minWidth"
-    v-bind="col.columnProps"
-  >
+  <el-table-column v-else v-bind="col.columnProps" :prop="col.prop" :label="col.label">
     <template v-if="col.prop" #default="scope">
       <slot :name="col.prop" v-bind="scope">
         {{ scope.row[col.prop] }}

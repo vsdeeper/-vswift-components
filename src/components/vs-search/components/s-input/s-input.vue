@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import config from '@/components/config'
-import type { SInputProps } from '.'
+import type { InputProps } from 'element-plus'
 
 defineProps<{
-  props?: SInputProps
+  props?: Partial<InputProps>
 }>()
 
 const model = defineModel<string>()
@@ -11,6 +11,6 @@ const model = defineModel<string>()
 
 <template>
   <el-config-provider :locale="config.locale">
-    <el-input v-model="model" v-bind="props" :clearable="props?.clearable ?? true"></el-input>
+    <el-input v-model="model" v-bind="{ ...props, clearable: props?.clearable ?? true }"></el-input>
   </el-config-provider>
 </template>

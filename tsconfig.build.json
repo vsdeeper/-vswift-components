@@ -8,6 +8,7 @@
     "jsx": "preserve",
     "jsxImportSource": "vue",
     "noImplicitThis": true,
+    "noImplicitAny": false,
     "strict": true,
     "verbatimModuleSyntax": true,
     "target": "ESNext",

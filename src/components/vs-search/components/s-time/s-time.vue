@@ -1,21 +1,23 @@
 <script setup lang="ts">
 import config from '@/components/config'
-import type { STimeProps, STimeValue } from '.'
+import type { TimePickerDefaultProps } from 'element-plus'
 
 defineProps<{
-  props?: STimeProps
+  props?: Partial<TimePickerDefaultProps>
 }>()
 
-const model = defineModel<STimeValue>()
+const model = defineModel<Date | [Date, Date] | [number, number] | [string, string]>()
 </script>
 
 <template>
   <el-config-provider :locale="config.locale">
     <el-time-picker
       v-model="model"
-      v-bind="props"
-      :value-format="props?.valueFormat ?? 'x'"
-      :clearable="props?.clearable ?? true"
+      v-bind="{
+        ...props,
+        valueFormat: props?.valueFormat ?? 'x',
+        clearable: props?.clearable ?? true
+      }"
     >
     </el-time-picker>
   </el-config-provider>

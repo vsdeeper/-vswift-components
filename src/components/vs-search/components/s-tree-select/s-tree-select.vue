@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import config from '@/components/config'
-import type { STreeSelectProps } from '.'
-import { VsTreeSelect, type VsTreeSelectValue } from '@/components/vs-tree-select'
+import {
+  VsTreeSelect,
+  type VsTreeSelectProps,
+  type VsTreeSelectValue
+} from '@/components/vs-tree-select'
 
 defineProps<{
-  props?: STreeSelectProps
+  props?: VsTreeSelectProps
 }>()
 
 const model = defineModel<VsTreeSelectValue>()

@@ -71,9 +71,6 @@ defineExpose({
 
 <style lang="scss" scoped>
 .vs-search {
-  &.more {
-    position: fixed;
-  }
   .btns {
     margin-left: 10px;
     .more {

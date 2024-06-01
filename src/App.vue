@@ -19,7 +19,6 @@ import { VsTreeSelectTest, VsSearchTest, VsTableTest } from '@/test'
 <style lang="scss" scoped>
 .el-tabs {
   display: flex;
-  padding: 15px 15px 15px 0;
   :deep(.el-tabs__content) {
     flex: 1;
   }

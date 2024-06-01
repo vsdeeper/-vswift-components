@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import type { VsTableProps, VsTableColumnItem, VsTableOperateItem, VsTableColumnProps } from '.'
+import type { VsTableColumnItem, VsTableOperateItem } from '.'
 import TableColumn from './table-column.vue'
 import config from '../config'
 import { getSlots } from './util'
 import type { LoadingBinding } from 'element-plus/es/components/loading/src/directive.mjs'
-import type { PaginationProps } from 'element-plus'
+import type { PaginationProps, TableColumnCtx, TableInstance, TableProps } from 'element-plus'
 
 const props = withDefaults(
   defineProps<{
-    data?: Record<string, any>[]
-    total?: number
+    // 自定义属性
     loading?: LoadingBinding
     showIndex?: boolean
     showSelection?: boolean
@@ -20,11 +19,13 @@ const props = withDefaults(
     columns?: VsTableColumnItem[]
     rowOperateItems?: VsTableOperateItem[]
     tableOperateItems?: VsTableOperateItem[]
-    tableProps?: VsTableProps
-    operateColumnProps?: VsTableColumnProps
-    paginationProps?: Partial<PaginationProps>
     currentPage?: number
     pageSize?: number
+
+    // 源属性
+    tableProps?: Partial<TableProps<Record<string, any>>>
+    operateColumnProps?: Partial<TableColumnCtx<any>>
+    paginationProps?: Partial<PaginationProps>
   }>(),
   {
     loading: false,
@@ -42,6 +43,7 @@ const emit = defineEmits<{
   (e: 'update:pageSize', val: number): void
 }>()
 
+const tableRef = ref<TableInstance>()
 const _currentPage = ref<number>()
 const _pageSize = ref<number>()
 
@@ -92,6 +94,74 @@ function handleSizeChange(val: number) {
 function handleCurrentChange(val: number) {
   emit('pagination-change', { currentPage: val, pageSize: _pageSize.value! })
 }
+
+function clearSelection() {
+  tableRef.value?.clearSelection()
+}
+
+function getSelectionRows() {
+  return tableRef.value?.getSelectionRows()
+}
+
+function toggleRowSelection(row: any, selected: boolean) {
+  tableRef.value?.toggleRowSelection(row, selected)
+}
+
+function toggleAllSelection() {
+  tableRef.value?.toggleAllSelection()
+}
+
+function toggleRowExpansion(row: any, expanded?: boolean) {
+  tableRef.value?.toggleRowExpansion(row, expanded)
+}
+
+function setCurrentRow(row: any) {
+  tableRef.value?.setCurrentRow(row)
+}
+
+function clearSort() {
+  tableRef.value?.clearSort()
+}
+
+function clearFilter(columnKeys?: string[]) {
+  tableRef.value?.clearFilter(columnKeys)
+}
+
+function doLayout() {
+  tableRef.value?.doLayout()
+}
+
+function sort(prop: string, order: string) {
+  tableRef.value?.sort(prop, order)
+}
+
+function scrollTo(options: number | ScrollToOptions, yCoord?: number) {
+  tableRef.value?.scrollTo(options, yCoord)
+}
+
+function setScrollTop(top?: number) {
+  tableRef.value?.setScrollTop(top)
+}
+
+function setScrollLeft(left?: number) {
+  tableRef.value?.setScrollLeft(left)
+}
+
+defineExpose({
+  clearSelection,
+  getSelectionRows,
+  toggleRowSelection,
+  toggleAllSelection,
+  toggleRowExpansion,
+  setCurrentRow,
+  clearSort,
+  clearFilter,
+  doLayout,
+  sort,
+  scrollTo,
+  setScrollTop,
+  setScrollLeft
+})
 </script>
 
 <template>
@@ -104,12 +174,13 @@ function handleCurrentChange(val: number) {
         >
           <el-popconfirm
             v-if="item.showPopconfirm && displayTableOperateItem(item)"
-            :title="item.popconfirmTitle"
             v-bind="item.popconfirmProps"
             @confirm="onOperate(item.value)"
           >
             <template #reference>
-              <el-button :type="item.type ?? 'primary'" v-bind="item.props">
+              <el-button
+                v-bind="{ ...item.buttonProps, type: item.buttonProps?.type ?? 'primary' }"
+              >
                 {{ item.label }}
               </el-button>
             </template>
@@ -117,8 +188,7 @@ function handleCurrentChange(val: number) {
           <template v-else>
             <el-button
               v-if="displayTableOperateItem(item)"
-              :type="item.type ?? 'primary'"
-              v-bind="item.props"
+              v-bind="{ ...item.buttonProps, type: item.buttonProps?.type ?? 'primary' }"
               @click="onOperate(item.value)"
             >
               {{ item.label }}
@@ -126,7 +196,7 @@ function handleCurrentChange(val: number) {
           </template>
         </template>
       </div>
-      <el-table stripe :data="data" v-bind="tableProps">
+      <el-table ref="tableRef" v-bind="tableProps">
         <el-table-column v-if="showSelection" type="selection" width="55" />
         <el-table-column v-if="showIndex" type="index" width="50" :index="(index) => index + 1" />
         <TableColumn v-for="(col, index) in columns" :key="`${col.label}${col.prop}${index}`" :col>
@@ -134,7 +204,7 @@ function handleCurrentChange(val: number) {
             <slot :name="slot" v-bind="scope" />
           </template>
         </TableColumn>
-        <el-table-column v-if="showRowOperate" label="操作" v-bind="operateColumnProps">
+        <el-table-column v-if="showRowOperate" v-bind="{ label: '操作', ...operateColumnProps }">
           <template #default="{ row }">
             <template
               v-for="(item, index) in rowOperateItems"
@@ -142,12 +212,17 @@ function handleCurrentChange(val: number) {
             >
               <el-popconfirm
                 v-if="item.showPopconfirm && displayOperateItem(row, item)"
-                :title="item.popconfirmTitle"
                 v-bind="item.popconfirmProps"
                 @confirm="onOperate(item.value, row)"
               >
                 <template #reference>
-                  <el-button :type="item.type ?? 'primary'" link v-bind="item.props">
+                  <el-button
+                    v-bind="{
+                      ...item.buttonProps,
+                      type: item.buttonProps?.type ?? 'primary',
+                      link: true
+                    }"
+                  >
                     {{ item.label }}
                   </el-button>
                 </template>
@@ -155,9 +230,11 @@ function handleCurrentChange(val: number) {
               <template v-else>
                 <el-button
                   v-if="displayOperateItem(row, item)"
-                  :type="item.type ?? 'primary'"
-                  link
-                  v-bind="item.props"
+                  v-bind="{
+                    ...item.buttonProps,
+                    type: item.buttonProps?.type ?? 'primary',
+                    link: true
+                  }"
                   @click="onOperate(item.value, row)"
                 >
                   {{ item.label }}
@@ -171,12 +248,13 @@ function handleCurrentChange(val: number) {
         <el-pagination
           v-model:current-page="_currentPage"
           v-model:page-size="_pageSize"
-          :page-sizes="[10, 20, 30, 40, 50]"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total
-          :pager-count="5"
-          background
-          v-bind="paginationProps"
+          v-bind="{
+            pageSizes: [10, 20, 30, 40, 50],
+            layout: 'total, sizes, prev, pager, next, jumper',
+            pagerCount: 5,
+            background: true,
+            ...paginationProps
+          }"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
         />

@@ -5,6 +5,7 @@ import { format } from 'date-fns'
 
 const data = ref<Record<string, any>[]>([])
 const loading = ref(false)
+const params = ref({ currentPage: 1, pageSize: 20 })
 const permissions = ref(['add', 'edit', 'delete', 'copy', 'permission_config'])
 const columns = ref<VsTableColumnItem[]>([
   { label: '日期', prop: 'date' },
@@ -34,9 +35,9 @@ const tableOperateItems = ref<VsTableOperateItem[]>([
     label: '批量删除',
     value: 'batch_delete',
     code: 'delete',
-    type: 'danger',
     showPopconfirm: true,
-    popconfirmTitle: '确定删除吗？',
+    buttonProps: { type: 'danger' },
+    popconfirmProps: { title: '确定删除吗？' },
     show: (code) => permissions.value.includes(code)
   }
 ])
@@ -75,9 +76,9 @@ const rowOperateItems = ref<VsTableOperateItem[]>([
     label: '删除',
     value: 'delete',
     code: 'delete',
-    type: 'danger',
     showPopconfirm: true,
-    popconfirmTitle: '确定删除吗？',
+    buttonProps: { type: 'danger' },
+    popconfirmProps: { title: '确定删除吗？' },
     show: (row, code) => {
       if (permissions.value.includes(code)) {
         return [1, 2, 3, 4].includes(row.status)
@@ -166,14 +167,16 @@ function onOperate(key: string, row?: Record<string, any>) {
 
 <template>
   <VsTable
+    v-model:current-page="params.currentPage"
+    v-model:page-size="params.pageSize"
     :loading
     :columns
-    :data
-    :total="100"
     show-selection
-    :operate-column-props="{ minWidth: 100 }"
     :table-operate-items="tableOperateItems"
     :row-operate-items="rowOperateItems"
+    :table-props="{ data }"
+    :operate-column-props="{ minWidth: 100 }"
+    :pagination-props="{ total: 100 }"
     @operate="onOperate"
   >
     <template #date="{ row }">

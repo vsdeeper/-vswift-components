@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import config from '@/components/config'
-import type { SDateProps, SDateValue } from '.'
+import type { SDateValue } from '.'
+import type { DatePickerProps } from 'element-plus'
 
 defineProps<{
-  props?: SDateProps
+  props?: Partial<DatePickerProps>
 }>()
 
 const model = defineModel<SDateValue>()
@@ -13,9 +14,11 @@ const model = defineModel<SDateValue>()
   <el-config-provider :locale="config.locale">
     <el-date-picker
       v-model="model"
-      v-bind="props"
-      :value-format="props?.valueFormat ?? 'x'"
-      :clearable="props?.clearable ?? true"
+      v-bind="{
+        ...props,
+        valueFormat: props?.valueFormat ?? 'x',
+        clearable: props?.clearable ?? true
+      }"
     >
     </el-date-picker>
   </el-config-provider>
