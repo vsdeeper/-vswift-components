@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { VsTableProps, VsTableColumnItem } from '.'
+import type { VsTableProps, VsTableColumnItem, VsTableRowOperateItem } from '.'
 import TableColumn from './table-column.vue'
 import config from '../config'
 import { getSlots } from './util'
@@ -16,6 +16,7 @@ withDefaults(
     paginationAlign?: 'left' | 'right'
     tableOperateAlign?: 'left' | 'right'
     columns?: VsTableColumnItem[]
+    rowOperateItems?: VsTableRowOperateItem[]
     tableProps?: VsTableProps
     paginationProps?: Partial<PaginationProps>
   }>(),
@@ -27,6 +28,12 @@ withDefaults(
 )
 
 const slots = computed(() => useSlots())
+
+function displayOperateItem(row: Record<string, any>, item: VsTableRowOperateItem) {
+  const { show, showFieldName = 'status', code /** 权限标识符 */ } = item
+  if (!show) return true
+  return show(row, showFieldName, code)
+}
 </script>
 
 <template>
@@ -43,6 +50,19 @@ const slots = computed(() => useSlots())
             <slot :name="slot" v-bind="scope" />
           </template>
         </TableColumn>
+        <el-table-column v-if="rowOperateItems?.length">
+          <template #default="{ row }">
+            <template v-for="item in rowOperateItems" :key="item.value">
+              <el-button
+                v-if="displayOperateItem(row, item)"
+                v-bind="item.props"
+                :type="item.type"
+                :color="item.color"
+                link
+              ></el-button>
+            </template>
+          </template>
+        </el-table-column>
       </el-table>
       <div :class="['pagination', paginationAlign]">
         <el-pagination
