@@ -30,8 +30,8 @@ const props = withDefaults(
     loading: false,
     showRowOperate: true,
     showPagination: true,
-    paginationAlign: 'right',
-    tableOperateAlign: 'right'
+    paginationAlign: 'left',
+    tableOperateAlign: 'left'
   }
 )
 
@@ -175,6 +175,7 @@ function handleCurrentChange(val: number) {
           layout="total, sizes, prev, pager, next, jumper"
           :total
           :pager-count="5"
+          background
           v-bind="paginationProps"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
