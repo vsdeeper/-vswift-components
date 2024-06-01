@@ -1,48 +1,132 @@
 <script setup lang="ts">
-import type { VsTableProps, VsTableColumnItem, VsTableRowOperateItem } from '.'
+import type { VsTableProps, VsTableColumnItem, VsTableOperateItem, VsTableColumnProps } from '.'
 import TableColumn from './table-column.vue'
 import config from '../config'
 import { getSlots } from './util'
 import type { LoadingBinding } from 'element-plus/es/components/loading/src/directive.mjs'
 import type { PaginationProps } from 'element-plus'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     data?: Record<string, any>[]
+    total?: number
     loading?: LoadingBinding
     showIndex?: boolean
     showSelection?: boolean
     showPagination?: boolean
+    showRowOperate?: boolean
     paginationAlign?: 'left' | 'right'
     tableOperateAlign?: 'left' | 'right'
     columns?: VsTableColumnItem[]
-    rowOperateItems?: VsTableRowOperateItem[]
+    rowOperateItems?: VsTableOperateItem[]
+    tableOperateItems?: VsTableOperateItem[]
     tableProps?: VsTableProps
+    operateColumnProps?: VsTableColumnProps
     paginationProps?: Partial<PaginationProps>
+    currentPage?: number
+    pageSize?: number
   }>(),
   {
     loading: false,
+    showRowOperate: true,
+    showPagination: true,
     paginationAlign: 'right',
     tableOperateAlign: 'right'
   }
 )
 
-const slots = computed(() => useSlots())
+const emit = defineEmits<{
+  (e: 'operate', key: string, row?: Record<string, any>): void
+  (e: 'pagination-change', val: { currentPage: number; pageSize: number }): void
+  (e: 'update:currentPage', val: number): void
+  (e: 'update:pageSize', val: number): void
+}>()
 
-function displayOperateItem(row: Record<string, any>, item: VsTableRowOperateItem) {
-  const { show, showFieldName = 'status', code /** 权限标识符 */ } = item
+const _currentPage = ref<number>()
+const _pageSize = ref<number>()
+
+watch(
+  () => props.currentPage,
+  (val) => {
+    _currentPage.value = val
+  },
+  { immediate: true }
+)
+
+watch(
+  () => props.pageSize,
+  (val) => {
+    _pageSize.value = val
+  },
+  { immediate: true }
+)
+
+watch(_currentPage, (val) => {
+  emit('update:currentPage', val!)
+})
+
+watch(_pageSize, (val) => {
+  emit('update:pageSize', val!)
+})
+
+function displayOperateItem(row: Record<string, any>, item: VsTableOperateItem) {
+  const { show, code /** 权限标识符 */ } = item
   if (!show) return true
-  return show(row, showFieldName, code)
+  return show(row, code)
+}
+
+function displayTableOperateItem(item: VsTableOperateItem) {
+  const { show, code /** 权限标识符 */ } = item
+  if (!show) return true
+  return show(code)
+}
+
+function onOperate(key: string, val?: any) {
+  emit('operate', key, val)
+}
+
+function handleSizeChange(val: number) {
+  emit('pagination-change', { currentPage: 1, pageSize: val })
+}
+
+function handleCurrentChange(val: number) {
+  emit('pagination-change', { currentPage: val, pageSize: _pageSize.value! })
 }
 </script>
 
 <template>
   <el-config-provider :locale="config.locale">
     <div v-loading="loading" class="vs-table">
-      <div v-if="slots['table-operate']" :class="['operate', tableOperateAlign]">
-        <slot name="table-operate" />
+      <div v-if="tableOperateItems?.length" :class="['operate', tableOperateAlign]">
+        <template
+          v-for="(item, index) in tableOperateItems"
+          :key="`tableOperateItem${item.value}${index}`"
+        >
+          <el-popconfirm
+            v-if="item.showPopconfirm && displayTableOperateItem(item)"
+            :title="item.popconfirmTitle"
+            v-bind="item.popconfirmProps"
+            @confirm="onOperate(item.value)"
+          >
+            <template #reference>
+              <el-button :type="item.type ?? 'primary'" v-bind="item.props">
+                {{ item.label }}
+              </el-button>
+            </template>
+          </el-popconfirm>
+          <template v-else>
+            <el-button
+              v-if="displayTableOperateItem(item)"
+              :type="item.type ?? 'primary'"
+              v-bind="item.props"
+              @click="onOperate(item.value)"
+            >
+              {{ item.label }}
+            </el-button>
+          </template>
+        </template>
       </div>
-      <el-table v-bind="tableProps" :data="data">
+      <el-table stripe :data="data" v-bind="tableProps">
         <el-table-column v-if="showSelection" type="selection" width="55" />
         <el-table-column v-if="showIndex" type="index" width="50" :index="(index) => index + 1" />
         <TableColumn v-for="(col, index) in columns" :key="`${col.label}${col.prop}${index}`" :col>
@@ -50,26 +134,50 @@ function displayOperateItem(row: Record<string, any>, item: VsTableRowOperateIte
             <slot :name="slot" v-bind="scope" />
           </template>
         </TableColumn>
-        <el-table-column v-if="rowOperateItems?.length">
+        <el-table-column v-if="showRowOperate" label="操作" v-bind="operateColumnProps">
           <template #default="{ row }">
-            <template v-for="item in rowOperateItems" :key="item.value">
-              <el-button
-                v-if="displayOperateItem(row, item)"
-                v-bind="item.props"
-                :type="item.type"
-                :color="item.color"
-                link
-              ></el-button>
+            <template
+              v-for="(item, index) in rowOperateItems"
+              :key="`rowOperateItem${item.value}${index}`"
+            >
+              <el-popconfirm
+                v-if="item.showPopconfirm && displayOperateItem(row, item)"
+                :title="item.popconfirmTitle"
+                v-bind="item.popconfirmProps"
+                @confirm="onOperate(item.value, row)"
+              >
+                <template #reference>
+                  <el-button :type="item.type ?? 'primary'" link v-bind="item.props">
+                    {{ item.label }}
+                  </el-button>
+                </template>
+              </el-popconfirm>
+              <template v-else>
+                <el-button
+                  v-if="displayOperateItem(row, item)"
+                  :type="item.type ?? 'primary'"
+                  link
+                  v-bind="item.props"
+                  @click="onOperate(item.value, row)"
+                >
+                  {{ item.label }}
+                </el-button>
+              </template>
             </template>
           </template>
         </el-table-column>
       </el-table>
-      <div :class="['pagination', paginationAlign]">
+      <div v-if="showPagination" :class="['pagination', paginationAlign]">
         <el-pagination
+          v-model:current-page="_currentPage"
+          v-model:page-size="_pageSize"
+          :page-sizes="[10, 20, 30, 40, 50]"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total
+          :pager-count="5"
           v-bind="paginationProps"
-          background
-          layout="prev, pager, next"
-          :total="1000"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
         />
       </div>
     </div>

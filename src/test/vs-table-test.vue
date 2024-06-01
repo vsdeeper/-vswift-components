@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { VsTable, type VsTableColumnItem } from '@/components'
+import { VsTable, type VsTableColumnItem, type VsTableOperateItem } from '@/components'
 import { sleep } from 'radash'
 import { format } from 'date-fns'
 
 const data = ref<Record<string, any>[]>([])
 const loading = ref(false)
+const permissions = ref(['add', 'edit', 'delete', 'copy', 'permission_config'])
 const columns = ref<VsTableColumnItem[]>([
   { label: '日期', prop: 'date' },
   {
@@ -22,6 +23,68 @@ const columns = ref<VsTableColumnItem[]>([
     ]
   }
 ])
+const tableOperateItems = ref<VsTableOperateItem[]>([
+  {
+    label: '新增',
+    value: 'add',
+    code: 'add',
+    show: (code) => permissions.value.includes(code)
+  },
+  {
+    label: '批量删除',
+    value: 'batch_delete',
+    code: 'delete',
+    type: 'danger',
+    showPopconfirm: true,
+    popconfirmTitle: '确定删除吗？',
+    show: (code) => permissions.value.includes(code)
+  }
+])
+const rowOperateItems = ref<VsTableOperateItem[]>([
+  {
+    label: '编辑',
+    value: 'edit',
+    code: 'edit',
+    show: (row, code) => {
+      if (permissions.value.includes(code)) {
+        return [1, 2, 3, 4].includes(row.status)
+      } else return false
+    }
+  },
+  {
+    label: '复制',
+    value: 'copy',
+    code: 'copy',
+    show: (row, code) => {
+      if (permissions.value.includes(code)) {
+        return [1, 2, 3, 4].includes(row.status)
+      } else return false
+    }
+  },
+  {
+    label: '权限设置',
+    value: 'permission_config',
+    code: 'permission_config',
+    show: (row, code) => {
+      if (permissions.value.includes(code)) {
+        return [4].includes(row.status)
+      } else return false
+    }
+  },
+  {
+    label: '删除',
+    value: 'delete',
+    code: 'delete',
+    type: 'danger',
+    showPopconfirm: true,
+    popconfirmTitle: '确定删除吗？',
+    show: (row, code) => {
+      if (permissions.value.includes(code)) {
+        return [1, 2, 3, 4].includes(row.status)
+      } else return false
+    }
+  }
+])
 
 async function getData() {
   loading.value = true
@@ -34,7 +97,8 @@ async function getData() {
       date: +new Date(2024, 4, 6),
       state: '中国',
       city: '武汉',
-      address: '硚口区金地悦江时代'
+      address: '硚口区金地悦江时代',
+      status: 1
     },
     {
       id: 2,
@@ -42,7 +106,8 @@ async function getData() {
       date: +new Date(2024, 11, 9),
       state: '中国',
       city: '上海',
-      address: '浦东新区张江高科'
+      address: '浦东新区张江高科',
+      status: 2
     },
     {
       id: 3,
@@ -50,7 +115,17 @@ async function getData() {
       date: +new Date(2024, 4, 9),
       state: '中国',
       city: '深圳',
-      address: '龙华区三和大神'
+      address: '龙华区三和大神',
+      status: 3
+    },
+    {
+      id: 4,
+      name: '陈默',
+      date: +new Date(2024, 3, 4),
+      state: '中国',
+      city: '深圳',
+      address: '龙华区三和大神',
+      status: 4
     }
   ]
 }
@@ -58,14 +133,49 @@ async function getData() {
 onMounted(() => {
   getData().then((res) => (data.value = res))
 })
+
+function onOperate(key: string, row?: Record<string, any>) {
+  switch (key) {
+    case 'add': {
+      console.log('onOperate ->', 'add')
+      break
+    }
+    case 'edit': {
+      console.log('onOperate ->', 'edit', row)
+      break
+    }
+    case 'delete': {
+      console.log('onOperate ->', 'delete', row)
+      break
+    }
+    case 'batch_delete': {
+      console.log('onOperate ->', 'batch_delete')
+      break
+    }
+    case 'copy': {
+      console.log('onOperate ->', 'copy', row)
+      break
+    }
+    case 'permission_config': {
+      console.log('onOperate ->', 'permission_config', row)
+      break
+    }
+  }
+}
 </script>
 
 <template>
-  <VsTable :loading :columns :data :table-props="{ stripe: true }">
-    <template #table-operate>
-      <el-button type="primary">新增</el-button>
-      <el-button type="danger">删除</el-button>
-    </template>
+  <VsTable
+    :loading
+    :columns
+    :data
+    :total="100"
+    show-selection
+    :operate-column-props="{ minWidth: 100 }"
+    :table-operate-items="tableOperateItems"
+    :row-operate-items="rowOperateItems"
+    @operate="onOperate"
+  >
     <template #date="{ row }">
       {{ format(row.date, 'yyyy-MM-dd HH:mm:ss') }}
     </template>

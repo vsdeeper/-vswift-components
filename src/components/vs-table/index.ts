@@ -1,4 +1,4 @@
-import type { ButtonProps, TableColumnCtx, TableProps } from 'element-plus'
+import type { ButtonProps, PopconfirmProps, TableColumnCtx, TableProps } from 'element-plus'
 import VsTable from './vs-table.vue'
 
 export type VsTableProps = Partial<TableProps<Record<string, any>>>
@@ -14,14 +14,15 @@ export interface VsTableColumnItem {
   children?: VsTableColumnItem[]
   columnProps?: VsTableColumnProps
 }
-export interface VsTableRowOperateItem {
+export interface VsTableOperateItem {
   label: string
   value: string
-  code?: string // 权限标识符
+  code: string // 权限标识符
   type?: 'primary' | 'success' | 'warning' | 'danger' | 'info'
-  color?: string
-  show?: (row: Record<string, any>, fieldName?: string, code?: string) => boolean
-  showFieldName?: string
+  showPopconfirm?: boolean
+  popconfirmTitle?: string
+  popconfirmProps?: Partial<PopconfirmProps>
+  show?: (...args: any[]) => boolean
   props?: Partial<ButtonProps>
 }
 export { VsTable }
