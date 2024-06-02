@@ -42,7 +42,7 @@ const emit = defineEmits<{
   (e: 'pagination-change', val: { currentPage: number; pageSize: number }): void
   (e: 'update:currentPage', val: number): void
   (e: 'update:pageSize', val: number): void
-  // 源emit事件
+  // ElTable emit 事件
   <T = any>(e: 'select', selection: T[], row: T): void
   (e: 'select-all', selection: any[]): void
   (e: 'selection-change', newSelection: any[]): void
@@ -114,7 +114,7 @@ function handleCurrentChange(val: number) {
   emit('pagination-change', { currentPage: val, pageSize: _pageSize.value! })
 }
 
-// 以下defineExpose
+// 以下 ElTable Expose
 function clearSelection() {
   tableRef.value?.clearSelection()
 }
