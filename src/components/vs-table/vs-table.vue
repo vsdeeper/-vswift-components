@@ -37,10 +37,29 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
+  // 自定义emit☄️
   (e: 'operate', key: string, row?: Record<string, any>): void
   (e: 'pagination-change', val: { currentPage: number; pageSize: number }): void
   (e: 'update:currentPage', val: number): void
   (e: 'update:pageSize', val: number): void
+  // 源emit事件
+  <T = any>(e: 'select', selection: T[], row: T): void
+  (e: 'select-all', selection: any[]): void
+  (e: 'selection-change', newSelection: any[]): void
+  (e: 'cell-mouse-enter', row: any, column: any, cell: HTMLTableCellElement, event: Event): void
+  (e: 'cell-mouse-leave', row: any, column: any, cell: HTMLTableCellElement, event: Event): void
+  (e: 'cell-click', row: any, column: any, cell: HTMLTableCellElement, event: Event): void
+  (e: 'cell-dblclick', row: any, column: any, cell: HTMLTableCellElement, event: Event): void
+  (e: 'cell-contextmenu', row: any, column: any, cell: HTMLTableCellElement, event: Event): void
+  (e: 'row-click', row: any, column: any, event: Event): void
+  (e: 'row-contextmenu', row: any, column: any, event: Event): void
+  (e: 'row-dblclick', row: any, column: any, event: Event): void
+  (e: 'header-contextmenu', column: any, event: Event): void
+  (e: 'sort-change', data: { column: any; prop: string; order: any }): void
+  (e: 'filter-change', newFilters: any): void
+  (e: 'current-change', currentRow: any, oldCurrentRow: any): void
+  (e: 'header-dragend', newWidth: number, oldWidth: number, column: any, event: MouseEvent): void
+  (e: 'expand-change', row: any, expanded: any[] | boolean): void
 }>()
 
 const tableRef = ref<TableInstance>()
@@ -95,6 +114,7 @@ function handleCurrentChange(val: number) {
   emit('pagination-change', { currentPage: val, pageSize: _pageSize.value! })
 }
 
+// 以下defineExpose
 function clearSelection() {
   tableRef.value?.clearSelection()
 }
@@ -197,10 +217,19 @@ defineExpose({
         </template>
       </div>
       <el-table ref="tableRef" v-bind="tableProps">
+        <template #append="scope">
+          <slot name="append" v-bind="scope"></slot>
+        </template>
+        <template #empty="scope">
+          <slot name="empty" v-bind="scope"></slot>
+        </template>
         <el-table-column v-if="showSelection" type="selection" width="55" />
         <el-table-column v-if="showIndex" type="index" width="50" :index="(index) => index + 1" />
         <TableColumn v-for="(col, index) in columns" :key="`${col.label}${col.prop}${index}`" :col>
           <template v-for="slot in getSlots(columns)" #[slot]="scope">
+            <slot :name="slot" v-bind="scope" />
+          </template>
+          <template v-for="slot in getSlots(columns).map((e) => `${e}-header`)" #[slot]="scope">
             <slot :name="slot" v-bind="scope" />
           </template>
         </TableColumn>

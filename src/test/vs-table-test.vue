@@ -11,10 +11,12 @@ const columns = ref<VsTableColumnItem[]>([
   { label: '日期', prop: 'date' },
   {
     label: '信息',
+    prop: 'info',
     children: [
       { label: '名字', prop: 'name' },
       {
         label: '地址',
+        prop: 'addrInfo',
         children: [
           { label: '国家', prop: 'state' },
           { label: '城市', prop: 'city' },
