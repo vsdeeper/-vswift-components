@@ -37,12 +37,12 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  // 自定义emit☄️
+  // 以下自定义 emit 事件
   (e: 'operate', key: string, row?: Record<string, any>): void
   (e: 'pagination-change', val: { currentPage: number; pageSize: number }): void
   (e: 'update:currentPage', val: number): void
   (e: 'update:pageSize', val: number): void
-  // ElTable emit 事件
+  // 以下 ElTable emit 事件
   <T = any>(e: 'select', selection: T[], row: T): void
   (e: 'select-all', selection: any[]): void
   (e: 'selection-change', newSelection: any[]): void
