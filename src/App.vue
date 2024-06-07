@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { VsTreeSelectTest, VsSearchTest, VsTableTest } from '@/test'
+import { VsTreeSelectTest, VsSearchTest, VsTableTest, VsFormDesignerTest } from '@/test'
 </script>
 
 <template>
@@ -12,6 +12,9 @@ import { VsTreeSelectTest, VsSearchTest, VsTableTest } from '@/test'
     </el-tab-pane>
     <el-tab-pane label="TreeSelect">
       <VsTreeSelectTest />
+    </el-tab-pane>
+    <el-tab-pane label="FormDesigner">
+      <VsFormDesignerTest />
     </el-tab-pane>
   </el-tabs>
 </template>
