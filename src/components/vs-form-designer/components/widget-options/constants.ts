@@ -4,10 +4,7 @@ export const widgetOptions: WidgetOptionItem[] = [
   {
     label: '基础组件',
     value: 'basic',
-    children: [
-      { label: '布局', value: 'layout' },
-      { label: '文本', value: 'text' }
-    ]
+    children: [{ label: '文本', value: 'text' }]
   },
   {
     label: '表单组件',

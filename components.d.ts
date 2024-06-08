@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    DraggableWidgetField: typeof import('./src/components/vs-form-designer/components/form-area/components/draggable-widget-field/draggable-widget-field.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCascader: typeof import('element-plus/es')['ElCascader']
@@ -41,6 +42,7 @@ declare module 'vue' {
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     ElTree: typeof import('element-plus/es')['ElTree']
     ElTreeV2: typeof import('element-plus/es')['ElTreeV2']
+    FormArea: typeof import('./src/components/vs-form-designer/components/form-area/form-area.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SCascader: typeof import('./src/components/vs-search/components/s-cascader/s-cascader.vue')['default']
@@ -57,6 +59,8 @@ declare module 'vue' {
     VsSearch: typeof import('./src/components/vs-search/vs-search.vue')['default']
     VsTable: typeof import('./src/components/vs-table/vs-table.vue')['default']
     VsTreeSelect: typeof import('./src/components/vs-tree-select/vs-tree-select.vue')['default']
+    WidgetFields: typeof import('./src/components/vs-form-designer/components/form-area/widget-field-set/widget-fields.vue')['default']
+    WidgetFieldSet: typeof import('./src/components/vs-form-designer/components/form-area/components/widget-field-set/widget-field-set.vue')['default']
     WidgetOptions: typeof import('./src/components/vs-form-designer/components/widget-options/widget-options.vue')['default']
   }
   export interface ComponentCustomProperties {
