@@ -3,7 +3,7 @@ import { widgetOptions } from './constants'
 </script>
 
 <template>
-  <el-collapse :model-value="widgetOptions.map((e) => e.value)">
+  <el-collapse class="widget-options" :model-value="widgetOptions.map((e) => e.value)">
     <el-collapse-item
       v-for="item in widgetOptions"
       :key="item.value"

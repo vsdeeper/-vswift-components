@@ -4,6 +4,9 @@ import { VsTreeSelectTest, VsSearchTest, VsTableTest, VsFormDesignerTest } from 
 
 <template>
   <el-tabs tab-position="left">
+    <el-tab-pane label="FormDesigner">
+      <VsFormDesignerTest />
+    </el-tab-pane>
     <el-tab-pane label="Table">
       <VsTableTest />
     </el-tab-pane>
@@ -12,9 +15,6 @@ import { VsTreeSelectTest, VsSearchTest, VsTableTest, VsFormDesignerTest } from 
     </el-tab-pane>
     <el-tab-pane label="TreeSelect">
       <VsTreeSelectTest />
-    </el-tab-pane>
-    <el-tab-pane label="FormDesigner">
-      <VsFormDesignerTest />
     </el-tab-pane>
   </el-tabs>
 </template>

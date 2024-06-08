@@ -2,17 +2,25 @@
 import { Delete, View } from '@element-plus/icons-vue'
 import { WidgetOptions } from './components'
 import config from '../config'
+
+defineProps<{
+  height?: string
+}>()
 </script>
 
 <template>
   <el-config-provider :locale="config.locale">
-    <el-container class="vs-form-designer">
-      <el-aside width="320px">
+    <el-container class="vs-form-designer" :style="{ height: height ?? '650px' }">
+      <el-aside class="left-side" width="320px">
         <el-tabs model-value="widget">
           <el-tab-pane label="组件" name="widget">
-            <WidgetOptions />
+            <el-scrollbar>
+              <WidgetOptions />
+            </el-scrollbar>
           </el-tab-pane>
-          <el-tab-pane label="表单模板" name="form-template"></el-tab-pane>
+          <el-tab-pane label="表单模板" name="form-template">
+            <el-scrollbar> 表单模板 </el-scrollbar>
+          </el-tab-pane>
         </el-tabs>
       </el-aside>
       <el-main>
@@ -22,12 +30,20 @@ import config from '../config'
           <el-button type="primary" text>导出JSON</el-button>
           <el-button type="danger" text :icon="Delete">清空</el-button>
         </div>
-        <el-scrollbar height="calc(100vh - 100px)"> fdsaf </el-scrollbar>
+        <el-scrollbar>
+          <div class="main-cont">发大范德萨范德萨</div>
+        </el-scrollbar>
       </el-main>
-      <el-aside width="320px">
+      <el-aside class="right-side" width="320px">
         <el-tabs model-value="widget-settings">
-          <el-tab-pane label="组件设置" name="widget-settings"></el-tab-pane>
-          <el-tab-pane label="表单设置" name="form-settings"></el-tab-pane>
+          <el-tab-pane label="组件设置" name="widget-settings">
+            <el-scrollbar>
+              <div style="height: 700px">组件设置</div>
+            </el-scrollbar>
+          </el-tab-pane>
+          <el-tab-pane label="表单设置" name="form-settings">
+            <el-scrollbar> 表单设置 </el-scrollbar>
+          </el-tab-pane>
         </el-tabs>
       </el-aside>
     </el-container>
@@ -37,20 +53,58 @@ import config from '../config'
 <style lang="scss" scoped>
 .vs-form-designer {
   overflow: auto;
-}
-.function-bar {
-  display: flex;
-  align-items: flex-end;
-  height: 40px;
-  .el-button + .el-button {
-    margin-left: 0;
+  .el-tabs {
+    height: 100%;
   }
-}
-.el-main {
-  --el-main-padding: 0;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 400px;
+  :deep(.el-tabs__content) {
+    height: calc(100% - 55px);
+  }
+  :deep(.el-tab-pane) {
+    height: 100%;
+  }
+  .left-side {
+    :deep(.el-scrollbar__view) {
+      padding: 0 8px;
+    }
+    :deep(.el-tabs__content) {
+      padding: 0;
+    }
+  }
+  .right-side {
+    :deep(.el-scrollbar__view) {
+      padding: 0 8px;
+    }
+    :deep(.el-tabs__content) {
+      padding: 0;
+    }
+  }
+  .el-main {
+    --el-main-padding: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 400px;
+    .main-cont {
+      height: 600px;
+      background-color: #fff;
+      padding: 8px;
+    }
+    .function-bar {
+      display: flex;
+      align-items: flex-end;
+      height: 44px;
+      .el-button + .el-button {
+        margin-left: 0;
+      }
+    }
+    :deep(.el-scrollbar) {
+      box-sizing: border-box;
+      border: 3px dotted var(--el-border-color-light);
+      background-color: var(--el-bg-color-page);
+    }
+    :deep(.el-scrollbar__view) {
+      padding: 8px;
+    }
+  }
 }
 </style>
