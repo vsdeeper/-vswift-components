@@ -1,4 +1,4 @@
-import type { FormDesignData } from '@/components'
+import type { FormDesignData, WidgetDesignData } from '@/components'
 import { defineStore } from 'pinia'
 
 export default defineStore('form-designer', () => {
@@ -6,8 +6,10 @@ export default defineStore('form-designer', () => {
     form: {},
     widgetList: []
   })
+  const activeWidgetDesignData = ref<WidgetDesignData>()
 
   return {
-    formDesignData
+    formDesignData,
+    activeWidgetDesignData
   }
 })

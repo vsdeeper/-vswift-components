@@ -2,8 +2,11 @@
 import draggable from 'vuedraggable'
 import type { WidgetDesignData, WidgetType } from '@/components/vs-form-designer'
 import { useFormDesignerStore } from '@/stores'
+import { DComponent } from './components'
+import { pascal } from 'radash'
 
 const props = defineProps<{
+  model: Record<string, any>
   where?: WidgetType // 标明被哪个widget-field组件引用，做逻辑区分
 }>()
 
@@ -15,6 +18,7 @@ const widgetList = defineModel<WidgetDesignData[]>({
   get: (val) => val ?? []
 })
 const canDrag = ref(false)
+const formData = computed(() => props.model)
 
 function onDragChange(...args: any[]) {
   console.log('onDragChange', args)
@@ -77,7 +81,7 @@ function toggleSelected(
     <template v-else>请从左侧列表中拖动组件放置于此处</template>
   </div>
   <draggable
-    class="draggable-items"
+    class="draggable-widget"
     :list="widgetList"
     group="draggable-widget-option"
     :animation="300"
@@ -88,8 +92,12 @@ function toggleSelected(
     @change="onDragChange"
   >
     <template #item="{ element: item }">
-      <div class="item">
-        {{ item.options.label }}
+      <div class="item widget-field">
+        <component
+          :is="DComponent[pascal(item.type)]"
+          v-model="formData[item.id]"
+          :design-data="item"
+        />
       </div>
     </template>
   </draggable>

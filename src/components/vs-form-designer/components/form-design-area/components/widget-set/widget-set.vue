@@ -1,3 +1,3 @@
 <script setup lang="ts"></script>
 
-<template>组件域集</template>
+<template>组件集</template>

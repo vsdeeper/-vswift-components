@@ -4,6 +4,7 @@ import type { WidgetOptionItem } from '.'
 import type { WidgetDesignData, WidgetType } from '../..'
 import { widgetOptions } from './constants'
 import { nanoid5 } from '../../util'
+import type { DTextOptions } from '../form-design-area/components/draggable-widget/components'
 // import type { InputProps } from 'element-plus'
 
 function transformClone(widget: WidgetOptionItem): WidgetDesignData | undefined {
@@ -23,10 +24,10 @@ function transformClone(widget: WidgetOptionItem): WidgetDesignData | undefined 
 
 function genWidgetSettingOptions(widget: WidgetOptionItem) {
   switch (widget.value) {
-    // case 'input':
-    //   return {
-    //     label: '输入框'
-    //   } as InputProps
+    case 'text':
+      return {
+        text: '请配置文字...'
+      } as DTextOptions
     default:
       return {
         label: widget.label
@@ -47,13 +48,17 @@ function genWidgetSettingOptions(widget: WidgetOptionItem) {
         <draggable
           class="draggable-items"
           :list="item.children"
-          :group="{ name: 'draggable-widget-option', pull: 'clone', put: false }"
+          :group="{
+            name: 'draggable-widget-option',
+            pull: 'clone',
+            put: false
+          }"
           :sort="false"
           :clone="(widget: WidgetOptionItem) => transformClone(widget)"
           item-key="value"
         >
           <template #item="{ element: item }">
-            <div class="item">
+            <div class="item widget-option">
               <el-button bg text>{{ item.label }}</el-button>
             </div>
           </template>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Delete, View } from '@element-plus/icons-vue'
-import { FormArea, WidgetOptions } from './components'
 import config from '../config'
 
 defineProps<{
@@ -31,14 +30,14 @@ defineProps<{
           <el-button type="danger" text :icon="Delete">清空</el-button>
         </div>
         <el-scrollbar>
-          <FormArea />
+          <FormDesignArea />
         </el-scrollbar>
       </el-main>
       <el-aside class="right-side" width="320px">
         <el-tabs model-value="widget-settings">
           <el-tab-pane label="组件设置" name="widget-settings">
             <el-scrollbar>
-              <div style="height: 700px">组件设置</div>
+              <WidgetDesignArea />
             </el-scrollbar>
           </el-tab-pane>
           <el-tab-pane label="表单设置" name="form-settings">
@@ -84,14 +83,14 @@ defineProps<{
     flex-direction: column;
     flex: 1;
     min-width: 400px;
-    :deep(.form-area) {
+    :deep(.form-design-area) {
       position: relative;
       height: 100%;
       background-color: #fff;
       padding: 8px;
       box-sizing: border-box;
     }
-    :deep(.draggable-items) {
+    :deep(.draggable-widget) {
       position: absolute;
       left: 0;
       right: 0;
@@ -102,13 +101,17 @@ defineProps<{
         position: relative;
         border: 2px solid #fff;
         background-color: #fff;
-        &.sortable-chosen {
-          height: 3px;
+        &.widget-option.sortable-chosen {
+          height: 0;
           overflow: hidden;
-          background-color: var(--el-color-primary);
-          .el-button {
-            display: none;
-          }
+          border-width: 1.5px;
+          border-color: var(--el-color-primary);
+        }
+        &.widget-field.sortable-chosen {
+          border-width: 2px;
+          border-style: dashed;
+          border-color: var(--el-color-primary);
+          box-sizing: border-box;
         }
       }
     }

@@ -7,7 +7,9 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    DraggableWidgetField: typeof import('./src/components/vs-form-designer/components/form-area/components/draggable-widget-field/draggable-widget-field.vue')['default']
+    DraggableWidget: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/draggable-widget.vue')['default']
+    DraggableWidgetField: (typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/draggable-widget-field.vueeld.vue'))['default']
+    DText: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-text/d-text.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCascader: typeof import('element-plus/es')['ElCascader']
@@ -37,11 +39,13 @@ declare module 'vue' {
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
+    ElText: typeof import('element-plus/es')['ElText']
     ElTimePicker: typeof import('element-plus/es')['ElTimePicker']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     ElTree: typeof import('element-plus/es')['ElTree']
     ElTreeV2: typeof import('element-plus/es')['ElTreeV2']
-    FormArea: typeof import('./src/components/vs-form-designer/components/form-area/form-area.vue')['default']
+    FormArea: (typeof import('./src/components/vs-form-designer/components/form-design-area/form-area.vuerea.vue'))['default']
+    FormDesignArea: typeof import('./src/components/vs-form-designer/components/form-design-area/form-design-area.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SCascader: typeof import('./src/components/vs-search/components/s-cascader/s-cascader.vue')['default']
@@ -51,6 +55,7 @@ declare module 'vue' {
     STime: typeof import('./src/components/vs-search/components/s-time/s-time.vue')['default']
     STreeSelect: typeof import('./src/components/vs-search/components/s-tree-select/s-tree-select.vue')['default']
     TableColumn: typeof import('./src/components/vs-table/table-column.vue')['default']
+    Text: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-text/text.vue')['default']
     VsColorPicker: typeof import('./src/components/vs-color-picker/vs-color-picker.vue')['default']
     VsDividerTitle: typeof import('./src/components/vs-divider-title/vs-divider-title.vue')['default']
     VsFormDesigner: typeof import('./src/components/vs-form-designer/vs-form-designer.vue')['default']
@@ -58,8 +63,10 @@ declare module 'vue' {
     VsSearch: typeof import('./src/components/vs-search/vs-search.vue')['default']
     VsTable: typeof import('./src/components/vs-table/vs-table.vue')['default']
     VsTreeSelect: typeof import('./src/components/vs-tree-select/vs-tree-select.vue')['default']
-    WidgetFieldSet: typeof import('./src/components/vs-form-designer/components/form-area/components/widget-field-set/widget-field-set.vue')['default']
+    WidgetDesignArea: typeof import('./src/components/vs-form-designer/components/widget-design-area/widget-design-area.vue')['default']
+    WidgetFieldSet: (typeof import('./src/components/vs-form-designer/components/form-design-area/components/widget-set/widget-field-set.vueset.vue'))['default']
     WidgetOptions: typeof import('./src/components/vs-form-designer/components/widget-options/widget-options.vue')['default']
+    WidgetSet: typeof import('./src/components/vs-form-designer/components/form-design-area/components/widget-set/widget-set.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']
