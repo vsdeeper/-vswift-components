@@ -1,3 +1,4 @@
+import type { FormProps } from 'element-plus'
 import VsFormDesigner from './vs-form-designer.vue'
 
 export type WidgetType =
@@ -16,11 +17,18 @@ export type WidgetType =
   | 'upload'
   // 以下其他组件
   | 'divider'
-export interface WidgetSetting {
+  | 'table'
+  | 'recursive-area'
+export interface WidgetDesignData {
   id: string
   type: WidgetType
   options: Record<string, any>
+  widgetList?: WidgetDesignData[]
   [key: string]: any
+}
+export interface FormDesignData {
+  form: Partial<FormProps>
+  widgetList: WidgetDesignData[]
 }
 export type VsFormDesignerInstance = InstanceType<typeof VsFormDesigner>
 export { VsFormDesigner }

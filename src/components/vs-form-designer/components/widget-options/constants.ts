@@ -25,6 +25,10 @@ export const widgetOptions: WidgetOptionItem[] = [
   {
     label: '其他',
     value: 'others',
-    children: [{ label: '分割线', value: 'divider' }]
+    children: [
+      { label: '分割线', value: 'divider' },
+      { label: '表格', value: 'table' },
+      { label: '递归域', value: 'recursive-area' }
+    ]
   }
 ]

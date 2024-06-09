@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Delete, View } from '@element-plus/icons-vue'
-import { WidgetOptions } from './components'
+import { FormArea, WidgetOptions } from './components'
 import config from '../config'
 
 defineProps<{
@@ -31,7 +31,9 @@ defineProps<{
           <el-button type="danger" text :icon="Delete">清空</el-button>
         </div>
         <el-scrollbar>
-          <div class="main-cont">发大范德萨范德萨</div>
+          <div class="main-cont">
+            <FormArea />
+          </div>
         </el-scrollbar>
       </el-main>
       <el-aside class="right-side" width="320px">

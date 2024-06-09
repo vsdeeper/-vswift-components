@@ -23,7 +23,6 @@ declare module 'vue' {
     ElDivider: typeof import('element-plus/es')['ElDivider']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
-    ElHeader: typeof import('element-plus/es')['ElHeader']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMain: typeof import('element-plus/es')['ElMain']
@@ -59,7 +58,6 @@ declare module 'vue' {
     VsSearch: typeof import('./src/components/vs-search/vs-search.vue')['default']
     VsTable: typeof import('./src/components/vs-table/vs-table.vue')['default']
     VsTreeSelect: typeof import('./src/components/vs-tree-select/vs-tree-select.vue')['default']
-    WidgetFields: typeof import('./src/components/vs-form-designer/components/form-area/widget-field-set/widget-fields.vue')['default']
     WidgetFieldSet: typeof import('./src/components/vs-form-designer/components/form-area/components/widget-field-set/widget-field-set.vue')['default']
     WidgetOptions: typeof import('./src/components/vs-form-designer/components/widget-options/widget-options.vue')['default']
   }

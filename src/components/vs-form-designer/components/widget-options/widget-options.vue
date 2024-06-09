@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import draggable from 'vuedraggable'
 import type { WidgetOptionItem } from '.'
-import type { WidgetSetting, WidgetType } from '../..'
+import type { WidgetDesignData, WidgetType } from '../..'
 import { widgetOptions } from './constants'
 import { nanoid5 } from '../../util'
 // import type { InputProps } from 'element-plus'
 
-function transformClone(widget: WidgetOptionItem): WidgetSetting | undefined {
+function transformClone(widget: WidgetOptionItem): WidgetDesignData | undefined {
   try {
     const type = widget.value.replace(/-/g, '')
     const id = `${type}${nanoid5()}`
@@ -43,28 +43,44 @@ function genWidgetSettingOptions(widget: WidgetOptionItem) {
       :title="item.label"
       :name="item.value"
     >
-      <el-row :gutter="10">
-        <el-col v-for="item1 in item.children" :key="item1.value" :span="12">
-          <draggable
-            :list="item.children"
-            :group="{ name: 'draggable-widget-option', pull: 'clone', put: false }"
-            :sort="false"
-            :clone="(widget: WidgetOptionItem) => transformClone(widget)"
-            item-key="value"
-          >
-            <el-button bg text>{{ item1.label }}</el-button>
-          </draggable>
-        </el-col>
-      </el-row>
+      <div class="draggable-wrap">
+        <draggable
+          :list="item.children"
+          :group="{ name: 'draggable-widget-option', pull: 'clone', put: false }"
+          :sort="false"
+          :clone="(widget: WidgetOptionItem) => transformClone(widget)"
+          item-key="value"
+        >
+          <template #item="{ element }">
+            <div class="item">
+              <el-button bg text>{{ element.label }}</el-button>
+            </div>
+          </template>
+        </draggable>
+      </div>
     </el-collapse-item>
   </el-collapse>
 </template>
 
 <style lang="scss" scoped>
-.el-button {
-  width: 100%;
-  font-weight: normal;
-  justify-content: flex-start;
-  margin-bottom: 10px;
+.draggable-wrap {
+  & > div {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -4px;
+    .item {
+      width: 50%;
+      padding: 4px;
+      box-sizing: border-box;
+      .el-button {
+        width: 100%;
+        font-weight: normal;
+        justify-content: flex-start;
+      }
+      .el-button + .el-button {
+        margin-left: 0;
+      }
+    }
+  }
 }
 </style>
