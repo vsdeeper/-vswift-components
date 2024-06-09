@@ -31,9 +31,7 @@ defineProps<{
           <el-button type="danger" text :icon="Delete">清空</el-button>
         </div>
         <el-scrollbar>
-          <div class="main-cont">
-            <FormArea />
-          </div>
+          <FormArea />
         </el-scrollbar>
       </el-main>
       <el-aside class="right-side" width="320px">
@@ -66,7 +64,7 @@ defineProps<{
   }
   .left-side {
     :deep(.el-scrollbar__view) {
-      padding: 0 8px;
+      padding: 0 10px;
     }
     :deep(.el-tabs__content) {
       padding: 0;
@@ -74,7 +72,7 @@ defineProps<{
   }
   .right-side {
     :deep(.el-scrollbar__view) {
-      padding: 0 8px;
+      padding: 0 10px;
     }
     :deep(.el-tabs__content) {
       padding: 0;
@@ -86,10 +84,33 @@ defineProps<{
     flex-direction: column;
     flex: 1;
     min-width: 400px;
-    .main-cont {
-      height: 600px;
+    :deep(.form-area) {
+      position: relative;
+      height: 100%;
       background-color: #fff;
       padding: 8px;
+      box-sizing: border-box;
+    }
+    :deep(.draggable-items) {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      padding: 8px;
+      .item {
+        position: relative;
+        border: 2px solid #fff;
+        background-color: #fff;
+        &.sortable-chosen {
+          height: 3px;
+          overflow: hidden;
+          background-color: var(--el-color-primary);
+          .el-button {
+            display: none;
+          }
+        }
+      }
     }
     .function-bar {
       display: flex;
@@ -105,7 +126,9 @@ defineProps<{
       background-color: var(--el-bg-color-page);
     }
     :deep(.el-scrollbar__view) {
+      height: 100%;
       padding: 8px;
+      box-sizing: border-box;
     }
   }
 }

@@ -45,15 +45,16 @@ function genWidgetSettingOptions(widget: WidgetOptionItem) {
     >
       <div class="draggable-wrap">
         <draggable
+          class="draggable-items"
           :list="item.children"
           :group="{ name: 'draggable-widget-option', pull: 'clone', put: false }"
           :sort="false"
           :clone="(widget: WidgetOptionItem) => transformClone(widget)"
           item-key="value"
         >
-          <template #item="{ element }">
+          <template #item="{ element: item }">
             <div class="item">
-              <el-button bg text>{{ element.label }}</el-button>
+              <el-button bg text>{{ item.label }}</el-button>
             </div>
           </template>
         </draggable>
@@ -64,7 +65,7 @@ function genWidgetSettingOptions(widget: WidgetOptionItem) {
 
 <style lang="scss" scoped>
 .draggable-wrap {
-  & > div {
+  .draggable-items {
     display: flex;
     flex-wrap: wrap;
     margin: 0 -4px;
