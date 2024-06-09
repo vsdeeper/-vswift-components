@@ -3,6 +3,7 @@ import type { DTextInstance } from '.'
 import type { AsyncComponentLoader } from 'vue'
 
 export * from './d-text'
+export * from './d-input'
 
 // 生成动态组件对象
 export type DComponentMap = {

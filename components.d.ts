@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    DInput: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-input/d-input.vue')['default']
     DraggableWidget: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/draggable-widget.vue')['default']
     DraggableWidgetField: (typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/draggable-widget-field.vueeld.vue'))['default']
     DText: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-text/d-text.vue')['default']
