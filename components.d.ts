@@ -13,6 +13,7 @@ declare module 'vue' {
     DRadio: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-radio/d-radio.vue')['default']
     DraggableWidget: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/draggable-widget.vue')['default']
     DraggableWidgetField: (typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/draggable-widget-field.vueeld.vue'))['default']
+    DSelect: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-select/d-select.vue')['default']
     DText: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-text/d-text.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']

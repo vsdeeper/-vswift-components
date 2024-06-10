@@ -4,7 +4,7 @@ import type { WidgetOptionItem } from '.'
 import type { WidgetDesignData, WidgetType } from '../..'
 import { widgetOptions } from './constants'
 import { nanoid5 } from '../../util'
-import type { DInputOptions } from '../form-design-area'
+import type { DInputOptions, DSelectOptions } from '../form-design-area'
 // import type { InputProps } from 'element-plus'
 
 function transformClone(widget: WidgetOptionItem): WidgetDesignData | undefined {
@@ -28,6 +28,8 @@ function genWidgetSettingOptions(widget: WidgetOptionItem) {
       return {
         placeholder: '请输入'
       } as DInputOptions
+    case 'select':
+      return { placeholder: '请选择' } as DSelectOptions
     default:
       return {
         label: widget.label
