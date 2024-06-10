@@ -107,11 +107,16 @@ defineProps<{
           border-width: 1.5px;
           border-color: var(--el-color-primary);
         }
-        &.widget-field.sortable-chosen {
-          border-width: 2px;
-          border-style: dashed;
-          border-color: var(--el-color-primary);
-          box-sizing: border-box;
+        &.widget-field {
+          &.sortable-chosen {
+            border-width: 2px;
+            border-style: dashed;
+            border-color: var(--el-color-primary);
+            box-sizing: border-box;
+          }
+          .el-cascader {
+            width: 100%;
+          }
         }
       }
     }

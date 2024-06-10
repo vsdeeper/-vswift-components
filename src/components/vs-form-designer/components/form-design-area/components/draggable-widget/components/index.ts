@@ -8,6 +8,7 @@ export * from './d-input-number'
 export * from './d-radio'
 export * from './d-checkbox'
 export * from './d-select'
+export * from './d-cascader'
 
 // 生成动态组件对象
 export type DComponentMap = {
