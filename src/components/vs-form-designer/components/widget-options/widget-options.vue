@@ -4,7 +4,12 @@ import type { WidgetOptionItem } from '.'
 import type { WidgetDesignData, WidgetType } from '../..'
 import { widgetOptions } from './constants'
 import { nanoid5 } from '../../util'
-import type { DDatePickerOptions, DInputOptions, DSelectOptions } from '../form-design-area'
+import type {
+  DDatePickerOptions,
+  DDatetimePickerOptions,
+  DInputOptions,
+  DSelectOptions
+} from '../form-design-area'
 // import type { InputProps } from 'element-plus'
 
 function transformClone(widget: WidgetOptionItem): WidgetDesignData | undefined {
@@ -36,6 +41,12 @@ function genWidgetSettingOptions(widget: WidgetOptionItem) {
         startPlaceholder: '开始日期',
         endPlaceholder: '结束日期'
       } as DDatePickerOptions
+    case 'datetime-picker':
+      return {
+        placeholder: '请选择日期时间',
+        startPlaceholder: '开始日期时间',
+        endPlaceholder: '结束日期时间'
+      } as DDatetimePickerOptions
     default:
       return {
         label: widget.label
