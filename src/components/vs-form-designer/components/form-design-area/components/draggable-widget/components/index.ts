@@ -11,6 +11,7 @@ export * from './d-select'
 export * from './d-cascader'
 export * from './d-date-picker'
 export * from './d-datetime-picker'
+export * from './d-time-picker'
 
 // 生成动态组件对象
 export type DComponentMap = {

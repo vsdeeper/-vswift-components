@@ -8,7 +8,8 @@ import type {
   DDatePickerOptions,
   DDatetimePickerOptions,
   DInputOptions,
-  DSelectOptions
+  DSelectOptions,
+  DTimePickerOptions
 } from '../form-design-area'
 // import type { InputProps } from 'element-plus'
 
@@ -47,6 +48,12 @@ function genWidgetSettingOptions(widget: WidgetOptionItem) {
         startPlaceholder: '开始日期时间',
         endPlaceholder: '结束日期时间'
       } as DDatetimePickerOptions
+    case 'time-picker':
+      return {
+        placeholder: '请选择时间',
+        startPlaceholder: '开始时间',
+        endPlaceholder: '结束时间'
+      } as DTimePickerOptions
     default:
       return {
         label: widget.label
