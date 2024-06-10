@@ -7,7 +7,17 @@ const widgetList = computed(() => useFormDesignerStore().formDesignData.widgetLi
 </script>
 
 <template>
-  <el-form class="form-design-area" v-bind="formSetting" :model disabled @submit.prevent>
+  <el-form class="form-design-area" v-bind="formSetting" :model @submit.prevent>
     <DraggableWidget v-model="widgetList" :model />
   </el-form>
 </template>
+
+<style lang="scss" scoped>
+.form-design-area {
+  :deep(.widget-field) {
+    & > div {
+      pointer-events: none;
+    }
+  }
+}
+</style>

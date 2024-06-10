@@ -4,7 +4,7 @@ import type { WidgetOptionItem } from '.'
 import type { WidgetDesignData, WidgetType } from '../..'
 import { widgetOptions } from './constants'
 import { nanoid5 } from '../../util'
-import type { DInputOptions, DTextOptions } from '../form-design-area'
+import type { DInputOptions } from '../form-design-area'
 // import type { InputProps } from 'element-plus'
 
 function transformClone(widget: WidgetOptionItem): WidgetDesignData | undefined {
@@ -24,10 +24,6 @@ function transformClone(widget: WidgetOptionItem): WidgetDesignData | undefined 
 
 function genWidgetSettingOptions(widget: WidgetOptionItem) {
   switch (widget.value) {
-    case 'text':
-      return {
-        text: '请配置文字...'
-      } as DTextOptions
     case 'input':
       return {
         placeholder: '请输入'

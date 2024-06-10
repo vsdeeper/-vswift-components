@@ -118,7 +118,7 @@ defineProps<{
     .function-bar {
       display: flex;
       align-items: flex-end;
-      height: 44px;
+      height: 40px;
       .el-button + .el-button {
         margin-left: 0;
       }

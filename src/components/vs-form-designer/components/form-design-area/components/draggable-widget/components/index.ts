@@ -4,6 +4,8 @@ import type { AsyncComponentLoader } from 'vue'
 
 export * from './d-text'
 export * from './d-input'
+export * from './d-input-number'
+export * from './d-radio'
 
 // 生成动态组件对象
 export type DComponentMap = {

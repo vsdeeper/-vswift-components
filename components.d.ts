@@ -8,6 +8,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     DInput: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-input/d-input.vue')['default']
+    DInputNumber: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-input-number/d-input-number.vue')['default']
+    DRadio: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-radio/d-radio.vue')['default']
     DraggableWidget: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/draggable-widget.vue')['default']
     DraggableWidgetField: (typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/draggable-widget-field.vueeld.vue'))['default']
     DText: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-text/d-text.vue')['default']
@@ -28,10 +30,14 @@ declare module 'vue' {
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
+    ElInputNumber: typeof import('element-plus/es')['ElInputNumber']
     ElMain: typeof import('element-plus/es')['ElMain']
     ElOption: typeof import('element-plus/es')['ElOption']
     ElPagination: typeof import('element-plus/es')['ElPagination']
     ElPopconfirm: typeof import('element-plus/es')['ElPopconfirm']
+    ElRadio: typeof import('element-plus/es')['ElRadio']
+    ElRadioButton: typeof import('element-plus/es')['ElRadioButton']
+    ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSelect: typeof import('element-plus/es')['ElSelect']
