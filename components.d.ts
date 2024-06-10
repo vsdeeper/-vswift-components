@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    DCheckbox: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-checkbox/d-checkbox.vue')['default']
     DInput: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-input/d-input.vue')['default']
     DInputNumber: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-input-number/d-input-number.vue')['default']
     DRadio: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-radio/d-radio.vue')['default']
@@ -17,6 +18,8 @@ declare module 'vue' {
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCascader: typeof import('element-plus/es')['ElCascader']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
+    ElCheckboxButton: typeof import('element-plus/es')['ElCheckboxButton']
+    ElCheckboxGroup: typeof import('element-plus/es')['ElCheckboxGroup']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElCollapse: typeof import('element-plus/es')['ElCollapse']
     ElCollapseItem: typeof import('element-plus/es')['ElCollapseItem']
