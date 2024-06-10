@@ -4,7 +4,7 @@ import type { WidgetOptionItem } from '.'
 import type { WidgetDesignData, WidgetType } from '../..'
 import { widgetOptions } from './constants'
 import { nanoid5 } from '../../util'
-import type { DInputOptions, DSelectOptions } from '../form-design-area'
+import type { DDatePickerOptions, DInputOptions, DSelectOptions } from '../form-design-area'
 // import type { InputProps } from 'element-plus'
 
 function transformClone(widget: WidgetOptionItem): WidgetDesignData | undefined {
@@ -30,6 +30,12 @@ function genWidgetSettingOptions(widget: WidgetOptionItem) {
       } as DInputOptions
     case 'select':
       return { placeholder: '请选择' } as DSelectOptions
+    case 'date-picker':
+      return {
+        placeholder: '请选择日期',
+        startPlaceholder: '开始日期',
+        endPlaceholder: '结束日期'
+      } as DDatePickerOptions
     default:
       return {
         label: widget.label

@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     DCascader: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-cascader/d-cascader.vue')['default']
     DCheckbox: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-checkbox/d-checkbox.vue')['default']
+    DDatePicker: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-date-picker/d-date-picker.vue')['default']
     DInput: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-input/d-input.vue')['default']
     DInputNumber: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-input-number/d-input-number.vue')['default']
     DRadio: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-radio/d-radio.vue')['default']

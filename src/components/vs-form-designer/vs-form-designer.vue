@@ -117,6 +117,9 @@ defineProps<{
           .el-cascader {
             width: 100%;
           }
+          .el-date-editor {
+            width: 100%;
+          }
         }
       }
     }
