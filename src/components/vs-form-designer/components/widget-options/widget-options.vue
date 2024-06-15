@@ -22,7 +22,9 @@ function transformClone(widget: WidgetOptionItem): WidgetDesignData | undefined 
       id,
       type: widget.value as WidgetType,
       options: genWidgetSettingOptions(widget),
-      widgetList: (['data-table'] as WidgetType[]).includes(widget.value) ? [] : undefined,
+      widgetList: (['data-table', 'recursive-area'] as WidgetType[]).includes(widget.value)
+        ? []
+        : undefined,
       __selected: false // 组件被选中标识，协助做交互，无实际用途
     }
   } catch (error) {

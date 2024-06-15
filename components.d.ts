@@ -18,6 +18,7 @@ declare module 'vue' {
     DRadio: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-radio/d-radio.vue')['default']
     DraggableWidget: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/draggable-widget.vue')['default']
     DraggableWidgetField: (typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/draggable-widget-field.vueeld.vue'))['default']
+    DRecursiveArea: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-recursive-area/d-recursive-area.vue')['default']
     DSelect: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-select/d-select.vue')['default']
     DText: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-text/d-text.vue')['default']
     DTimePicker: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-time-picker/d-time-picker.vue')['default']

@@ -1,5 +1,20 @@
 import { last, pascal } from 'radash'
-import type { DTextInstance } from '.'
+import type {
+  DTextInstance,
+  DInputInstance,
+  DInputNumberInstance,
+  DRadioInstance,
+  DCheckboxInstance,
+  DSelectInstance,
+  DCascaderInstance,
+  DDatePickerInstance,
+  DDatetimePickerInstance,
+  DTimePickerInstance,
+  DUploadInstance,
+  DDividerInstance,
+  DDataTableInstance,
+  DRecursiveAreaInstance
+} from '.'
 import type { AsyncComponentLoader } from 'vue'
 
 export * from './d-text'
@@ -15,10 +30,24 @@ export * from './d-time-picker'
 export * from './d-upload'
 export * from './d-divider'
 export * from './d-data-table'
+export * from './d-recursive-area'
 
 // 生成动态组件对象
 export type DComponentMap = {
   Text?: DTextInstance
+  Input?: DInputInstance
+  InputNumber?: DInputNumberInstance
+  Radio?: DRadioInstance
+  Checkbox?: DCheckboxInstance
+  Select?: DSelectInstance
+  Cascader?: DCascaderInstance
+  DatePicker?: DDatePickerInstance
+  DatetimePicker?: DDatetimePickerInstance
+  TimePicker?: DTimePickerInstance
+  Upload?: DUploadInstance
+  Divider?: DDividerInstance
+  DataTable?: DDataTableInstance
+  RecursiveArea?: DRecursiveAreaInstance
 }
 export type DComponentKey = keyof DComponentMap
 
