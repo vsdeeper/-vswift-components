@@ -21,10 +21,8 @@ function transformClone(widget: WidgetOptionItem): WidgetDesignData | undefined 
     return {
       id,
       type: widget.value as WidgetType,
-      options: genWidgetSettingOptions(widget),
-      widgetList: (['data-table', 'recursive-area'] as WidgetType[]).includes(widget.value)
-        ? []
-        : undefined,
+      options: genWidgetDataOptions(widget),
+      widgetList: genWidgetDataWidgetList(widget.value),
       __selected: false // 组件被选中标识，协助做交互，无实际用途
     }
   } catch (error) {
@@ -32,7 +30,21 @@ function transformClone(widget: WidgetOptionItem): WidgetDesignData | undefined 
   }
 }
 
-function genWidgetSettingOptions(widget: WidgetOptionItem) {
+function genWidgetDataWidgetList(widgetType: WidgetType): WidgetDesignData[] | undefined {
+  switch (widgetType) {
+    case 'data-table':
+    case 'recursive-area':
+      return []
+    case 'grid-layout': {
+      const id = `gridcol${nanoid5()}`
+      return [{ id, type: widgetType, options: {}, widgetList: [] }]
+    }
+    default:
+      return undefined
+  }
+}
+
+function genWidgetDataOptions(widget: WidgetOptionItem) {
   switch (widget.value) {
     case 'input':
       return {

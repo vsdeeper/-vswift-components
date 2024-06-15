@@ -7,7 +7,7 @@ export const widgetOptions: WidgetOptionItem[] = [
     children: [
       { label: '文本', value: 'text' },
       { label: '分割线', value: 'divider' },
-      { label: '网格布局', value: 'grid-layout' },
+      { label: '栅格布局', value: 'grid-layout' },
       { label: '表格布局', value: 'table-layout' },
       { label: '数据表格', value: 'data-table' },
       { label: '递归域', value: 'recursive-area' }

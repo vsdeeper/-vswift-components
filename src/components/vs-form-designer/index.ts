@@ -9,6 +9,7 @@ export type WidgetType =
   // 以下基础组件
   | 'text'
   | 'grid-layout'
+  | 'grid-col'
   | 'table-layout'
   | 'divider'
   | 'data-table'
@@ -25,11 +26,11 @@ export type WidgetType =
   | 'time-picker'
   | 'upload'
 // 以下自定义组件
-export interface WidgetDesignData {
+export interface WidgetDesignData<Options = Record<string, any>> {
   id: string
   type: WidgetType
-  options: Record<string, any>
-  widgetList?: WidgetDesignData[]
+  options: Options
+  widgetList?: WidgetDesignData<Options>[]
   [key: string]: any
 }
 export interface FormDesignData {

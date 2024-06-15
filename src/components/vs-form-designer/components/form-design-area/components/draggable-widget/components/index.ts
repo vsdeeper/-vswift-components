@@ -13,7 +13,8 @@ import type {
   DUploadInstance,
   DDividerInstance,
   DDataTableInstance,
-  DRecursiveAreaInstance
+  DRecursiveAreaInstance,
+  DGridLayoutInstance
 } from '.'
 import type { AsyncComponentLoader } from 'vue'
 
@@ -31,6 +32,8 @@ export * from './d-upload'
 export * from './d-divider'
 export * from './d-data-table'
 export * from './d-recursive-area'
+export * from './d-grid-layout'
+export * from './d-grid-col'
 
 // 生成动态组件对象
 export type DComponentMap = {
@@ -48,6 +51,7 @@ export type DComponentMap = {
   Divider?: DDividerInstance
   DataTable?: DDataTableInstance
   RecursiveArea?: DRecursiveAreaInstance
+  GridLayout?: DGridLayoutInstance
 }
 export type DComponentKey = keyof DComponentMap
 

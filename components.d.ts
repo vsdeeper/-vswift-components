@@ -13,6 +13,8 @@ declare module 'vue' {
     DDatePicker: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-date-picker/d-date-picker.vue')['default']
     DDatetimePicker: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-datetime-picker/d-datetime-picker.vue')['default']
     DDivider: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-divider/d-divider.vue')['default']
+    DGridCol: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-grid-col/d-grid-col.vue')['default']
+    DGridLayout: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-grid-layout/d-grid-layout.vue')['default']
     DInput: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-input/d-input.vue')['default']
     DInputNumber: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-input-number/d-input-number.vue')['default']
     DRadio: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-radio/d-radio.vue')['default']
