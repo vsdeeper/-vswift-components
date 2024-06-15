@@ -5,11 +5,14 @@ export type WidgetType =
   // 以下组件分类
   | 'basic'
   | 'form'
-  | 'others'
+  | 'custom'
   // 以下基础组件
   | 'text'
   | 'grid-layout'
   | 'table-layout'
+  | 'divider'
+  | 'data-table'
+  | 'recursive-area'
   // 以下表单组件
   | 'input'
   | 'input-number'
@@ -21,10 +24,7 @@ export type WidgetType =
   | 'datetime-picker'
   | 'time-picker'
   | 'upload'
-  // 以下其他组件
-  | 'divider'
-  | 'data-table'
-  | 'recursive-area'
+// 以下自定义组件
 export interface WidgetDesignData {
   id: string
   type: WidgetType

@@ -6,8 +6,11 @@ export const widgetOptions: WidgetOptionItem[] = [
     value: 'basic',
     children: [
       { label: '文本', value: 'text' },
+      { label: '分割线', value: 'divider' },
       { label: '网格布局', value: 'grid-layout' },
-      { label: '表格布局', value: 'table-layout' }
+      { label: '表格布局', value: 'table-layout' },
+      { label: '数据表格', value: 'data-table' },
+      { label: '递归域', value: 'recursive-area' }
     ]
   },
   {
@@ -27,12 +30,8 @@ export const widgetOptions: WidgetOptionItem[] = [
     ]
   },
   {
-    label: '其他',
-    value: 'others',
-    children: [
-      { label: '分割线', value: 'divider' },
-      { label: '数据表格', value: 'data-table' },
-      { label: '递归域', value: 'recursive-area' }
-    ]
+    label: '自定义组件',
+    value: 'custom',
+    children: []
   }
 ]

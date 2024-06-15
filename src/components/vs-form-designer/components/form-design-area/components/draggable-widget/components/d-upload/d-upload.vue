@@ -57,7 +57,13 @@ defineExpose({
 </script>
 
 <template>
-  <el-upload ref="uploadRef" v-bind="options" v-model:file-list="model" :on-preview="onPreview">
+  <el-upload
+    ref="uploadRef"
+    v-bind="options"
+    v-model:file-list="model"
+    :on-preview="onPreview"
+    :show-file-list="!!model?.length"
+  >
     <template #default>
       <el-icon v-if="options.listType === 'picture-card'"><Plus /></el-icon>
       <el-button v-else type="primary">上传</el-button>

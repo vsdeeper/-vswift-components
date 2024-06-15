@@ -47,7 +47,7 @@ function interceptSomeWidgetPutInAnotherWidget(
   where?: WidgetType
 ) {
   switch (where) {
-    case 'table': {
+    case 'data-table': {
       return false
     }
     default: {
@@ -76,7 +76,7 @@ function toggleSelected(
 
 <template>
   <div v-if="!widgetList?.length" class="note">
-    <template v-if="where === 'table'">请从左侧列表中拖动组件放置于此处</template>
+    <template v-if="where === 'data-table'">请从左侧列表中拖动组件放置于此处</template>
     <template v-else-if="where === 'recursive-area'">请从左侧列表中拖动组件放置于此处</template>
     <template v-else>请从左侧列表中拖动组件放置于此处</template>
   </div>
