@@ -91,33 +91,30 @@ defineProps<{
       box-sizing: border-box;
     }
     :deep(.draggable-widget) {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      padding: 8px;
+      height: 100%;
+      box-sizing: border-box;
       .item {
         position: relative;
+        padding: 5px;
         border: 2px solid #fff;
         background-color: #fff;
         &.widget-option.sortable-chosen {
           height: 0;
+          padding: 0;
           overflow: hidden;
-          border-width: 1.5px;
+          border-width: 1px;
           border-color: var(--el-color-primary);
         }
         &.widget-field {
           &.sortable-chosen {
             border-width: 2px;
-            border-style: dashed;
+            border-style: solid;
             border-color: var(--el-color-primary);
             box-sizing: border-box;
           }
-          .el-cascader {
-            width: 100%;
-          }
-          .el-date-editor {
+          .el-cascader,
+          .el-date-editor,
+          .el-input-number {
             width: 100%;
           }
         }

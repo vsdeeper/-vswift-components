@@ -5,6 +5,7 @@ import type { WidgetDesignData, WidgetType } from '../..'
 import { widgetOptions } from './constants'
 import { nanoid5 } from '../../util'
 import type {
+  DDataTableOptions,
   DDatePickerOptions,
   DDatetimePickerOptions,
   DInputOptions,
@@ -21,6 +22,7 @@ function transformClone(widget: WidgetOptionItem): WidgetDesignData | undefined 
       id,
       type: widget.value as WidgetType,
       options: genWidgetSettingOptions(widget),
+      widgetList: (['data-table'] as WidgetType[]).includes(widget.value) ? [] : undefined,
       __selected: false // 组件被选中标识，协助做交互，无实际用途
     }
   } catch (error) {
@@ -54,6 +56,10 @@ function genWidgetSettingOptions(widget: WidgetOptionItem) {
         startPlaceholder: '开始时间',
         endPlaceholder: '结束时间'
       } as DTimePickerOptions
+    case 'data-table':
+      return {
+        label: '数据表格'
+      } as DDataTableOptions
     default:
       return {
         label: widget.label

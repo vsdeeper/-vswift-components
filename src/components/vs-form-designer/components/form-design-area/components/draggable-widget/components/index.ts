@@ -14,6 +14,7 @@ export * from './d-datetime-picker'
 export * from './d-time-picker'
 export * from './d-upload'
 export * from './d-divider'
+export * from './d-data-table'
 
 // 生成动态组件对象
 export type DComponentMap = {

@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     DCascader: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-cascader/d-cascader.vue')['default']
     DCheckbox: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-checkbox/d-checkbox.vue')['default']
+    DDataTable: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-data-table/d-data-table.vue')['default']
     DDatePicker: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-date-picker/d-date-picker.vue')['default']
     DDatetimePicker: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-datetime-picker/d-datetime-picker.vue')['default']
     DDivider: typeof import('./src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-divider/d-divider.vue')['default']

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import draggable from 'vuedraggable'
 import type { WidgetDesignData, WidgetType } from '@/components/vs-form-designer'
-import { useFormDesignerStore } from '@/stores'
 import { DComponent } from './components'
 import { pascal } from 'radash'
+import { useFormDesignerStore } from '@/stores'
 
 const props = defineProps<{
-  model: Record<string, any>
+  formData: any
   where?: WidgetType // 标明被哪个widget-field组件引用，做逻辑区分
 }>()
 
@@ -14,11 +14,9 @@ const emit = defineEmits<{
   (e: 'added', added: any): void
 }>()
 
-const widgetList = defineModel<WidgetDesignData[]>({
-  get: (val) => val ?? []
-})
+const widgetList = defineModel<WidgetDesignData[]>('widgetList')
+const _formData = computed<any>(() => props.formData ?? {})
 const canDrag = ref(false)
-const formData = computed(() => props.model)
 
 function onDragChange(...args: any[]) {
   console.log('onDragChange', args)
@@ -94,8 +92,15 @@ function toggleSelected(
     <template #item="{ element: item }">
       <div class="item widget-field">
         <component
+          v-if="item.type === 'data-table'"
           :is="DComponent[pascal(item.type)]"
-          v-model="formData[item.id]"
+          :form-data="_formData![item.id]"
+          :design-data="item"
+        />
+        <component
+          v-else
+          :is="DComponent[pascal(item.type)]"
+          v-model="_formData![item.id]"
           :design-data="item"
         />
       </div>
