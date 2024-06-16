@@ -6,9 +6,9 @@ export const widgetOptions: WidgetOptionItem[] = [
     value: 'basic',
     children: [
       { label: '文本', value: 'text' },
-      { label: '分割线', value: 'divider' },
-      { label: '栅格布局', value: 'grid-layout' },
-      { label: '表格布局', value: 'table-layout' },
+      { label: '分隔线', value: 'divider' },
+      // { label: '栅格布局', value: 'grid-layout' },
+      // { label: '表格布局', value: 'table-layout' },
       { label: '数据表格', value: 'data-table' },
       { label: '递归域', value: 'recursive-area' }
     ]
@@ -28,10 +28,10 @@ export const widgetOptions: WidgetOptionItem[] = [
       { label: '时间选择器', value: 'time-picker' },
       { label: '上传', value: 'upload' }
     ]
-  },
-  {
-    label: '自定义组件',
-    value: 'custom',
-    children: []
   }
+  // {
+  //   label: '自定义组件',
+  //   value: 'custom',
+  //   children: []
+  // }
 ]
