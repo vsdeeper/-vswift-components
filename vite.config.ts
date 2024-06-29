@@ -22,46 +22,55 @@ const genEntry = () => {
 }
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    vue(),
-    cssInjectedByJsPlugin(),
-    AutoImport({
-      imports: ['vue'],
-      dts: './auto-imports.d.ts',
-      resolvers: [
-        ElementPlusResolver({
-          importStyle: 'sass'
-        })
-      ]
-    }),
-    Components({
-      dts: './components.d.ts',
-      resolvers: [
-        ElementPlusResolver({
-          importStyle: 'sass'
-        })
-      ]
-    }),
-    ElementPlus({
-      ignoreComponents: ['AutoResizer'] // 解决 Table-v2 AutoResizer with manual import: failed to resolve css file
-    }),
-    Inspect()
-  ],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  },
-  build: {
-    emptyOutDir: false,
-    copyPublicDir: false,
-    lib: {
-      entry: genEntry(),
-      fileName: '[name]'
+export default defineConfig(() => {
+  // 优化element-plus预加载
+  const matchElementPlusPath = globSync('node_modules/element-plus/es/components/*/style')
+  const optimizeDepsElementPlusIncludes = [
+    ...matchElementPlusPath.map((path) => `${path.replace('node_modules/', '')}/index`),
+    ...matchElementPlusPath.map((path) => `${path.replace('node_modules/', '')}/css`)
+  ]
+  return {
+    plugins: [
+      vue(),
+      cssInjectedByJsPlugin(),
+      AutoImport({
+        imports: ['vue'],
+        dts: './auto-imports.d.ts',
+        resolvers: [
+          ElementPlusResolver({
+            importStyle: 'sass'
+          })
+        ]
+      }),
+      Components({
+        dts: './components.d.ts',
+        resolvers: [
+          ElementPlusResolver({
+            importStyle: 'sass'
+          })
+        ]
+      }),
+      ElementPlus({
+        ignoreComponents: ['AutoResizer'] // 解决 Table-v2 AutoResizer with manual import: failed to resolve css file
+      }),
+      Inspect()
+    ],
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url))
+      }
     },
-    rollupOptions: {
-      external: ['vue', '@element-plus/icons-vue', 'element-plus', 'radash', 'nanoid']
+    optimizeDeps: { include: [...optimizeDepsElementPlusIncludes] },
+    build: {
+      emptyOutDir: false,
+      copyPublicDir: false,
+      lib: {
+        entry: genEntry(),
+        fileName: '[name]'
+      },
+      rollupOptions: {
+        external: ['vue', '@element-plus/icons-vue', 'element-plus', 'radash', 'nanoid']
+      }
     }
   }
 })
