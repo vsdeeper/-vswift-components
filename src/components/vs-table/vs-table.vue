@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { VsTableColumnItem, VsTableOperateItem } from '.'
 import TableColumn from './table-column.vue'
-import config from '../config'
 import { getSlots } from './util'
 import type { LoadingBinding } from 'element-plus/es/components/loading/src/directive.mjs'
 import type { PaginationProps, TableColumnCtx, TableInstance, TableProps } from 'element-plus'
@@ -185,111 +184,107 @@ defineExpose({
 </script>
 
 <template>
-  <el-config-provider :namespace="config.namespace" :locale="config.locale">
-    <div v-loading="loading" class="vs-table">
-      <div v-if="tableOperateItems?.length" :class="['operate', tableOperateAlign]">
-        <template
-          v-for="(item, index) in tableOperateItems"
-          :key="`tableOperateItem${item.value}${index}`"
+  <div v-loading="loading" class="vs-table">
+    <div v-if="tableOperateItems?.length" :class="['operate', tableOperateAlign]">
+      <template
+        v-for="(item, index) in tableOperateItems"
+        :key="`tableOperateItem${item.value}${index}`"
+      >
+        <el-popconfirm
+          v-if="item.showPopconfirm && displayTableOperateItem(item)"
+          v-bind="item.popconfirmProps"
+          @confirm="onOperate(item.value)"
         >
-          <el-popconfirm
-            v-if="item.showPopconfirm && displayTableOperateItem(item)"
-            v-bind="item.popconfirmProps"
-            @confirm="onOperate(item.value)"
-          >
-            <template #reference>
-              <el-button
-                v-bind="{ ...item.buttonProps, type: item.buttonProps?.type ?? 'primary' }"
-              >
-                {{ item.label }}
-              </el-button>
-            </template>
-          </el-popconfirm>
-          <template v-else>
-            <el-button
-              v-if="displayTableOperateItem(item)"
-              v-bind="{ ...item.buttonProps, type: item.buttonProps?.type ?? 'primary' }"
-              @click="onOperate(item.value)"
-            >
+          <template #reference>
+            <el-button v-bind="{ ...item.buttonProps, type: item.buttonProps?.type ?? 'primary' }">
               {{ item.label }}
             </el-button>
           </template>
+        </el-popconfirm>
+        <template v-else>
+          <el-button
+            v-if="displayTableOperateItem(item)"
+            v-bind="{ ...item.buttonProps, type: item.buttonProps?.type ?? 'primary' }"
+            @click="onOperate(item.value)"
+          >
+            {{ item.label }}
+          </el-button>
         </template>
-      </div>
-      <el-table ref="tableRef" v-bind="tableProps">
-        <template #append="scope">
-          <slot name="append" v-bind="scope"></slot>
+      </template>
+    </div>
+    <el-table ref="tableRef" v-bind="tableProps">
+      <template #append="scope">
+        <slot name="append" v-bind="scope"></slot>
+      </template>
+      <template #empty="scope">
+        <slot name="empty" v-bind="scope"></slot>
+      </template>
+      <el-table-column v-if="showSelection" type="selection" width="55" />
+      <el-table-column v-if="showIndex" type="index" width="50" :index="(index) => index + 1" />
+      <TableColumn v-for="(col, index) in columns" :key="`${col.label}${col.prop}${index}`" :col>
+        <template v-for="slot in getSlots(columns)" #[slot]="scope">
+          <slot :name="slot" v-bind="scope" />
         </template>
-        <template #empty="scope">
-          <slot name="empty" v-bind="scope"></slot>
+        <template v-for="slot in getSlots(columns).map((e) => `${e}-header`)" #[slot]="scope">
+          <slot :name="slot" v-bind="scope" />
         </template>
-        <el-table-column v-if="showSelection" type="selection" width="55" />
-        <el-table-column v-if="showIndex" type="index" width="50" :index="(index) => index + 1" />
-        <TableColumn v-for="(col, index) in columns" :key="`${col.label}${col.prop}${index}`" :col>
-          <template v-for="slot in getSlots(columns)" #[slot]="scope">
-            <slot :name="slot" v-bind="scope" />
-          </template>
-          <template v-for="slot in getSlots(columns).map((e) => `${e}-header`)" #[slot]="scope">
-            <slot :name="slot" v-bind="scope" />
-          </template>
-        </TableColumn>
-        <el-table-column v-if="showRowOperate" v-bind="{ label: '操作', ...operateColumnProps }">
-          <template #default="{ row }">
-            <template
-              v-for="(item, index) in rowOperateItems"
-              :key="`rowOperateItem${item.value}${index}`"
+      </TableColumn>
+      <el-table-column v-if="showRowOperate" v-bind="{ label: '操作', ...operateColumnProps }">
+        <template #default="{ row }">
+          <template
+            v-for="(item, index) in rowOperateItems"
+            :key="`rowOperateItem${item.value}${index}`"
+          >
+            <el-popconfirm
+              v-if="item.showPopconfirm && displayOperateItem(row, item)"
+              v-bind="item.popconfirmProps"
+              @confirm="onOperate(item.value, row)"
             >
-              <el-popconfirm
-                v-if="item.showPopconfirm && displayOperateItem(row, item)"
-                v-bind="item.popconfirmProps"
-                @confirm="onOperate(item.value, row)"
-              >
-                <template #reference>
-                  <el-button
-                    v-bind="{
-                      ...item.buttonProps,
-                      type: item.buttonProps?.type ?? 'primary',
-                      link: true
-                    }"
-                  >
-                    {{ item.label }}
-                  </el-button>
-                </template>
-              </el-popconfirm>
-              <template v-else>
+              <template #reference>
                 <el-button
-                  v-if="displayOperateItem(row, item)"
                   v-bind="{
                     ...item.buttonProps,
                     type: item.buttonProps?.type ?? 'primary',
                     link: true
                   }"
-                  @click="onOperate(item.value, row)"
                 >
                   {{ item.label }}
                 </el-button>
               </template>
+            </el-popconfirm>
+            <template v-else>
+              <el-button
+                v-if="displayOperateItem(row, item)"
+                v-bind="{
+                  ...item.buttonProps,
+                  type: item.buttonProps?.type ?? 'primary',
+                  link: true
+                }"
+                @click="onOperate(item.value, row)"
+              >
+                {{ item.label }}
+              </el-button>
             </template>
           </template>
-        </el-table-column>
-      </el-table>
-      <div v-if="showPagination" :class="['pagination', paginationAlign]">
-        <el-pagination
-          v-model:current-page="_currentPage"
-          v-model:page-size="_pageSize"
-          v-bind="{
-            pageSizes: [10, 20, 30, 40, 50],
-            layout: 'total, sizes, prev, pager, next, jumper',
-            pagerCount: 5,
-            background: true,
-            ...paginationProps
-          }"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-        />
-      </div>
+        </template>
+      </el-table-column>
+    </el-table>
+    <div v-if="showPagination" :class="['pagination', paginationAlign]">
+      <el-pagination
+        v-model:current-page="_currentPage"
+        v-model:page-size="_pageSize"
+        v-bind="{
+          pageSizes: [10, 20, 30, 40, 50],
+          layout: 'total, sizes, prev, pager, next, jumper',
+          pagerCount: 5,
+          background: true,
+          ...paginationProps
+        }"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
     </div>
-  </el-config-provider>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -314,7 +309,7 @@ defineExpose({
       justify-content: flex-start;
     }
   }
-  :deep(.vs-button + .vs-button) {
+  :deep(.el-button + .el-button) {
     margin-left: 5px;
   }
 }

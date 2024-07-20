@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import config from '@/components/config'
 import {
   VsTreeSelect,
   type VsTreeSelectProps,
@@ -14,7 +13,5 @@ const model = defineModel<VsTreeSelectValue>()
 </script>
 
 <template>
-  <el-config-provider :namespace="config.namespace" :locale="config.locale">
-    <VsTreeSelect v-model="model" v-bind="props" />
-  </el-config-provider>
+  <VsTreeSelect v-model="model" v-bind="props" />
 </template>

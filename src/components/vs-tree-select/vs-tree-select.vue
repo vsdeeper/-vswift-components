@@ -5,7 +5,6 @@ import type { TreeKey, TreeNodeData } from 'element-plus/es/components/tree-v2/s
 import { type InputInstance, ElTree as MyTree, ElTreeV2 as MyTreeV2 } from 'element-plus'
 import type { VsTreeSelectProps, VsTreeSelectValue, VsTreeSelectValueItem } from '.'
 import { findArraryValueFromTreeData, isArraryObject } from '@vswift/utils'
-import config from '../config'
 
 const props = withDefaults(defineProps<VsTreeSelectProps>(), {
   modelValue: undefined,
@@ -317,178 +316,171 @@ defineExpose({
 </script>
 
 <template>
-  <el-config-provider :namespace="config.namespace" :locale="config.locale">
-    <div
-      class="vs-tree-select"
-      :class="{ disabled: _disabled, 'collapse-tags': collapseTags }"
-      @click="operate('click.field')"
-    >
-      <div class="inner">
-        <span v-if="!toArraryValue(value).length" class="placeholder">{{ placeholder }}</span>
-        <template v-if="collapseTags">
-          <el-tag
-            v-if="toArraryValue(value).length"
-            class="link-tag"
-            closable
-            disable-transitions
-            :type="_disabled ? 'info' : undefined"
-            @close="operate('delete.field', toArraryValue(value)[0])"
-            @click.stop="operate('click.selectedTag', toArraryValue(value)[0])"
-          >
-            {{ getLabel(toArraryValue(value)[0], copySourceOptions) }}
-          </el-tag>
-          <el-tooltip
-            v-if="toArraryValue(value).length > 1 && collapseTagsTooltip"
-            placement="bottom"
-            effect="light"
-            popper-class="tag-tooltip-popper"
-          >
-            <el-tag disable-transitions :type="_disabled ? 'info' : undefined">
-              +{{ toArraryValue(value).length - 1 }}
-            </el-tag>
-            <template #content>
-              <el-tag
-                v-for="item in toArraryValue(value).slice(1)"
-                :key="getTreeKey(item)"
-                class="link-tag"
-                closable
-                disable-transitions
-                :type="_disabled ? 'info' : undefined"
-                @close="operate('delete.field', item)"
-                @click.stop="operate('click.selectedTag', item)"
-              >
-                {{ getLabel(item, copySourceOptions) }}
-              </el-tag>
-            </template>
-          </el-tooltip>
-          <el-tag
-            v-if="toArraryValue(value).length > 1 && !collapseTagsTooltip"
-            disable-transitions
-            :type="_disabled ? 'info' : undefined"
-          >
-            +{{ toArraryValue(value).length - 1 }}
-          </el-tag>
-        </template>
+  <div
+    class="vs-tree-select"
+    :class="{ disabled: _disabled, 'collapse-tags': collapseTags }"
+    @click="operate('click.field')"
+  >
+    <div class="inner">
+      <span v-if="!toArraryValue(value).length" class="placeholder">{{ placeholder }}</span>
+      <template v-if="collapseTags">
         <el-tag
-          v-for="item in toArraryValue(value)"
-          v-else
-          :key="getTreeKey(item)"
+          v-if="toArraryValue(value).length"
           class="link-tag"
           closable
           disable-transitions
           :type="_disabled ? 'info' : undefined"
-          @close="operate('delete.field', item)"
-          @click.stop="operate('click.selectedTag', item)"
+          @close="operate('delete.field', toArraryValue(value)[0])"
+          @click.stop="operate('click.selectedTag', toArraryValue(value)[0])"
         >
-          {{ getLabel(item, copySourceOptions) }}
+          {{ getLabel(toArraryValue(value)[0], copySourceOptions) }}
         </el-tag>
-      </div>
-      <el-button
-        v-if="toArraryValue(value).length"
-        class="clear"
-        :icon="Close"
-        link
-        :disabled="_disabled"
-        @click.stop="operate('clear.field')"
-      ></el-button>
-    </div>
-    <el-dialog
-      v-model="show"
-      class="vs-tree-select-dialog"
-      :class="{ virtualized }"
-      :title="title"
-      :append-to-body="appendToBody"
-      @opened="operate('opened.dialog')"
-      @closed="operate('closed.dialog')"
-    >
-      <el-row v-loading="loading">
-        <el-col :span="14">
-          <el-input
-            ref="filterInputRef"
-            v-model="filterText"
-            clearable
-            placeholder="请输入关键词"
-          />
-          <div v-if="renderOptions.length" class="toggle-all-selection">
-            <el-checkbox v-model="allSelected" @change="operate('toggle.allSelection')">
-              {{ allSelected ? '取消全选' : '全选' }}
-            </el-checkbox>
-          </div>
-          <el-tree-v2
-            v-if="virtualized"
-            ref="treeV2Ref"
-            :data="renderOptions"
-            highlight-current
-            :filter-method="filterMethod"
-            :props="{
-              label: itemLabel,
-              value: itemValue,
-              children: itemChildren
-            }"
-            show-checkbox
-            :check-strictly="checkStrictly"
-            :height="380"
-            @check="onCheck"
-          />
-          <el-tree
-            v-else
-            ref="treeRef"
-            :data="renderOptions"
-            :class="{ single: !multiple }"
-            :lazy="lazy"
-            show-checkbox
-            default-expand-all
-            :node-key="itemValue"
-            highlight-current
-            :check-strictly="checkStrictly"
-            :filter-node-method="filterMethod"
-            :props="{
-              label: itemLabel,
-              children: itemChildren
-            }"
-            @check="onCheck"
-          />
-        </el-col>
-        <el-col :span="10">
-          <el-input v-model="filterTextSelected" clearable placeholder="请输入关键词" />
-          <div class="topbar">
-            <div class="text">
-              已选：{{ getRenderCheckedNodes(getCheckedNodes(), filterValue).length }} 个
-            </div>
-            <div class="btns">
-              <el-button
-                v-if="getRenderCheckedNodes(getCheckedNodes(), filterValue).length"
-                type="primary"
-                link
-                @click="operate('clear.dialog')"
-              >
-                清空
-              </el-button>
-            </div>
-          </div>
-          <div class="items">
-            <div
-              v-for="node in getRenderCheckedNodes(renderCheckedNodes, filterValue)"
-              :key="node[props.itemValue]"
-              class="item"
+        <el-tooltip
+          v-if="toArraryValue(value).length > 1 && collapseTagsTooltip"
+          placement="bottom"
+          effect="light"
+          popper-class="tag-tooltip-popper"
+        >
+          <el-tag disable-transitions :type="_disabled ? 'info' : undefined">
+            +{{ toArraryValue(value).length - 1 }}
+          </el-tag>
+          <template #content>
+            <el-tag
+              v-for="item in toArraryValue(value).slice(1)"
+              :key="getTreeKey(item)"
+              class="link-tag"
+              closable
+              disable-transitions
+              :type="_disabled ? 'info' : undefined"
+              @close="operate('delete.field', item)"
+              @click.stop="operate('click.selectedTag', item)"
             >
-              <span>{{ node[props.itemLabel] }}</span>
-              <el-button
-                link
-                circle
-                :icon="Close"
-                @click="operate('delete.dialog', node)"
-              ></el-button>
-            </div>
-          </div>
-        </el-col>
-      </el-row>
-      <template #footer>
-        <el-button @click="show = false">取消</el-button>
-        <el-button type="primary" @click="confirm">确定</el-button>
+              {{ getLabel(item, copySourceOptions) }}
+            </el-tag>
+          </template>
+        </el-tooltip>
+        <el-tag
+          v-if="toArraryValue(value).length > 1 && !collapseTagsTooltip"
+          disable-transitions
+          :type="_disabled ? 'info' : undefined"
+        >
+          +{{ toArraryValue(value).length - 1 }}
+        </el-tag>
       </template>
-    </el-dialog>
-  </el-config-provider>
+      <el-tag
+        v-for="item in toArraryValue(value)"
+        v-else
+        :key="getTreeKey(item)"
+        class="link-tag"
+        closable
+        disable-transitions
+        :type="_disabled ? 'info' : undefined"
+        @close="operate('delete.field', item)"
+        @click.stop="operate('click.selectedTag', item)"
+      >
+        {{ getLabel(item, copySourceOptions) }}
+      </el-tag>
+    </div>
+    <el-button
+      v-if="toArraryValue(value).length"
+      class="clear"
+      :icon="Close"
+      link
+      :disabled="_disabled"
+      @click.stop="operate('clear.field')"
+    ></el-button>
+  </div>
+  <el-dialog
+    v-model="show"
+    class="vs-tree-select-dialog"
+    :class="{ virtualized }"
+    :title="title"
+    :append-to-body="appendToBody"
+    @opened="operate('opened.dialog')"
+    @closed="operate('closed.dialog')"
+  >
+    <el-row v-loading="loading">
+      <el-col :span="14">
+        <el-input ref="filterInputRef" v-model="filterText" clearable placeholder="请输入关键词" />
+        <div v-if="renderOptions.length" class="toggle-all-selection">
+          <el-checkbox v-model="allSelected" @change="operate('toggle.allSelection')">
+            {{ allSelected ? '取消全选' : '全选' }}
+          </el-checkbox>
+        </div>
+        <el-tree-v2
+          v-if="virtualized"
+          ref="treeV2Ref"
+          :data="renderOptions"
+          highlight-current
+          :filter-method="filterMethod"
+          :props="{
+            label: itemLabel,
+            value: itemValue,
+            children: itemChildren
+          }"
+          show-checkbox
+          :check-strictly="checkStrictly"
+          :height="380"
+          @check="onCheck"
+        />
+        <el-tree
+          v-else
+          ref="treeRef"
+          :data="renderOptions"
+          :class="{ single: !multiple }"
+          :lazy="lazy"
+          show-checkbox
+          default-expand-all
+          :node-key="itemValue"
+          highlight-current
+          :check-strictly="checkStrictly"
+          :filter-node-method="filterMethod"
+          :props="{
+            label: itemLabel,
+            children: itemChildren
+          }"
+          @check="onCheck"
+        />
+      </el-col>
+      <el-col :span="10">
+        <el-input v-model="filterTextSelected" clearable placeholder="请输入关键词" />
+        <div class="topbar">
+          <div class="text">
+            已选：{{ getRenderCheckedNodes(getCheckedNodes(), filterValue).length }} 个
+          </div>
+          <div class="btns">
+            <el-button
+              v-if="getRenderCheckedNodes(getCheckedNodes(), filterValue).length"
+              type="primary"
+              link
+              @click="operate('clear.dialog')"
+            >
+              清空
+            </el-button>
+          </div>
+        </div>
+        <div class="items">
+          <div
+            v-for="node in getRenderCheckedNodes(renderCheckedNodes, filterValue)"
+            :key="node[props.itemValue]"
+            class="item"
+          >
+            <span>{{ node[props.itemLabel] }}</span>
+            <el-button
+              link
+              circle
+              :icon="Close"
+              @click="operate('delete.dialog', node)"
+            ></el-button>
+          </div>
+        </div>
+      </el-col>
+    </el-row>
+    <template #footer>
+      <el-button @click="show = false">取消</el-button>
+      <el-button type="primary" @click="confirm">确定</el-button>
+    </template>
+  </el-dialog>
 </template>
 
 <style lang="scss">
@@ -498,26 +490,26 @@ defineExpose({
   .toggle-all-selection {
     display: flex;
     justify-content: flex-start;
-    .vs-checkbox {
+    .el-checkbox {
       margin-left: 24px;
     }
   }
-  .vs-row {
+  .el-row {
     border: 1px solid #dcdfe6;
     border-radius: 4px;
-    .vs-col {
+    .el-col {
       padding: 15px;
       &:first-child {
         border-right: 1px solid #dcdfe6;
       }
     }
   }
-  .vs-tree {
+  .el-tree {
     overflow: auto;
     max-height: 355px;
     &.single {
-      .vs-checkbox__input {
-        .vs-checkbox__inner {
+      .el-checkbox__input {
+        .el-checkbox__inner {
           border-radius: 50%;
           &::after {
             width: 4px;
@@ -533,14 +525,14 @@ defineExpose({
           }
         }
         &.is-checked {
-          .vs-checkbox__inner::after {
+          .el-checkbox__inner::after {
             transform: translate(-50%, -50%) scale(1);
           }
         }
       }
     }
   }
-  .vs-input {
+  .el-input {
     margin-bottom: 10px;
   }
   .topbar {
@@ -574,22 +566,22 @@ defineExpose({
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      .vs-button {
+      .el-button {
         margin-left: 5px;
       }
     }
   }
 }
-.vs-tag.link-tag {
+.el-tag.link-tag {
   cursor: pointer;
-  .vs-tag__content:hover {
+  .el-tag__content:hover {
     text-decoration: underline;
   }
 }
 .tag-tooltip-popper {
   max-height: 300px;
   overflow: auto;
-  .vs-tag.link-tag {
+  .el-tag.link-tag {
     margin: 2px;
   }
 }
@@ -611,14 +603,14 @@ defineExpose({
   border-radius: var(--border-radius);
   box-sizing: border-box;
   background-color: #fff;
-  transition: border-color var(--vs-transition-duration-fast)
-    var(--vs-transition-function-ease-in-out-bezier);
+  transition: border-color var(--el-transition-duration-fast)
+    var(--el-transition-function-ease-in-out-bezier);
   &.disabled {
     cursor: not-allowed;
     background-color: var(--disabled-bg-color);
-    .vs-tag {
+    .el-tag {
       :deep {
-        .vs-icon {
+        .el-icon {
           cursor: not-allowed !important;
         }
       }
@@ -634,10 +626,10 @@ defineExpose({
     flex-wrap: wrap;
     .placeholder {
       color: var(--text-color-placeholder);
-      font-size: var(--vs-font-size-base);
+      font-size: var(--el-font-size-base);
     }
 
-    & > .vs-tag {
+    & > .el-tag {
       margin: 3px 3px 3px 0;
       height: auto;
       white-space: unset;

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import config from '@/components/config'
 import type { ISelectProps } from 'element-plus'
 
 defineProps<{
@@ -14,22 +13,20 @@ const model = defineModel<string | number | boolean | Record<string, any> | any[
 </script>
 
 <template>
-  <el-config-provider :namespace="config.namespace" :locale="config.locale">
-    <el-select
-      v-model="model"
-      v-bind="{
-        ...props,
-        clearable: props?.clearable ?? true,
-        filterable: props?.filterable ?? true
-      }"
+  <el-select
+    v-model="model"
+    v-bind="{
+      ...props,
+      clearable: props?.clearable ?? true,
+      filterable: props?.filterable ?? true
+    }"
+  >
+    <el-option
+      v-for="item in props?.options"
+      :key="item[props?.itemValue ?? 'id']"
+      :label="item[props?.itemLabel ?? 'label']"
+      :value="item[props?.itemValue ?? 'id']"
     >
-      <el-option
-        v-for="item in props?.options"
-        :key="item[props?.itemValue ?? 'id']"
-        :label="item[props?.itemLabel ?? 'label']"
-        :value="item[props?.itemValue ?? 'id']"
-      >
-      </el-option>
-    </el-select>
-  </el-config-provider>
+    </el-option>
+  </el-select>
 </template>

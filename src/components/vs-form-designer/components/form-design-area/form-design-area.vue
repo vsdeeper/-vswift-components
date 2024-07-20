@@ -14,7 +14,7 @@ const formDesignData = computed(() => useFormDesignerStore().formDesignData)
 <style lang="scss" scoped>
 .form-design-area {
   :deep(.widget-field) {
-    & > div[class*='el-']:not(.vs-row) {
+    & > div[class*='el-']:not(.el-row) {
       pointer-events: none;
     }
   }
