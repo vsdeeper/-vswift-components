@@ -230,6 +230,7 @@ function getTreeRef<T = InstanceType<typeof MyTree>>(): T | undefined {
 function getTreeKeysByValue(data?: VsTreeSelectValue) {
   if (!data) return []
   if (Array.isArray(data)) {
+    if (!data.length) return []
     if (isArraryObject(data)) {
       return (data as VsTreeSelectValueItem[]).map(
         (e: VsTreeSelectValueItem) => (e as Record<string, any>)[props.itemValue] as TreeKey
@@ -316,7 +317,7 @@ defineExpose({
 </script>
 
 <template>
-  <el-config-provider :locale="config.locale">
+  <el-config-provider :namespace="config.namespace" :locale="config.locale">
     <div
       class="vs-tree-select"
       :class="{ disabled: _disabled, 'collapse-tags': collapseTags }"
@@ -497,26 +498,26 @@ defineExpose({
   .toggle-all-selection {
     display: flex;
     justify-content: flex-start;
-    .el-checkbox {
+    .vs-checkbox {
       margin-left: 24px;
     }
   }
-  .el-row {
+  .vs-row {
     border: 1px solid #dcdfe6;
     border-radius: 4px;
-    .el-col {
+    .vs-col {
       padding: 15px;
       &:first-child {
         border-right: 1px solid #dcdfe6;
       }
     }
   }
-  .el-tree {
+  .vs-tree {
     overflow: auto;
     max-height: 355px;
     &.single {
-      .el-checkbox__input {
-        .el-checkbox__inner {
+      .vs-checkbox__input {
+        .vs-checkbox__inner {
           border-radius: 50%;
           &::after {
             width: 4px;
@@ -532,14 +533,14 @@ defineExpose({
           }
         }
         &.is-checked {
-          .el-checkbox__inner::after {
+          .vs-checkbox__inner::after {
             transform: translate(-50%, -50%) scale(1);
           }
         }
       }
     }
   }
-  .el-input {
+  .vs-input {
     margin-bottom: 10px;
   }
   .topbar {
@@ -573,22 +574,22 @@ defineExpose({
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      .el-button {
+      .vs-button {
         margin-left: 5px;
       }
     }
   }
 }
-.el-tag.link-tag {
+.vs-tag.link-tag {
   cursor: pointer;
-  .el-tag__content:hover {
+  .vs-tag__content:hover {
     text-decoration: underline;
   }
 }
 .tag-tooltip-popper {
   max-height: 300px;
   overflow: auto;
-  .el-tag.link-tag {
+  .vs-tag.link-tag {
     margin: 2px;
   }
 }
@@ -610,14 +611,14 @@ defineExpose({
   border-radius: var(--border-radius);
   box-sizing: border-box;
   background-color: #fff;
-  transition: border-color var(--el-transition-duration-fast)
-    var(--el-transition-function-ease-in-out-bezier);
+  transition: border-color var(--vs-transition-duration-fast)
+    var(--vs-transition-function-ease-in-out-bezier);
   &.disabled {
     cursor: not-allowed;
     background-color: var(--disabled-bg-color);
-    .el-tag {
+    .vs-tag {
       :deep {
-        .el-icon {
+        .vs-icon {
           cursor: not-allowed !important;
         }
       }
@@ -633,10 +634,10 @@ defineExpose({
     flex-wrap: wrap;
     .placeholder {
       color: var(--text-color-placeholder);
-      font-size: var(--el-font-size-base);
+      font-size: var(--vs-font-size-base);
     }
 
-    & > .el-tag {
+    & > .vs-tag {
       margin: 3px 3px 3px 0;
       height: auto;
       white-space: unset;

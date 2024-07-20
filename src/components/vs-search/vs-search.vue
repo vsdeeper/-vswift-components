@@ -22,7 +22,7 @@ defineExpose({
 </script>
 
 <template>
-  <el-config-provider :locale="config.locale">
+  <el-config-provider :namespace="config.namespace" :locale="config.locale">
     <div :id="id" class="vs-search" :class="{ more: showMore }">
       <el-form :model="form" :label-width="labelWidth ?? '100px'">
         <el-row>
@@ -76,15 +76,15 @@ defineExpose({
     .more {
       font-weight: normal;
     }
-    .el-button + .el-button {
+    .vs-button + .vs-button {
       margin-left: 5px;
     }
   }
 }
-:deep(.el-cascader) {
+:deep(.vs-cascader) {
   flex: 1;
 }
-:deep(.el-date-editor) {
+:deep(.vs-date-editor) {
   flex: 1;
 }
 </style>

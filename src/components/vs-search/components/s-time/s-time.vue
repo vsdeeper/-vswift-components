@@ -10,7 +10,7 @@ const model = defineModel<Date | [Date, Date] | [number, number] | [string, stri
 </script>
 
 <template>
-  <el-config-provider :locale="config.locale">
+  <el-config-provider :namespace="config.namespace" :locale="config.locale">
     <el-time-picker
       v-model="model"
       v-bind="{

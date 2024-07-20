@@ -55,6 +55,14 @@ export default defineConfig(() => {
       }),
       Inspect()
     ],
+    css: {
+      preprocessorOptions: {
+        scss: {
+          // element-plus自定义命名空间设置
+          additionalData: `@use "@/styles/element/index.scss" as *;`
+        }
+      }
+    },
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url))

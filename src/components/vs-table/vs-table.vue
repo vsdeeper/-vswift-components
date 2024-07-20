@@ -185,7 +185,7 @@ defineExpose({
 </script>
 
 <template>
-  <el-config-provider :locale="config.locale">
+  <el-config-provider :namespace="config.namespace" :locale="config.locale">
     <div v-loading="loading" class="vs-table">
       <div v-if="tableOperateItems?.length" :class="['operate', tableOperateAlign]">
         <template
@@ -314,7 +314,7 @@ defineExpose({
       justify-content: flex-start;
     }
   }
-  :deep(.el-button + .el-button) {
+  :deep(.vs-button + .vs-button) {
     margin-left: 5px;
   }
 }

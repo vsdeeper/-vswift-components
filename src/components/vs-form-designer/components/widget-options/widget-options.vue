@@ -124,12 +124,13 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
       width: 50%;
       padding: 4px;
       box-sizing: border-box;
-      .el-button {
+      .vs-button {
         width: 100%;
         font-weight: normal;
+        font-size: 12px;
         justify-content: flex-start;
       }
-      .el-button + .el-button {
+      .vs-button + .vs-button {
         margin-left: 0;
       }
     }

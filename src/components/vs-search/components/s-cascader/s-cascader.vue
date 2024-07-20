@@ -11,7 +11,7 @@ const model = defineModel<CascaderValue>()
 </script>
 
 <template>
-  <el-config-provider :locale="config.locale">
+  <el-config-provider :namespace="config.namespace" :locale="config.locale">
     <el-cascader
       v-model="model"
       v-bind="{

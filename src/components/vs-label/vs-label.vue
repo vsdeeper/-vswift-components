@@ -36,7 +36,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <el-config-provider :locale="config.locale">
+  <el-config-provider :namespace="config.namespace" :locale="config.locale">
     <div class="vs-label">
       {{ label }}
       <el-tooltip v-if="tooltipContent" :effect="tooltipEffect" :placement="tooltipPlacement">
@@ -53,7 +53,7 @@ const emit = defineEmits<{
 .vs-label {
   display: inline-flex;
   align-items: center;
-  .el-icon {
+  .vs-icon {
     margin-left: 3px;
   }
 }

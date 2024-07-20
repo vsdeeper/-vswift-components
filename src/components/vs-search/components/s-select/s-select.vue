@@ -14,7 +14,7 @@ const model = defineModel<string | number | boolean | Record<string, any> | any[
 </script>
 
 <template>
-  <el-config-provider :locale="config.locale">
+  <el-config-provider :namespace="config.namespace" :locale="config.locale">
     <el-select
       v-model="model"
       v-bind="{

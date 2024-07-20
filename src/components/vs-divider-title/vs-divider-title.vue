@@ -12,7 +12,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <el-config-provider :locale="config.locale">
+  <el-config-provider :namespace="config.namespace" :locale="config.locale">
     <div class="vs-divider-title">
       <el-divider content-position="left" border-style="dashed">
         {{ label }}
@@ -36,10 +36,10 @@ const emit = defineEmits<{
   display: flex;
   align-items: center;
   line-height: 1;
-  :deep(.el-divider__text.is-left) {
+  :deep(.vs-divider__text.is-left) {
     left: 0;
     padding: 0 5px 0 0;
-    color: var(--el-text-color-regular);
+    color: var(--vs-text-color-regular);
     font-weight: normal;
   }
 }

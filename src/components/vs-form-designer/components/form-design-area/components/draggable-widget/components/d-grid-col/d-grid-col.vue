@@ -26,7 +26,7 @@ const _formData = computed(() => props.formData)
 </template>
 
 <style lang="scss" scoped>
-.el-col {
+.vs-col {
   display: flex;
   min-height: 50px;
   border: 2px solid #fff;
@@ -38,7 +38,7 @@ const _formData = computed(() => props.formData)
     background-color: #fff;
     .col-widget {
       flex: 1;
-      border: 2px dotted var(--el-border-color);
+      border: 2px dotted var(--vs-border-color);
     }
   }
   :deep(.note) {

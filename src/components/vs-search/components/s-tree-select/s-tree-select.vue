@@ -14,7 +14,7 @@ const model = defineModel<VsTreeSelectValue>()
 </script>
 
 <template>
-  <el-config-provider :locale="config.locale">
+  <el-config-provider :namespace="config.namespace" :locale="config.locale">
     <VsTreeSelect v-model="model" v-bind="props" />
   </el-config-provider>
 </template>

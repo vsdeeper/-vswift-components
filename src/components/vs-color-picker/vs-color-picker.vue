@@ -20,7 +20,7 @@ function clickInput() {
 </script>
 
 <template>
-  <el-config-provider :locale="config.locale">
+  <el-config-provider :namespace="config.namespace" :locale="config.locale">
     <dvi class="vs-color-picker">
       <el-input v-model="model" :placeholder="placeholder" readonly @click="clickInput">
         <template #append>
@@ -33,10 +33,10 @@ function clickInput() {
 
 <style lang="scss" scoped>
 .vs-color-picker {
-  :deep(.el-input-group__append) {
+  :deep(.vs-input-group__append) {
     padding: 0;
   }
-  :deep(.el-color-picker__trigger) {
+  :deep(.vs-color-picker__trigger) {
     border: 0 none;
   }
 }

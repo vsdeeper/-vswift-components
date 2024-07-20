@@ -8,7 +8,7 @@ defineProps<{
 </script>
 
 <template>
-  <el-config-provider :locale="config.locale">
+  <el-config-provider :namespace="config.namespace" :locale="config.locale">
     <el-container class="vs-form-designer" :style="{ height: height ?? '650px' }">
       <el-aside class="left-side" width="320px">
         <el-tabs model-value="widget">
@@ -52,33 +52,33 @@ defineProps<{
 <style lang="scss" scoped>
 .vs-form-designer {
   overflow: auto;
-  .el-tabs {
+  .vs-tabs {
     height: 100%;
   }
-  :deep(.el-tabs__content) {
+  :deep(.vs-tabs__content) {
     height: calc(100% - 55px);
   }
-  :deep(.el-tab-pane) {
+  :deep(.vs-tab-pane) {
     height: 100%;
   }
   .left-side {
-    :deep(.el-scrollbar__view) {
+    :deep(.vs-scrollbar__view) {
       padding: 0 10px;
     }
-    :deep(.el-tabs__content) {
+    :deep(.vs-tabs__content) {
       padding: 0;
     }
   }
   .right-side {
-    :deep(.el-scrollbar__view) {
+    :deep(.vs-scrollbar__view) {
       padding: 0 10px;
     }
-    :deep(.el-tabs__content) {
+    :deep(.vs-tabs__content) {
       padding: 0;
     }
   }
-  .el-main {
-    --el-main-padding: 0;
+  .vs-main {
+    --vs-main-padding: 0;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -103,18 +103,18 @@ defineProps<{
           padding: 0;
           overflow: hidden;
           border-width: 1px;
-          border-color: var(--el-color-primary);
+          border-color: var(--vs-color-primary);
         }
         &.widget-field {
           &.sortable-chosen {
             border-width: 2px;
             border-style: solid;
-            border-color: var(--el-color-primary);
+            border-color: var(--vs-color-primary);
             box-sizing: border-box;
           }
-          .el-cascader,
-          .el-date-editor,
-          .el-input-number {
+          .vs-cascader,
+          .vs-date-editor,
+          .vs-input-number {
             width: 100%;
           }
         }
@@ -124,16 +124,16 @@ defineProps<{
       display: flex;
       align-items: flex-end;
       height: 40px;
-      .el-button + .el-button {
+      .vs-button + .vs-button {
         margin-left: 0;
       }
     }
-    :deep(.el-scrollbar) {
+    :deep(.vs-scrollbar) {
       box-sizing: border-box;
-      border: 3px dotted var(--el-border-color-light);
-      background-color: var(--el-bg-color-page);
+      border: 3px dotted var(--vs-border-color-light);
+      background-color: var(--vs-bg-color-page);
     }
-    :deep(.el-scrollbar__view) {
+    :deep(.vs-scrollbar__view) {
       height: 100%;
       padding: 8px;
       box-sizing: border-box;
