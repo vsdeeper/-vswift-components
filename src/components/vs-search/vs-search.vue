@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { nanoid } from 'nanoid'
 import type { VsSearchOptions } from '.'
 import { SComponent, type SComponentKey } from './components'
 import { pascal } from 'radash'
@@ -10,10 +9,23 @@ defineProps<{
   labelWidth?: string | number
 }>()
 
-const id = `mysearch${nanoid(5)}`
+const emit = defineEmits<{
+  (e: 'inquire', val: Record<string, any>): void
+  (e: 'reset'): void
+}>()
+
 const form = ref<Record<string, any>>({})
 const loading = ref(false)
 const showMore = ref(false)
+
+function onInquire() {
+  emit('inquire', form.value)
+}
+
+function onRest() {
+  form.value = {}
+  emit('reset')
+}
 
 defineExpose({
   loading
@@ -21,7 +33,7 @@ defineExpose({
 </script>
 
 <template>
-  <div v-if="options?.length" :id="id" class="vs-search" :class="{ more: showMore }">
+  <div v-if="options?.length" class="vs-search" :class="{ more: showMore }">
     <el-form :model="form" :label-width="labelWidth ?? '100px'">
       <el-row>
         <el-col
@@ -57,8 +69,8 @@ defineExpose({
                 <component :is="showMore ? ArrowUp : ArrowDown" />
               </el-icon>
             </el-button>
-            <el-button type="primary">查询</el-button>
-            <el-button>重置</el-button>
+            <el-button type="primary" @click="onInquire">查询</el-button>
+            <el-button @click="onRest">重置</el-button>
           </div>
         </el-col>
       </el-row>

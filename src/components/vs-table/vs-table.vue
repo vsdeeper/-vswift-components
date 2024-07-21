@@ -64,6 +64,17 @@ const emit = defineEmits<{
 const tableRef = ref<TableInstance>()
 const _currentPage = ref<number>()
 const _pageSize = ref<number>()
+const paginationLayout = ref('total, sizes, prev, pager, next, jumper')
+const paginationPagerCount = ref(5)
+
+onMounted(() => {
+  handleWindowResize()
+  window.addEventListener('resize', handleWindowResize)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleWindowResize)
+})
 
 watch(
   () => props.currentPage,
@@ -88,6 +99,18 @@ watch(_currentPage, (val) => {
 watch(_pageSize, (val) => {
   emit('update:pageSize', val!)
 })
+
+function handleWindowResize() {
+  const el = document.documentElement
+  const ww = el.clientWidth
+  if (ww < 768) {
+    paginationLayout.value = 'total, prev, pager, next'
+    paginationPagerCount.value = 3
+  } else {
+    paginationLayout.value = 'total, sizes, prev, pager, next, jumper'
+    paginationPagerCount.value = 5
+  }
+}
 
 function displayOperateItem(row: Record<string, any>, item: VsTableOperateItem) {
   const { show, code /** 权限标识符 */ } = item
@@ -219,7 +242,7 @@ defineExpose({
       <template #empty="scope">
         <slot name="empty" v-bind="scope"></slot>
       </template>
-      <el-table-column v-if="showSelection" type="selection" width="55" />
+      <el-table-column v-if="showSelection" type="selection" fixed="left" width="55" />
       <el-table-column v-if="showIndex" type="index" width="50" :index="(index) => index + 1" />
       <TableColumn v-for="(col, index) in columns" :key="`${col.label}${col.prop}${index}`" :col>
         <template v-for="slot in getSlots(columns)" #[slot]="scope">
@@ -279,8 +302,8 @@ defineExpose({
         v-model:page-size="_pageSize"
         v-bind="{
           pageSizes: [10, 20, 30, 40, 50],
-          layout: 'total, sizes, prev, pager, next, jumper',
-          pagerCount: 5,
+          layout: paginationLayout,
+          pagerCount: paginationPagerCount,
           background: true,
           ...paginationProps
         }"
@@ -318,7 +341,7 @@ defineExpose({
   }
   .pagination {
     display: flex;
-    margin: 15px 0;
+    margin: 16px 0;
     &.right {
       justify-content: flex-end;
     }

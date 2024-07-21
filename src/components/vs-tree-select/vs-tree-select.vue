@@ -509,7 +509,7 @@ defineExpose({
     border: 1px solid #dcdfe6;
     border-radius: 4px;
     div[class*='-col'] {
-      padding: 15px;
+      padding: 16px;
       &:first-child {
         border-right: 1px solid #dcdfe6;
       }
@@ -559,8 +559,8 @@ defineExpose({
   .items {
     max-height: 345px;
     overflow: auto;
-    padding-right: 15px;
-    margin-right: -15px;
+    padding-right: 16px;
+    margin-right: -16px;
     .item {
       display: flex;
       align-items: center;
