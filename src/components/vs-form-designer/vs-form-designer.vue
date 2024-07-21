@@ -49,32 +49,32 @@ defineProps<{
 <style lang="scss" scoped>
 .vs-form-designer {
   overflow: auto;
-  .el-tabs {
+  div[class*='-tabs--top'] {
     height: 100%;
   }
-  :deep(.el-tabs__content) {
+  :deep(div[class*='-tabs__content']) {
     height: calc(100% - 55px);
   }
-  :deep(.el-tab-pane) {
+  :deep(div[class*='-tab-pane']) {
     height: 100%;
   }
   .left-side {
-    :deep(.el-scrollbar__view) {
+    :deep(div[class*='-scrollbar__view']) {
       padding: 0 10px;
     }
-    :deep(.el-tabs__content) {
+    :deep(div[class*='-tabs__content']) {
       padding: 0;
     }
   }
   .right-side {
-    :deep(.el-scrollbar__view) {
+    :deep(div[class*='-scrollbar__view']) {
       padding: 0 10px;
     }
-    :deep(.el-tabs__content) {
+    :deep(div[class*='-tabs__content']) {
       padding: 0;
     }
   }
-  .el-main {
+  main[class*='-main'] {
     --el-main-padding: 0;
     display: flex;
     flex-direction: column;
@@ -109,9 +109,9 @@ defineProps<{
             border-color: var(--el-color-primary);
             box-sizing: border-box;
           }
-          .el-cascader,
-          .el-date-editor,
-          .el-input-number {
+          div[class*='-cascader '],
+          div[class*='-date-editor '],
+          div[class*='-input-number'] {
             width: 100%;
           }
         }
@@ -121,19 +121,19 @@ defineProps<{
       display: flex;
       align-items: flex-end;
       height: 40px;
-      .el-button + .el-button {
+      button[class*='-button'] + button[class*='-button'] {
         margin-left: 0;
       }
     }
-    :deep(.el-scrollbar) {
+    & > :deep(div[class*='-scrollbar']) {
       box-sizing: border-box;
       border: 3px dotted var(--el-border-color-light);
       background-color: var(--el-bg-color-page);
-    }
-    :deep(.el-scrollbar__view) {
-      height: 100%;
-      padding: 8px;
-      box-sizing: border-box;
+      div[class*='-scrollbar__view'] {
+        height: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+      }
     }
   }
 }

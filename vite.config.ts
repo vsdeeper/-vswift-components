@@ -43,6 +43,7 @@ export default defineConfig(() => {
         ]
       }),
       Components({
+        dirs: ['src/components', 'src/test'],
         dts: './components.d.ts',
         resolvers: [
           ElementPlusResolver({

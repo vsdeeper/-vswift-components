@@ -309,7 +309,7 @@ defineExpose({
       justify-content: flex-start;
     }
   }
-  :deep(.el-button + .el-button) {
+  :deep(button[class*='-button'] + button[class*='-button']) {
     margin-left: 5px;
   }
 }

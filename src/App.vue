@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import { VsTreeSelectTest, VsSearchTest, VsTableTest, VsFormDesignerTest } from '@/test'
-</script>
-
 <template>
   <el-tabs tab-position="left">
     <el-tab-pane label="表单设计">

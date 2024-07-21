@@ -12,7 +12,7 @@ const _formData = computed(() => props.formData)
 </script>
 
 <template>
-  <el-col v-for="col in designData" :key="col.id">
+  <el-col class="my-col" v-for="col in designData" :key="col.id">
     <div class="col-inner">
       <div class="col-widget">
         <DraggableWidget
@@ -26,7 +26,7 @@ const _formData = computed(() => props.formData)
 </template>
 
 <style lang="scss" scoped>
-.el-col {
+.my-col {
   display: flex;
   min-height: 50px;
   border: 2px solid #fff;

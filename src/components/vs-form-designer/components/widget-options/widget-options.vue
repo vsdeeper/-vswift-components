@@ -5,6 +5,7 @@ import type { WidgetDesignData, WidgetType } from '../..'
 import { widgetOptions } from './constants'
 import { nanoid5 } from '../../util'
 import type {
+  DCascaderOptions,
   DDataTableOptions,
   DDatePickerOptions,
   DDatetimePickerOptions,
@@ -52,6 +53,8 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
       } as DInputOptions
     case 'select':
       return { placeholder: '请选择' } as DSelectOptions
+    case 'cascader':
+      return { placeholder: '请选择' } as DCascaderOptions
     case 'date-picker':
       return {
         placeholder: '请选择日期',
@@ -124,14 +127,14 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
       width: 50%;
       padding: 4px;
       box-sizing: border-box;
-      .el-button {
+      button[class*='-button'] {
         width: 100%;
         font-weight: normal;
         font-size: 12px;
         justify-content: flex-start;
-      }
-      .el-button + .el-button {
-        margin-left: 0;
+        & + button[class*='-button'] {
+          margin-left: 0;
+        }
       }
     }
   }

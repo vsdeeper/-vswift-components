@@ -401,7 +401,13 @@ defineExpose({
   >
     <el-row v-loading="loading">
       <el-col :span="14">
-        <el-input ref="filterInputRef" v-model="filterText" clearable placeholder="请输入关键词" />
+        <el-input
+          ref="filterInputRef"
+          class="search-input"
+          v-model="filterText"
+          clearable
+          placeholder="请输入关键词"
+        />
         <div v-if="renderOptions.length" class="toggle-all-selection">
           <el-checkbox v-model="allSelected" @change="operate('toggle.allSelection')">
             {{ allSelected ? '取消全选' : '全选' }}
@@ -443,7 +449,12 @@ defineExpose({
         />
       </el-col>
       <el-col :span="10">
-        <el-input v-model="filterTextSelected" clearable placeholder="请输入关键词" />
+        <el-input
+          v-model="filterTextSelected"
+          class="search-input"
+          clearable
+          placeholder="请输入关键词"
+        />
         <div class="topbar">
           <div class="text">
             已选：{{ getRenderCheckedNodes(getCheckedNodes(), filterValue).length }} 个
@@ -490,26 +501,26 @@ defineExpose({
   .toggle-all-selection {
     display: flex;
     justify-content: flex-start;
-    .el-checkbox {
+    & > label[class*='-checkbox'] {
       margin-left: 24px;
     }
   }
-  .el-row {
+  div[class*='-row'] {
     border: 1px solid #dcdfe6;
     border-radius: 4px;
-    .el-col {
+    div[class*='-col'] {
       padding: 15px;
       &:first-child {
         border-right: 1px solid #dcdfe6;
       }
     }
   }
-  .el-tree {
+  div[class*='-tree '] {
     overflow: auto;
     max-height: 355px;
     &.single {
-      .el-checkbox__input {
-        .el-checkbox__inner {
+      span[class*='-checkbox__input'] {
+        span[class*='-checkbox__inner'] {
           border-radius: 50%;
           &::after {
             width: 4px;
@@ -525,14 +536,14 @@ defineExpose({
           }
         }
         &.is-checked {
-          .el-checkbox__inner::after {
+          span[class*='-checkbox__inner']::after {
             transform: translate(-50%, -50%) scale(1);
           }
         }
       }
     }
   }
-  .el-input {
+  .search-input {
     margin-bottom: 10px;
   }
   .topbar {
@@ -566,22 +577,22 @@ defineExpose({
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      .el-button {
+      button[class*='-button'] {
         margin-left: 5px;
       }
     }
   }
 }
-.el-tag.link-tag {
+span[class*='-tag '].link-tag {
   cursor: pointer;
-  .el-tag__content:hover {
+  span[class*='-tag__content']:hover {
     text-decoration: underline;
   }
 }
 .tag-tooltip-popper {
   max-height: 300px;
   overflow: auto;
-  .el-tag.link-tag {
+  span[class*='-tag '].link-tag {
     margin: 2px;
   }
 }
@@ -608,9 +619,9 @@ defineExpose({
   &.disabled {
     cursor: not-allowed;
     background-color: var(--disabled-bg-color);
-    .el-tag {
+    span[class*='-tag '] {
       :deep {
-        .el-icon {
+        i[class*='-icon '] {
           cursor: not-allowed !important;
         }
       }
@@ -629,7 +640,7 @@ defineExpose({
       font-size: var(--el-font-size-base);
     }
 
-    & > .el-tag {
+    & > span[class*='-tag '] {
       margin: 3px 3px 3px 0;
       height: auto;
       white-space: unset;

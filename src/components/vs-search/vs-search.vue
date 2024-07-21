@@ -73,15 +73,15 @@ defineExpose({
     .more {
       font-weight: normal;
     }
-    .el-button + .el-button {
+    button[class*='-button'] + button[class*='-button'] {
       margin-left: 5px;
     }
   }
 }
-:deep(.el-cascader) {
+:deep(div[class*='-cascader ']) {
   flex: 1;
 }
-:deep(.el-date-editor) {
+:deep(div[class*='-date-editor ']) {
   flex: 1;
 }
 </style>
