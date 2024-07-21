@@ -235,7 +235,7 @@ defineExpose({
         </template>
       </template>
     </div>
-    <el-table ref="tableRef" v-bind="tableProps">
+    <el-table v-if="columns?.length" ref="tableRef" v-bind="tableProps">
       <template #append="scope">
         <slot name="append" v-bind="scope"></slot>
       </template>
@@ -296,6 +296,7 @@ defineExpose({
         </template>
       </el-table-column>
     </el-table>
+    <el-text v-else class="no-data" type="info" tag="i">未配置表格列</el-text>
     <div v-if="showPagination" :class="['pagination', paginationAlign]">
       <el-pagination
         v-model:current-page="_currentPage"
@@ -348,6 +349,11 @@ defineExpose({
     &.left {
       justify-content: flex-start;
     }
+  }
+
+  .no-data {
+    display: block;
+    padding: 16px;
   }
 }
 </style>

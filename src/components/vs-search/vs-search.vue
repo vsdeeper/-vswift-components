@@ -33,8 +33,8 @@ defineExpose({
 </script>
 
 <template>
-  <div v-if="options?.length" class="vs-search" :class="{ more: showMore }">
-    <el-form :model="form" :label-width="labelWidth ?? '100px'">
+  <div class="vs-search" :class="{ more: showMore }">
+    <el-form v-if="options?.length" :model="form" :label-width="labelWidth ?? '100px'">
       <el-row>
         <el-col
           v-for="(item, index) in options"
@@ -62,7 +62,7 @@ defineExpose({
           </el-form-item>
         </el-col>
         <el-col :lg="6" :md="8" :sm="12" :xs="24">
-          <div class="btns">
+          <div class="function-btns">
             <el-button class="more" type="primary" size="small" link @click="showMore = !showMore">
               更多筛选条件
               <el-icon class="el-icon--right">
@@ -75,13 +75,13 @@ defineExpose({
         </el-col>
       </el-row>
     </el-form>
+    <el-text v-else class="no-data" type="info" tag="i">未配置搜索选项</el-text>
   </div>
-  <el-text v-else type="info" tag="i">未配置搜索选项</el-text>
 </template>
 
 <style lang="scss" scoped>
 .vs-search {
-  .btns {
+  .function-btns {
     margin-left: 10px;
     .more {
       font-weight: normal;
@@ -90,11 +90,15 @@ defineExpose({
       margin-left: 5px;
     }
   }
-}
-:deep(div[class*='-cascader ']) {
-  flex: 1;
-}
-:deep(div[class*='-date-editor ']) {
-  flex: 1;
+  :deep(div[class*='-cascader ']) {
+    flex: 1;
+  }
+  :deep(div[class*='-date-editor ']) {
+    flex: 1;
+  }
+  .no-data {
+    display: block;
+    padding: 16px;
+  }
 }
 </style>
