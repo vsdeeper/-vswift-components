@@ -185,7 +185,7 @@ defineExpose({
 
 <template>
   <div v-loading="loading" class="vs-table">
-    <div v-if="tableOperateItems?.length" :class="['operate', tableOperateAlign]">
+    <div v-if="tableOperateItems?.length" :class="['table-operate', tableOperateAlign]">
       <template
         v-for="(item, index) in tableOperateItems"
         :key="`tableOperateItem${item.value}${index}`"
@@ -229,7 +229,11 @@ defineExpose({
           <slot :name="slot" v-bind="scope" />
         </template>
       </TableColumn>
-      <el-table-column v-if="showRowOperate" v-bind="{ label: '操作', ...operateColumnProps }">
+      <el-table-column
+        v-if="showRowOperate"
+        class-name="column-operate"
+        v-bind="{ label: '操作', fixed: 'right', ...operateColumnProps }"
+      >
         <template #default="{ row }">
           <template
             v-for="(item, index) in rowOperateItems"
@@ -289,7 +293,7 @@ defineExpose({
 
 <style lang="scss" scoped>
 .vs-table {
-  .operate {
+  .table-operate {
     display: flex;
     margin: 10px 0;
     &.right {
@@ -297,6 +301,19 @@ defineExpose({
     }
     &.left {
       justify-content: flex-start;
+    }
+    :deep(button[class*='-button'] + button[class*='-button']) {
+      margin-left: 5px;
+    }
+  }
+  :deep(table[class*='-table__body']) {
+    .column-operate {
+      .cell {
+        margin-left: -2px;
+        button[class*='-button'] + button[class*='-button'] {
+          margin: 0;
+        }
+      }
     }
   }
   .pagination {
@@ -308,9 +325,6 @@ defineExpose({
     &.left {
       justify-content: flex-start;
     }
-  }
-  :deep(button[class*='-button'] + button[class*='-button']) {
-    margin-left: 5px;
   }
 }
 </style>

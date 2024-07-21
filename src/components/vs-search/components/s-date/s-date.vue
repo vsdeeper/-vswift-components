@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import type { SDateValue } from '.'
-import type { DatePickerProps } from 'element-plus'
+import type { SDateValue, SDateProps } from '.'
 
 defineProps<{
-  props?: Partial<DatePickerProps>
+  props?: SDateProps
 }>()
 
 const model = defineModel<SDateValue>()

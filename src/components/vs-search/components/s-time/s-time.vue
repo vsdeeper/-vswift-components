@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { TimePickerDefaultProps } from 'element-plus'
+import type { STimeProps } from '.'
 
 defineProps<{
-  props?: Partial<TimePickerDefaultProps>
+  props?: STimeProps
 }>()
 
 const model = defineModel<Date | [Date, Date] | [number, number] | [string, string]>()

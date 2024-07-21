@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { CascaderValue, cascaderProps } from 'element-plus'
-import type { ExtractPropTypes } from 'vue'
+import type { CascaderValue } from 'element-plus'
+import type { SCascaderProps } from '.'
 
 defineProps<{
-  props?: Partial<ExtractPropTypes<typeof cascaderProps>>
+  props?: SCascaderProps
 }>()
 
 const model = defineModel<CascaderValue>()

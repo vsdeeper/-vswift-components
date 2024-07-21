@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { WidgetDesignData } from '@/components/vs-form-designer'
 import type { DCheckboxOptions } from '.'
-import type { CheckboxValueType } from 'element-plus'
+import type { CheckboxGroupValueType, CheckboxValueType } from 'element-plus'
 
 const props = defineProps<{
   designData: WidgetDesignData
@@ -11,7 +11,7 @@ const emit = defineEmits<{
   (e: 'change', val?: CheckboxValueType[]): void
 }>()
 
-const model = defineModel<string>()
+const model = defineModel<CheckboxGroupValueType>()
 const options = computed<DCheckboxOptions>(() => props.designData.options)
 
 function onChange(val?: CheckboxValueType[]) {

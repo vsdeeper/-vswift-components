@@ -1,12 +1,8 @@
 <script setup lang="ts">
-import type { ISelectProps } from 'element-plus'
+import type { SSelectProps } from '.'
 
 defineProps<{
-  props?: Partial<ISelectProps> & {
-    options?: Record<string, any>[] // 选项数据源
-    itemLabel?: string // 指定选项标签为选项对象的某个属性值
-    itemValue?: string // 指定选项的值为选项对象的某个属性值
-  }
+  props?: SSelectProps
 }>()
 
 const model = defineModel<string | number | boolean | Record<string, any> | any[]>()

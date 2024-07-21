@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { InputProps } from 'element-plus'
+import type { SInputProps } from '.'
 
 defineProps<{
-  props?: Partial<InputProps>
+  props?: SInputProps
 }>()
 
 const model = defineModel<string>()

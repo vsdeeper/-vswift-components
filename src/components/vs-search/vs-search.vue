@@ -21,7 +21,7 @@ defineExpose({
 </script>
 
 <template>
-  <div :id="id" class="vs-search" :class="{ more: showMore }">
+  <div v-if="options?.length" :id="id" class="vs-search" :class="{ more: showMore }">
     <el-form :model="form" :label-width="labelWidth ?? '100px'">
       <el-row>
         <el-col
@@ -51,7 +51,7 @@ defineExpose({
         </el-col>
         <el-col :lg="6" :md="8" :sm="12" :xs="24">
           <div class="btns">
-            <el-button class="more" type="primary" link @click="showMore = !showMore">
+            <el-button class="more" type="primary" size="small" link @click="showMore = !showMore">
               更多筛选条件
               <el-icon class="el-icon--right">
                 <component :is="showMore ? ArrowUp : ArrowDown" />
@@ -64,6 +64,7 @@ defineExpose({
       </el-row>
     </el-form>
   </div>
+  <el-text v-else type="info" tag="i">未配置搜索选项</el-text>
 </template>
 
 <style lang="scss" scoped>
