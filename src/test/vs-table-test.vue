@@ -3,11 +3,11 @@ import { VsTable, type VsTableColumnItem, type VsTableOperateItem } from '@/comp
 import { sleep } from 'radash'
 import { format } from 'date-fns'
 
-const data = ref<Record<string, any>[]>([])
+const tableData = ref<Record<string, any>[]>([])
 const loading = ref(false)
 const params = ref({ currentPage: 1, pageSize: 20 })
 const permissions = ref(['add', 'edit', 'delete', 'copy', 'permission_config'])
-const columns = ref<VsTableColumnItem[]>([
+const tableColumns = ref<VsTableColumnItem[]>([
   { label: '日期', prop: 'date' },
   {
     label: '信息',
@@ -26,7 +26,7 @@ const columns = ref<VsTableColumnItem[]>([
     ]
   }
 ])
-const tableOperateItems = ref<VsTableOperateItem[]>([
+const tableOperateOptions = ref<VsTableOperateItem[]>([
   {
     label: '新增',
     value: 'add',
@@ -43,7 +43,7 @@ const tableOperateItems = ref<VsTableOperateItem[]>([
     show: (code) => permissions.value.includes(code)
   }
 ])
-const rowOperateItems = ref<VsTableOperateItem[]>([
+const rowOperateOptions = ref<VsTableOperateItem[]>([
   {
     label: '编辑',
     value: 'edit',
@@ -134,7 +134,7 @@ async function getData() {
 }
 
 onMounted(() => {
-  getData().then((res) => (data.value = res))
+  getData().then((res) => (tableData.value = res))
 })
 
 function onOperate(key: string, row?: Record<string, any>) {
@@ -172,13 +172,13 @@ function onOperate(key: string, row?: Record<string, any>) {
     v-model:current-page="params.currentPage"
     v-model:page-size="params.pageSize"
     :loading
-    :columns
+    :table-columns
+    :table-data
     show-selection
-    :table-operate-items="tableOperateItems"
-    :row-operate-items="rowOperateItems"
-    :table-props="{ data }"
+    :total="100"
+    :table-operate-options="tableOperateOptions"
+    :row-operate-options="rowOperateOptions"
     :operate-column-props="{ minWidth: 100 }"
-    :pagination-props="{ total: 100 }"
     @operate="onOperate"
   >
     <template #date="{ row }">
