@@ -37,9 +37,8 @@ const tableOperateOptions = ref<VsTableOperateItem[]>([
     label: '批量删除',
     value: 'batch_delete',
     code: 'delete',
+    type: 'danger',
     showPopconfirm: true,
-    buttonProps: { type: 'danger' },
-    popconfirmProps: { title: '确定删除吗？' },
     show: (code) => permissions.value.includes(code)
   }
 ])
@@ -48,9 +47,9 @@ const rowOperateOptions = ref<VsTableOperateItem[]>([
     label: '编辑',
     value: 'edit',
     code: 'edit',
-    show: (row, code) => {
+    show: (code, row) => {
       if (permissions.value.includes(code)) {
-        return [1, 2, 3, 4].includes(row.status)
+        return [1, 2, 3, 4].includes(row!.status)
       } else return false
     }
   },
@@ -58,9 +57,9 @@ const rowOperateOptions = ref<VsTableOperateItem[]>([
     label: '复制',
     value: 'copy',
     code: 'copy',
-    show: (row, code) => {
+    show: (code, row) => {
       if (permissions.value.includes(code)) {
-        return [1, 2, 3, 4].includes(row.status)
+        return [1, 2, 3, 4].includes(row!.status)
       } else return false
     }
   },
@@ -68,9 +67,9 @@ const rowOperateOptions = ref<VsTableOperateItem[]>([
     label: '权限设置',
     value: 'permission_config',
     code: 'permission_config',
-    show: (row, code) => {
+    show: (code, row) => {
       if (permissions.value.includes(code)) {
-        return [4].includes(row.status)
+        return [4].includes(row!.status)
       } else return false
     }
   },
@@ -78,12 +77,11 @@ const rowOperateOptions = ref<VsTableOperateItem[]>([
     label: '删除',
     value: 'delete',
     code: 'delete',
+    type: 'danger',
     showPopconfirm: true,
-    buttonProps: { type: 'danger' },
-    popconfirmProps: { title: '确定删除吗？' },
-    show: (row, code) => {
+    show: (code, row) => {
       if (permissions.value.includes(code)) {
-        return [1, 2, 3, 4].includes(row.status)
+        return [1, 2, 3, 4].includes(row!.status)
       } else return false
     }
   }
