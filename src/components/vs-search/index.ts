@@ -11,4 +11,10 @@ export interface VsSearchOptionItem {
 }
 export type VsSearchOptions = VsSearchOptionItem[]
 export type VsSearchInstance = InstanceType<typeof VsSearch>
+export interface VsSearchProps {
+  options?: VsSearchOptions
+  labelWidth?: string | number
+  showDividerLine?: boolean
+  [key: string]: any
+}
 export { VsSearch }

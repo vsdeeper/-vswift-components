@@ -75,7 +75,7 @@ defineProps<{
     }
   }
   main[class*='-main'] {
-    --el-main-padding: 0;
+    --vs-main-padding: 0;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -100,13 +100,13 @@ defineProps<{
           padding: 0;
           overflow: hidden;
           border-width: 1px;
-          border-color: var(--el-color-primary);
+          border-color: var(--vs-color-primary);
         }
         &.widget-field {
           &.sortable-chosen {
             border-width: 2px;
             border-style: solid;
-            border-color: var(--el-color-primary);
+            border-color: var(--vs-color-primary);
             box-sizing: border-box;
           }
           div[class*='-cascader '],
@@ -127,8 +127,8 @@ defineProps<{
     }
     & > :deep(div[class*='-scrollbar']) {
       box-sizing: border-box;
-      border: 3px dotted var(--el-border-color-light);
-      background-color: var(--el-bg-color-page);
+      border: 3px dotted var(--vs-border-color-light);
+      background-color: var(--vs-bg-color-page);
       div[class*='-scrollbar__view'] {
         height: 100%;
         padding: 8px;

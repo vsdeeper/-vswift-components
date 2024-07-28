@@ -1,3 +1,8 @@
+// 自定义命名空间
+@forward 'element-plus/theme-chalk/src/mixins/config.scss' with (
+  $namespace: 'vs'
+);
+
 // 修改element-plus的样式变量
 @forward 'element-plus/theme-chalk/src/common/var.scss' with (
   $colors: (

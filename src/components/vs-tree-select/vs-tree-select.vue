@@ -4,7 +4,7 @@ import { Close } from '@element-plus/icons-vue'
 import type { TreeKey, TreeNodeData } from 'element-plus/es/components/tree-v2/src/types'
 import { type InputInstance, ElTree as MyTree, ElTreeV2 as MyTreeV2 } from 'element-plus'
 import type { VsTreeSelectProps, VsTreeSelectValue, VsTreeSelectValueItem } from '.'
-import { findArraryValueFromTreeData, isArraryObject } from '@vswift/utils'
+import { findArraryValueFromTreeData, isArraryObject } from './util'
 
 const props = withDefaults(defineProps<VsTreeSelectProps>(), {
   modelValue: undefined,
@@ -614,8 +614,8 @@ span[class*='-tag '].link-tag {
   border-radius: var(--border-radius);
   box-sizing: border-box;
   background-color: #fff;
-  transition: border-color var(--el-transition-duration-fast)
-    var(--el-transition-function-ease-in-out-bezier);
+  transition: border-color var(--vs-transition-duration-fast)
+    var(--vs-transition-function-ease-in-out-bezier);
   &.disabled {
     cursor: not-allowed;
     background-color: var(--disabled-bg-color);
@@ -637,7 +637,7 @@ span[class*='-tag '].link-tag {
     flex-wrap: wrap;
     .placeholder {
       color: var(--text-color-placeholder);
-      font-size: var(--el-font-size-base);
+      font-size: var(--vs-font-size-base);
     }
 
     & > span[class*='-tag '] {

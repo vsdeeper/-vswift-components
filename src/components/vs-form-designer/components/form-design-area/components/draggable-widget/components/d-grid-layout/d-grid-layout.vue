@@ -20,6 +20,6 @@ const _formData = computed(() => props.formData)
 .d-grid-layout {
   width: 100%;
   min-height: 45px;
-  border: 2px dotted var(--el-border-color);
+  border: 2px dotted var(--vs-border-color);
 }
 </style>

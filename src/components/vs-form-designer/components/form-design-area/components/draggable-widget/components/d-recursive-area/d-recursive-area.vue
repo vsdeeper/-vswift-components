@@ -23,7 +23,7 @@ const _formData = computed(() => props.formData)
 <style lang="scss" scoped>
 .d-recursive-area {
   position: relative;
-  border: 2px dotted var(--el-border-color);
+  border: 2px dotted var(--vs-border-color);
   box-sizing: border-box;
   :deep(.draggable-widget) {
     min-height: 150px;

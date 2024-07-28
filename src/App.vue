@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 </script>
+
 <template>
-  <el-config-provider :locale="zhCn">
-    <el-tabs tab-position="left">
+  <el-config-provider :locale="zhCn" namespace="vs">
+    <el-tabs class="my-tabs" tab-position="left">
       <el-tab-pane label="表单设计">
         <VsFormDesignerTest />
       </el-tab-pane>
@@ -21,11 +22,11 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 </template>
 
 <style lang="scss" scoped>
-.el-tabs {
+.my-tabs {
   display: flex;
-  :deep(.el-tabs__content) {
+  & > :deep(div[class*='-tabs__content']) {
     flex: 1;
-    padding: 10px;
+    padding: 20px;
   }
 }
 </style>
