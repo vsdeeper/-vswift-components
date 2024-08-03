@@ -1,96 +1,99 @@
 <script setup lang="ts">
-import { VsTable, type VsTableColumnItem, type VsTableOperateItem } from '@/components'
+import { VsTable, type VsTableProps } from '@/components'
 import { sleep } from 'radash'
 import { format } from 'date-fns'
 
-const tableData = ref<Record<string, any>[]>([])
-const loading = ref(false)
 const params = ref({ currentPage: 1, pageSize: 20 })
 const permissions = ref(['add', 'edit', 'delete', 'copy', 'permission_config'])
-const tableColumns = ref<VsTableColumnItem[]>([
-  { label: '日期', prop: 'date' },
-  {
-    label: '信息',
-    prop: 'info',
-    children: [
-      { label: '名字', prop: 'name' },
-      {
-        label: '地址',
-        prop: 'addrInfo',
-        children: [
-          { label: '国家', prop: 'state' },
-          { label: '城市', prop: 'city' },
-          { label: '地址', prop: 'address' }
-        ]
+const table = ref<VsTableProps>({
+  loading: false,
+  data: [],
+  total: 100,
+  showSelection: true,
+  operateColumnProps: { minWidth: 100 },
+  columns: [
+    { label: '日期', prop: 'date' },
+    {
+      label: '信息',
+      prop: 'info',
+      children: [
+        { label: '名字', prop: 'name' },
+        {
+          label: '地址',
+          prop: 'addrInfo',
+          children: [
+            { label: '国家', prop: 'state' },
+            { label: '城市', prop: 'city' },
+            { label: '地址', prop: 'address' }
+          ]
+        }
+      ]
+    }
+  ],
+  operateOptions: [
+    {
+      label: '新增',
+      value: 'add',
+      code: 'add',
+      show: (code) => permissions.value.includes(code)
+    },
+    {
+      label: '批量删除',
+      value: 'batch_delete',
+      code: 'delete',
+      type: 'danger',
+      show: (code) => permissions.value.includes(code)
+    }
+  ],
+  rowOperateOptions: [
+    {
+      label: '编辑',
+      value: 'edit',
+      code: 'edit',
+      show: (code, row) => {
+        if (permissions.value.includes(code)) {
+          return [1, 2, 3, 4].includes(row!.status)
+        } else return false
       }
-    ]
-  }
-])
-const tableOperateOptions = ref<VsTableOperateItem[]>([
-  {
-    label: '新增',
-    value: 'add',
-    code: 'add',
-    show: (code) => permissions.value.includes(code)
-  },
-  {
-    label: '批量删除',
-    value: 'batch_delete',
-    code: 'delete',
-    type: 'danger',
-    showPopconfirm: true,
-    show: (code) => permissions.value.includes(code)
-  }
-])
-const rowOperateOptions = ref<VsTableOperateItem[]>([
-  {
-    label: '编辑',
-    value: 'edit',
-    code: 'edit',
-    show: (code, row) => {
-      if (permissions.value.includes(code)) {
-        return [1, 2, 3, 4].includes(row!.status)
-      } else return false
+    },
+    {
+      label: '复制',
+      value: 'copy',
+      code: 'copy',
+      show: (code, row) => {
+        if (permissions.value.includes(code)) {
+          return [1, 2, 3, 4].includes(row!.status)
+        } else return false
+      }
+    },
+    {
+      label: '权限设置',
+      value: 'permission_config',
+      code: 'permission_config',
+      show: (code, row) => {
+        if (permissions.value.includes(code)) {
+          return [4].includes(row!.status)
+        } else return false
+      }
+    },
+    {
+      label: '删除',
+      value: 'delete',
+      code: 'delete',
+      type: 'danger',
+      show: (code, row) => {
+        if (permissions.value.includes(code)) {
+          return [1, 2, 3, 4].includes(row!.status)
+        } else return false
+      }
     }
-  },
-  {
-    label: '复制',
-    value: 'copy',
-    code: 'copy',
-    show: (code, row) => {
-      if (permissions.value.includes(code)) {
-        return [1, 2, 3, 4].includes(row!.status)
-      } else return false
-    }
-  },
-  {
-    label: '权限设置',
-    value: 'permission_config',
-    code: 'permission_config',
-    show: (code, row) => {
-      if (permissions.value.includes(code)) {
-        return [4].includes(row!.status)
-      } else return false
-    }
-  },
-  {
-    label: '删除',
-    value: 'delete',
-    code: 'delete',
-    type: 'danger',
-    showPopconfirm: true,
-    show: (code, row) => {
-      if (permissions.value.includes(code)) {
-        return [1, 2, 3, 4].includes(row!.status)
-      } else return false
-    }
-  }
-])
+  ]
+})
 
 async function getData() {
-  loading.value = true
+  table.value.loading = true
   await sleep(2000)
-  loading.value = false
+  table.value.loading = false
   return [
     {
       id: 1,
@@ -132,7 +135,7 @@ async function getData() {
 }
 
 onMounted(() => {
-  getData().then((res) => (tableData.value = res))
+  getData().then((res) => (table.value.data = res))
 })
 
 function onOperate(key: string, row?: Record<string, any>) {
@@ -169,14 +172,7 @@ function onOperate(key: string, row?: Record<string, any>) {
   <VsTable
     v-model:current-page="params.currentPage"
     v-model:page-size="params.pageSize"
-    :loading
-    :table-columns
-    :table-data
-    show-selection
-    :total="100"
-    :table-operate-options="tableOperateOptions"
-    :row-operate-options="rowOperateOptions"
-    :operate-column-props="{ minWidth: 100 }"
+    v-bind="table"
     @operate="onOperate"
   >
     <template #date="{ row }">

@@ -23,6 +23,8 @@ const genEntry = () => {
 
 // https://vitejs.dev/config/
 export default defineConfig(() => {
+  const { IS_BUILD_LIB } = process.env
+
   // 优化element-plus预加载
   const matchElementPlusPath = globSync('node_modules/element-plus/es/components/*/style')
   const optimizeDepsElementPlusIncludes = [
@@ -70,16 +72,19 @@ export default defineConfig(() => {
       }
     },
     optimizeDeps: { include: [...optimizeDepsElementPlusIncludes] },
-    build: {
-      emptyOutDir: false,
-      copyPublicDir: false,
-      lib: {
-        entry: genEntry(),
-        fileName: '[name]'
-      },
-      rollupOptions: {
-        external: ['vue', '@element-plus/icons-vue', 'element-plus', 'radash', 'nanoid']
-      }
-    }
+    build:
+      IS_BUILD_LIB === 'true'
+        ? {
+            emptyOutDir: false,
+            copyPublicDir: false,
+            lib: {
+              entry: genEntry(),
+              fileName: '[name]'
+            },
+            rollupOptions: {
+              external: ['vue', '@element-plus/icons-vue', 'element-plus', 'radash', 'nanoid']
+            }
+          }
+        : undefined
   }
 })

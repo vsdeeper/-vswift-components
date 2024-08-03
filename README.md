@@ -11,7 +11,7 @@ pnpm dev
 ## Build lib mode
 
 ```sh
-pnpm build
+pnpm build:lib
 ```
 
 It will emit `dts` for components, then build output `.js` and `.cjs` file.
