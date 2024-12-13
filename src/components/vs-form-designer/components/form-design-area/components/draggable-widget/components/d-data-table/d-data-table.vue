@@ -2,19 +2,15 @@
 import type { WidgetDesignData } from '@/components/vs-form-designer'
 import DraggableWidget from '../../draggable-widget.vue'
 
-const props = defineProps<{
-  formData: Record<string, any>[]
-  designData: WidgetDesignData
-}>()
-
-const _formData = computed(() => props.formData)
+const widgetList = defineModel<WidgetDesignData[]>('widgetList', { default: () => [] })
+const formData = defineModel<Record<string, any>[]>('formData', { default: () => [] })
 </script>
 
 <template>
   <div class="d-data-table">
     <DraggableWidget
-      v-model:widgetList="designData.widgetList!"
-      :form-data="_formData"
+      v-model:widget-list="widgetList"
+      v-model:form-data="formData"
       where="data-table"
     />
   </div>
@@ -27,6 +23,7 @@ const _formData = computed(() => props.formData)
   box-sizing: border-box;
   :deep(.draggable-widget) {
     min-height: 150px;
+    padding: 12px;
   }
 }
 </style>

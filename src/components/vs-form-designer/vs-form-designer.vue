@@ -87,36 +87,6 @@ defineProps<{
       padding: 8px;
       box-sizing: border-box;
     }
-    :deep(.draggable-widget) {
-      height: 100%;
-      box-sizing: border-box;
-      .item {
-        position: relative;
-        padding: 5px;
-        border: 2px solid #fff;
-        background-color: #fff;
-        &.widget-option.sortable-chosen {
-          height: 0;
-          padding: 0;
-          overflow: hidden;
-          border-width: 1px;
-          border-color: var(--vs-color-primary);
-        }
-        &.widget-field {
-          &.sortable-chosen {
-            border-width: 2px;
-            border-style: solid;
-            border-color: var(--vs-color-primary);
-            box-sizing: border-box;
-          }
-          div[class*='-cascader '],
-          div[class*='-date-editor '],
-          div[class*='-input-number'] {
-            width: 100%;
-          }
-        }
-      }
-    }
     .function-bar {
       display: flex;
       align-items: flex-end;
