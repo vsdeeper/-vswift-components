@@ -11,7 +11,7 @@ import type {
   DDatetimePickerOptions,
   DInputOptions,
   DSelectOptions,
-  DTimePickerOptions
+  DTimePickerOptions,
 } from '../form-design-area'
 // import type { InputProps } from 'element-plus'
 
@@ -24,7 +24,7 @@ function transformClone(widget: WidgetOptionItem): WidgetDesignData | undefined 
       type: widget.value as WidgetType,
       options: genWidgetDataOptions(widget),
       widgetList: genWidgetDataWidgetList(widget.value),
-      __selected: false // 组件被选中标识，协助做交互，无实际用途
+      __selected: false, // 组件被选中标识，协助做交互，无实际用途
     }
   } catch (error) {
     console.error('transformClone ->', error)
@@ -49,44 +49,48 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
   switch (widget.value) {
     case 'input':
       return {
-        placeholder: '请输入'
+        label: widget.label,
+        placeholder: '请输入',
       } as DInputOptions
     case 'select':
-      return { placeholder: '请选择' } as DSelectOptions
+      return { label: widget.label, placeholder: '请选择' } as DSelectOptions
     case 'cascader':
-      return { placeholder: '请选择' } as DCascaderOptions
+      return { label: widget.label, placeholder: '请选择' } as DCascaderOptions
     case 'date-picker':
       return {
+        label: widget.label,
         placeholder: '请选择日期',
         startPlaceholder: '开始日期',
-        endPlaceholder: '结束日期'
+        endPlaceholder: '结束日期',
       } as DDatePickerOptions
     case 'datetime-picker':
       return {
+        label: widget.label,
         placeholder: '请选择日期时间',
         startPlaceholder: '开始日期时间',
-        endPlaceholder: '结束日期时间'
+        endPlaceholder: '结束日期时间',
       } as DDatetimePickerOptions
     case 'time-picker':
       return {
+        label: widget.label,
         placeholder: '请选择时间',
         startPlaceholder: '开始时间',
-        endPlaceholder: '结束时间'
+        endPlaceholder: '结束时间',
       } as DTimePickerOptions
     case 'data-table':
       return {
-        label: '数据表格'
+        label: widget.label,
       } as DDataTableOptions
     default:
       return {
-        label: widget.label
+        label: widget.label,
       } as Record<string, any>
   }
 }
 </script>
 
 <template>
-  <el-collapse class="widget-options" :model-value="widgetOptions.map((e) => e.value)">
+  <el-collapse class="widget-options" :model-value="widgetOptions.map(e => e.value)">
     <el-collapse-item
       v-for="item in widgetOptions"
       :key="item.value"
@@ -100,7 +104,7 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
           :group="{
             name: 'draggable-widget-option',
             pull: 'clone',
-            put: false
+            put: false,
           }"
           :sort="false"
           :clone="(widget: WidgetOptionItem) => transformClone(widget)"

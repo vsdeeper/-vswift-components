@@ -106,18 +106,26 @@ function toggleSelected(widgetList: WidgetDesignData[], isAdded?: boolean) {
         :class="{ selected: item.__selected }"
         @click.stop="onOperate('click-widget-field', item)"
       >
+        <el-form-item v-if="item.type === 'data-table'" :label="item.options?.label">
+          <component
+            :is="DComponent[pascal(item.type)]"
+            v-model:widget-list="item.widgetList"
+            v-model:form-data="formData![item.id]"
+          />
+        </el-form-item>
         <component
-          v-if="item.type === 'data-table'"
-          :is="DComponent[pascal(item.type)]"
-          v-model:widget-list="item.widgetList"
-          v-model:form-data="formData![item.id]"
-        />
-        <component
-          v-else
+          v-else-if="item.type === 'text'"
           :is="DComponent[pascal(item.type)]"
           v-model="formData![item.id]"
           :design-data="item"
         />
+        <el-form-item v-else :label="item.options?.label">
+          <component
+            :is="DComponent[pascal(item.type)]"
+            v-model="formData![item.id]"
+            :design-data="item"
+          />
+        </el-form-item>
       </div>
     </template>
   </draggable>

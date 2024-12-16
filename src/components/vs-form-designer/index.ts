@@ -26,6 +26,7 @@ export type WidgetType =
   | 'time-picker'
   | 'upload'
 // 以下自定义组件
+
 export interface WidgetDesignData<Options = Record<string, any>> {
   id: string
   type: WidgetType

@@ -18,12 +18,14 @@ const formData = defineModel<Record<string, any>[]>('formData', { default: () =>
 
 <style lang="scss" scoped>
 .d-data-table {
+  flex: 1;
   position: relative;
   border: 2px dotted var(--vs-border-color);
   box-sizing: border-box;
+  background-color: var(--vs-bg-color-page);
   :deep(.draggable-widget) {
     min-height: 150px;
-    padding: 12px;
+    padding: 8px;
   }
 }
 </style>

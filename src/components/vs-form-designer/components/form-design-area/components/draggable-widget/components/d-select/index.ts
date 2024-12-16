@@ -3,7 +3,8 @@ import DSelect from './d-select.vue'
 
 export type DSelectInstance = InstanceType<typeof DSelect>
 export type DSelectOptions = Partial<ISelectProps> & {
-  options?: Record<string, any>[]
+  label?: string
+  optionItems?: Record<string, any>[]
   itemLabel?: string
   itemValue?: string
 }
