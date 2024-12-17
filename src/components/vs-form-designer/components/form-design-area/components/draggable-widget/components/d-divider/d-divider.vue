@@ -7,11 +7,10 @@ const props = defineProps<{
 }>()
 
 const options = computed<DDividerOptions>(() => props.designData.options)
-const slots = useSlots()
 </script>
 
 <template>
   <el-divider v-bind="options">
-    <template v-if="slots.default" #default>{{ options.text }}</template>
+    <template #default>{{ options.text ?? '分割线' }}</template>
   </el-divider>
 </template>

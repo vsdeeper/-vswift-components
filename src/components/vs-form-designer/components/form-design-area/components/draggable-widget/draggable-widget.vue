@@ -4,9 +4,12 @@ import type { FormDesignData, WidgetDesignData, WidgetType } from '@/components/
 import { DComponent } from './components'
 import { pascal } from 'radash'
 import { useFormDesignerStore } from '@/stores'
+import { OPERATE_OPTIONS } from './constants'
+import { genWidgetId } from '@/components/vs-form-designer/util'
 
 const props = defineProps<{
   where?: WidgetType // 标明被哪个widget-field组件引用，做逻辑区分
+  parentNode?: WidgetDesignData
 }>()
 
 const widgetList = defineModel<WidgetDesignData[]>('widgetList', { default: () => [] })
@@ -31,7 +34,48 @@ function onOperate(key: string, val: any) {
       setActiveWidgetDesignData(val)
       break
     }
+    case 'copy': {
+      const copyItem: WidgetDesignData = JSON.parse(JSON.stringify(widgetList.value[val]))
+      recurWidgetList(copyItem, item => {
+        item.id = genWidgetId(item.type)
+      })
+      widgetList.value.splice(val + 1, 0, copyItem)
+      setActiveWidgetDesignData(copyItem)
+      break
+    }
+    case 'delete': {
+      widgetList.value.splice(val, 1)
+      if (
+        widgetList.value.length ===
+        0 /** 控件删完，检查是否有父级，有则选中父级，无则清空当前设计数据 */
+      ) {
+        if (props.parentNode) {
+          setActiveWidgetDesignData(props.parentNode)
+        } else {
+          setActiveWidgetDesignData(undefined)
+        }
+      } else {
+        if (widgetList.value.length === val /** 删的是最后一项，选中控件列表第一项 */) {
+          setActiveWidgetDesignData(widgetList.value[0])
+        } else {
+          setActiveWidgetDesignData(widgetList.value[val])
+        }
+      }
+      break
+    }
   }
+}
+
+/**
+ * 递归widgetList
+ * @param data
+ * @param callback
+ */
+function recurWidgetList(data: WidgetDesignData, handler: (item: WidgetDesignData) => void) {
+  handler(data)
+  data.widgetList?.forEach(item => {
+    recurWidgetList(item, handler)
+  })
 }
 
 /**
@@ -54,37 +98,6 @@ function interceptSomeWidgetPutInAnotherWidget(
     }
   }
 }
-
-function toggleSelected(widgetList: WidgetDesignData[], isAdded?: boolean) {
-  // 如果当前控件已经是选中的，则无视
-  // if (widget.__selected) return
-
-  // 清除旧selected
-  // removeSelected(item, data)
-
-  if (isAdded /** 新增加的组件 */) {
-    // setShareActiveFieldSettingData(addSelected(item, data))
-  } else {
-    // widget.__selected = true
-    // setShareActiveFieldSettingData(item)
-  }
-}
-
-// 清除旧selected
-// function removeSelected(item: WidgetDesignData, data: FieldSetting[]) {
-//   const find = data.find(e => !!e.__selected)
-//   const findIndex = data.findIndex(e => !!e.__selected)
-//   const handler: Handler<FieldSetting[]> = (find, findIndex, data) => {
-//     find.__selected = false
-//   }
-//   if (find) {
-//     handler(find, findIndex, data)
-//   } else {
-//     gridColLooper('remove_selected', item, data, handler)
-//     selfincrementTableLooper('remove_selected', item, data, handler)
-//     selfincrementAreaLooper('remove_selected', item, data, handler)
-//   }
-// }
 </script>
 
 <template>
@@ -100,21 +113,25 @@ function toggleSelected(widgetList: WidgetDesignData[], isAdded?: boolean) {
     @end="canDrag = false"
     @change="onDragChange"
   >
-    <template #item="{ element: item }">
+    <template #item="{ element: item, index }">
       <div
         class="widget-field"
         :class="{ selected: item.__selected }"
         @click.stop="onOperate('click-widget-field', item)"
       >
-        <el-form-item v-if="item.type === 'data-table'" :label="item.options?.label">
+        <el-form-item
+          v-if="['data-table', 'recursive-area'].includes(item.type)"
+          :label="item.options?.label"
+        >
           <component
             :is="DComponent[pascal(item.type)]"
             v-model:widget-list="item.widgetList"
             v-model:form-data="formData![item.id]"
+            :parent-node="item"
           />
         </el-form-item>
         <component
-          v-else-if="item.type === 'text'"
+          v-else-if="['text', 'divider'].includes(item.type)"
           :is="DComponent[pascal(item.type)]"
           v-model="formData![item.id]"
           :design-data="item"
@@ -126,6 +143,21 @@ function toggleSelected(widgetList: WidgetDesignData[], isAdded?: boolean) {
             :design-data="item"
           />
         </el-form-item>
+        <div v-if="item.__selected" class="operate-btns">
+          <el-tooltip
+            v-for="operateItem in OPERATE_OPTIONS"
+            :key="operateItem.value"
+            :content="operateItem.label"
+            placement="top"
+          >
+            <el-button
+              type="primary"
+              size="small"
+              :icon="operateItem.icon"
+              @click.stop="onOperate(operateItem.value, index)"
+            />
+          </el-tooltip>
+        </div>
       </div>
     </template>
   </draggable>
@@ -158,6 +190,19 @@ function toggleSelected(widgetList: WidgetDesignData[], isAdded?: boolean) {
     }
     &.selected {
       border-color: var(--vs-color-primary);
+    }
+    & > .operate-btns {
+      position: absolute;
+      right: -3px;
+      top: -3px;
+      line-height: 1;
+      .vs-button {
+        padding: 5px 6px;
+        border-radius: 0;
+        & + .vs-button {
+          margin-left: 0;
+        }
+      }
     }
   }
   :deep(.item.sortable-chosen) {

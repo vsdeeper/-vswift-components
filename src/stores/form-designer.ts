@@ -8,11 +8,13 @@ export default defineStore('form-designer', () => {
   })
   const activeWidgetDesignData = ref<WidgetDesignData>()
 
-  const setActiveWidgetDesignData = (data: WidgetDesignData) => {
+  const setActiveWidgetDesignData = (data?: WidgetDesignData) => {
     if (activeWidgetDesignData.value) {
       activeWidgetDesignData.value.__selected = false
     }
-    data.__selected = true
+    if (data) {
+      data.__selected = true
+    }
     activeWidgetDesignData.value = data
   }
 

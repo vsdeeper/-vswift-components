@@ -3,22 +3,23 @@ import draggable from 'vuedraggable'
 import type { WidgetOptionItem } from '.'
 import type { WidgetDesignData, WidgetType } from '../..'
 import { widgetOptions } from './constants'
-import { nanoid5 } from '../../util'
+import { genWidgetId, nanoid5 } from '../../util'
 import type {
   DCascaderOptions,
   DDataTableOptions,
   DDatePickerOptions,
   DDatetimePickerOptions,
+  DDividerOptions,
   DInputOptions,
   DSelectOptions,
+  DTextOptions,
   DTimePickerOptions,
 } from '../form-design-area'
 // import type { InputProps } from 'element-plus'
 
 function transformClone(widget: WidgetOptionItem): WidgetDesignData | undefined {
   try {
-    const type = widget.value.replace(/-/g, '')
-    const id = `${type}${nanoid5()}`
+    const id = genWidgetId(widget.value)
     return {
       id,
       type: widget.value as WidgetType,
@@ -47,6 +48,10 @@ function genWidgetDataWidgetList(widgetType: WidgetType): WidgetDesignData[] | u
 
 function genWidgetDataOptions(widget: WidgetOptionItem) {
   switch (widget.value) {
+    case 'text':
+      return { text: '文本' } as DTextOptions
+    case 'divider':
+      return { text: '分割线' } as DDividerOptions
     case 'input':
       return {
         label: widget.label,

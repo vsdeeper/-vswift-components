@@ -2,31 +2,35 @@
 import type { WidgetDesignData } from '@/components/vs-form-designer'
 import DraggableWidget from '../../draggable-widget.vue'
 
-const props = defineProps<{
-  formData: Record<string, any>[]
-  designData: WidgetDesignData
+defineProps<{
+  parentNode?: WidgetDesignData
 }>()
 
-const _formData = computed(() => props.formData)
+const widgetList = defineModel<WidgetDesignData[]>('widgetList', { default: () => [] })
+const formData = defineModel<Record<string, any>[]>('formData', { default: () => [] })
 </script>
 
 <template>
   <div class="d-recursive-area">
     <DraggableWidget
-      v-model:widgetList="designData.widgetList!"
-      :form-data="_formData"
+      v-model:widget-list="widgetList"
+      v-model:form-data="formData"
       where="recursive-area"
+      :parent-node
     />
   </div>
 </template>
 
 <style lang="scss" scoped>
 .d-recursive-area {
+  flex: 1;
   position: relative;
   border: 2px dotted var(--vs-border-color);
   box-sizing: border-box;
+  background-color: var(--vs-bg-color-page);
   :deep(.draggable-widget) {
     min-height: 150px;
+    padding: 8px;
   }
 }
 </style>

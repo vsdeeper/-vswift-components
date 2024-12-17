@@ -2,6 +2,10 @@
 import type { WidgetDesignData } from '@/components/vs-form-designer'
 import DraggableWidget from '../../draggable-widget.vue'
 
+defineProps<{
+  parentNode?: WidgetDesignData
+}>()
+
 const widgetList = defineModel<WidgetDesignData[]>('widgetList', { default: () => [] })
 const formData = defineModel<Record<string, any>[]>('formData', { default: () => [] })
 </script>
@@ -12,6 +16,7 @@ const formData = defineModel<Record<string, any>[]>('formData', { default: () =>
       v-model:widget-list="widgetList"
       v-model:form-data="formData"
       where="data-table"
+      :parent-node
     />
   </div>
 </template>
