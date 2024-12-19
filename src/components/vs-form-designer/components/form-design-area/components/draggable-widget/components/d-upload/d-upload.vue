@@ -3,10 +3,11 @@ import type { WidgetDesignData } from '@/components/vs-form-designer'
 import type { DUploadOptions } from '.'
 import type {
   UploadFile,
+  UploadFiles,
   UploadInstance,
   UploadRawFile,
   UploadStatus,
-  UploadUserFile
+  UploadUserFile,
 } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 
@@ -15,18 +16,26 @@ const props = defineProps<{
 }>()
 
 const uploadRef = ref<UploadInstance>()
-const model = defineModel<UploadUserFile[]>()
+const model = defineModel<UploadUserFile[]>({ default: () => [] })
 const options = computed<DUploadOptions>(() => props.designData.options)
 const slots = useSlots()
 const previewSrcList = ref<string[]>([])
 const showImagePreview = ref(false)
 
-function onPreview(uploadFile: UploadFile) {
+const onPreview = (uploadFile: UploadFile) => {
   previewSrcList.value = [uploadFile.url!]
   showImagePreview.value = true
 }
 
-// 以下expose
+const onSuccess = (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => {
+  console.log('onSuccess', response, uploadFile, uploadFiles)
+}
+
+const onError = (error: Error, uploadFile: UploadFile, uploadFiles: UploadFiles) => {
+  console.log('onError', error, uploadFile, uploadFiles)
+}
+
+// 以下defineExpose
 function abort(file: UploadFile) {
   uploadRef.value?.abort(file)
 }
@@ -52,17 +61,18 @@ defineExpose({
   submit,
   clearFiles,
   handleStart,
-  handleRemove
+  handleRemove,
 })
 </script>
 
 <template>
   <el-upload
     ref="uploadRef"
-    v-bind="options"
     v-model:file-list="model"
     :on-preview="onPreview"
-    :show-file-list="!!model?.length"
+    :on-success="onSuccess"
+    :on-error="onError"
+    v-bind="options"
   >
     <template #default>
       <el-icon v-if="options.listType === 'picture-card'"><Plus /></el-icon>

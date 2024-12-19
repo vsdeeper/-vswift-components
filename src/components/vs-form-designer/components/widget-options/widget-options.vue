@@ -15,7 +15,6 @@ import type {
   DTextOptions,
   DTimePickerOptions,
 } from '../form-design-area'
-// import type { InputProps } from 'element-plus'
 
 function transformClone(widget: WidgetOptionItem): WidgetDesignData | undefined {
   try {

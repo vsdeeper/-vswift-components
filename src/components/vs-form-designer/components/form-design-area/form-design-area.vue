@@ -24,6 +24,10 @@ const formDesignData = computed(() => useFormDesignerStore().formDesignData)
     .vs-form-item__content > div[class^='vs-'] {
       pointer-events: none;
     }
+    .vs-date-editor,
+    .vs-cascader {
+      width: 100%;
+    }
   }
 }
 </style>
