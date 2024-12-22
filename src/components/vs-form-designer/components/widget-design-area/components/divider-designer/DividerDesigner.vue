@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { QuestionFilled } from '@element-plus/icons-vue'
-import type { DTextOptions } from '../../../form-design-area'
-import { SIZE_OPTIONS, TYPE_OPTIONS } from '../constants'
+import type { DDividerOptions } from '../../../form-design-area'
+import { BORDER_STYLE_OPTIONS, CONTENT_POSITION_OPTIONS, DIRECTION_OPTIONS } from '../constants'
 import type { WidgetDesignData } from '@/components/vs-form-designer'
 
-const model = defineModel<WidgetDesignData<DTextOptions>>({ default: () => ({}) })
+const model = defineModel<WidgetDesignData<DDividerOptions>>({ default: () => ({}) })
 </script>
 
 <template>
@@ -22,40 +22,37 @@ const model = defineModel<WidgetDesignData<DTextOptions>>({ default: () => ({}) 
       <el-input v-model="model.idAlias" placeholder="请输入" />
     </el-form-item>
     <el-form-item label="内容" prop="options.text">
-      <el-input v-model="model.options.text" placeholder="请输入" type="textarea" autosize />
+      <el-input v-model="model.options.text" placeholder="请输入" />
     </el-form-item>
-    <el-form-item label="类型" prop="options.type">
-      <el-select v-model="model.options.type" placeholder="请选择" clearable filterable>
+    <el-form-item label="分割线方向" prop="options.direction">
+      <el-select v-model="model.options.direction" placeholder="请选择" clearable filterable>
         <el-option
-          v-for="item in TYPE_OPTIONS"
+          v-for="item in DIRECTION_OPTIONS"
           :key="item.value"
           :label="item.label"
           :value="item.value"
         />
       </el-select>
     </el-form-item>
-    <el-form-item label="大小" prop="options.size">
-      <el-select v-model="model.options.size" placeholder="请选择" clearable filterable>
+    <el-form-item label="分隔符样式" prop="options.borderStyle">
+      <el-select v-model="model.options.borderStyle" placeholder="请选择" clearable filterable>
         <el-option
-          v-for="item in SIZE_OPTIONS"
+          v-for="item in BORDER_STYLE_OPTIONS"
           :key="item.value"
           :label="item.label"
           :value="item.value"
         />
       </el-select>
     </el-form-item>
-    <el-form-item label="显示省略号" prop="options.truncated">
-      <el-switch v-model="model.options.truncated" :active-value="true" :inactive-value="false" />
-    </el-form-item>
-    <el-form-item label="最大行数" prop="options.lineClamp">
-      <el-input-number
-        v-model="model.options.lineClamp as number"
-        :min="1"
-        :max="Number.MAX_SAFE_INTEGER"
-        :step="1"
-        :controls="true"
-        controls-position="right"
-      />
+    <el-form-item label="内容的位置" prop="options.contentPosition">
+      <el-select v-model="model.options.contentPosition" placeholder="请选择" clearable filterable>
+        <el-option
+          v-for="item in CONTENT_POSITION_OPTIONS"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
     </el-form-item>
   </el-form>
 </template>

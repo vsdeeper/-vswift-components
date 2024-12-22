@@ -7,6 +7,8 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    DataTableDesigner: (typeof import('../src/components/vs-form-designer/components/widget-design-area/components/data-table-designer/DataTableDesigner.vue'))['default']
+    DateTableDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/data-table-designer/DateTableDesigner.vue'))['default']
     DCascader: (typeof import('./../src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-cascader/d-cascader.vue'))['default']
     DCheckbox: (typeof import('./../src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-checkbox/d-checkbox.vue'))['default']
     DDataTable: (typeof import('./../src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-data-table/d-data-table.vue'))['default']
@@ -17,6 +19,7 @@ declare module 'vue' {
     DGridLayout: (typeof import('./../src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-grid-layout/d-grid-layout.vue'))['default']
     DInput: (typeof import('./../src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-input/d-input.vue'))['default']
     DInputNumber: (typeof import('./../src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-input-number/d-input-number.vue'))['default']
+    DividerDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/divider-designer/DividerDesigner.vue'))['default']
     DRadio: (typeof import('./../src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-radio/d-radio.vue'))['default']
     DraggableWidget: (typeof import('./../src/components/vs-form-designer/components/form-design-area/components/draggable-widget/draggable-widget.vue'))['default']
     DRecursiveArea: (typeof import('./../src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-recursive-area/d-recursive-area.vue'))['default']

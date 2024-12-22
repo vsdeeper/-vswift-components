@@ -137,8 +137,6 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
       box-sizing: border-box;
       button[class*='-button'] {
         width: 100%;
-        font-weight: normal;
-        font-size: 12px;
         justify-content: flex-start;
         & + button[class*='-button'] {
           margin-left: 0;
