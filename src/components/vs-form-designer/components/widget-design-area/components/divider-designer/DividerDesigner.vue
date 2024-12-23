@@ -15,7 +15,11 @@ const model = defineModel<WidgetDesignData<DDividerOptions>>({ default: () => ({
     <el-form-item prop="idAlias">
       <template #label>
         ID别名
-        <el-tooltip content="表单的value值对应的key，默认为唯一标识" placement="top" effect="dark">
+        <el-tooltip
+          content="表单的 value 值对应的 key，默认为唯一标识"
+          placement="top"
+          effect="dark"
+        >
           <el-icon><QuestionFilled /></el-icon>
         </el-tooltip>
       </template>

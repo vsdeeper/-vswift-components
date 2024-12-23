@@ -195,6 +195,7 @@ function interceptSomeWidgetPutInAnotherWidget(
       position: absolute;
       right: -3px;
       top: -3px;
+      z-index: 1;
       line-height: 1;
       .vs-button {
         padding: 5px 6px;

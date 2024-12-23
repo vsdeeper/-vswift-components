@@ -2,13 +2,15 @@ import { last } from 'radash'
 import type { TextDesignerInstance } from './text-designer'
 import type { AsyncComponentLoader } from 'vue'
 
+export * from './options-config'
+
 // 生成动态组件对象
 export type DesignerComponentMap = {
   Text?: TextDesignerInstance
 }
 export type DesignerComponentKey = keyof DesignerComponentMap
 
-const matchFiles = import.meta.glob('./**/*Designer.vue')
+const matchFiles = import.meta.glob('./*-designer/*Designer.vue')
 const DesignerComponent: DesignerComponentMap = {}
 
 for (const filePath in matchFiles) {

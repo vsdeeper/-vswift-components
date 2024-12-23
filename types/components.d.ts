@@ -7,8 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    DataTableDesigner: (typeof import('../src/components/vs-form-designer/components/widget-design-area/components/data-table-designer/DataTableDesigner.vue'))['default']
-    DateTableDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/data-table-designer/DateTableDesigner.vue'))['default']
+    DataTableDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/data-table-designer/DataTableDesigner.vue'))['default']
     DCascader: (typeof import('./../src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-cascader/d-cascader.vue'))['default']
     DCheckbox: (typeof import('./../src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-checkbox/d-checkbox.vue'))['default']
     DDataTable: (typeof import('./../src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-data-table/d-data-table.vue'))['default']
@@ -70,6 +69,11 @@ declare module 'vue' {
     ElTreeV2: (typeof import('element-plus/es'))['ElTreeV2']
     ElUpload: (typeof import('element-plus/es'))['ElUpload']
     FormDesignArea: (typeof import('./../src/components/vs-form-designer/components/form-design-area/form-design-area.vue'))['default']
+    InputDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/input-designer/InputDesigner.vue'))['default']
+    InputNumberDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/input-number-designer/InputNumberDesigner.vue'))['default']
+    OptionsConfig: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/options-config/OptionsConfig.vue'))['default']
+    RadioDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/radio-designer/RadioDesigner.vue'))['default']
+    RecursiveAreaDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/recursive-area-designer/RecursiveAreaDesigner.vue'))['default']
     RouterLink: (typeof import('vue-router'))['RouterLink']
     RouterView: (typeof import('vue-router'))['RouterView']
     SCascader: (typeof import('./../src/components/vs-search/components/s-cascader/s-cascader.vue'))['default']

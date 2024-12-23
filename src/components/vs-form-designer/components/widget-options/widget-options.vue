@@ -10,6 +10,7 @@ import type {
   DDatePickerOptions,
   DDatetimePickerOptions,
   DDividerOptions,
+  DInputNumberOptions,
   DInputOptions,
   DSelectOptions,
   DTextOptions,
@@ -56,6 +57,9 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
         label: widget.label,
         placeholder: '请输入',
       } as DInputOptions
+    case 'input-number': {
+      return { controls: true } as DInputNumberOptions
+    }
     case 'select':
       return { label: widget.label, placeholder: '请选择' } as DSelectOptions
     case 'cascader':
@@ -133,9 +137,10 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
     margin: 0 -4px;
     .item {
       width: 50%;
-      padding: 4px;
+      padding: 5px;
       box-sizing: border-box;
       button[class*='-button'] {
+        font-size: 12px;
         width: 100%;
         justify-content: flex-start;
         & + button[class*='-button'] {

@@ -24,5 +24,11 @@ const { activeWidgetDesignData } = storeToRefs(useFormDesignerStore())
       margin-left: 3px;
     }
   }
+  :deep(.vs-input-number) {
+    width: 100%;
+    .vs-input__inner {
+      text-align: left;
+    }
+  }
 }
 </style>

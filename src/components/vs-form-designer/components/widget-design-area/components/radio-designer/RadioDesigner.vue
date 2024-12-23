@@ -1,13 +1,21 @@
 <script setup lang="ts">
 import { QuestionFilled } from '@element-plus/icons-vue'
-import type { DDataTableOptions } from '../../../form-design-area'
+import type { DInputOptions, DRadioOptions } from '../../../form-design-area'
+import { INPUT_TYPE_OPTIONS, PATTERN_OPTIONS } from '../constants'
 import type { WidgetDesignData } from '@/components/vs-form-designer'
+import { useFormDesignerStore } from '@/stores'
 
-const model = defineModel<WidgetDesignData<DDataTableOptions>>({ default: () => ({}) })
+const model = defineModel<WidgetDesignData<DRadioOptions>>({ default: () => ({}) })
+
+const showColumnWidth = (id: string) => {
+  const { formDesignData } = useFormDesignerStore()
+  const filterTable = formDesignData.widgetList.filter(e => e.type === 'data-table')
+  return filterTable.some(e => e.widgetList?.some(a => a.id === id))
+}
 </script>
 
 <template>
-  <el-form :model ref="formRef" label-width="90px">
+  <el-form :model ref="formRef" label-width="100px">
     <el-form-item label="唯一标识" prop="id" :rules="[{ required: true, message: '必填项' }]">
       <el-input :model-value="model.id" placeholder="请输入" disabled />
     </el-form-item>
@@ -26,6 +34,9 @@ const model = defineModel<WidgetDesignData<DDataTableOptions>>({ default: () => 
     </el-form-item>
     <el-form-item label="标签名称" prop="options.label">
       <el-input v-model="model.options.label" placeholder="请输入" />
+    </el-form-item>
+    <el-form-item label="选项配置" prop="options.optionData">
+      <!-- <el-input v-model="model.options.optionData" placeholder="请输入" /> -->
     </el-form-item>
   </el-form>
 </template>

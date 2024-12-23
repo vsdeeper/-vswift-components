@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { QuestionFilled } from '@element-plus/icons-vue'
-import type { DDataTableOptions } from '../../../form-design-area'
+import type { DRecursiveAreaOptions } from '../../../form-design-area'
 import type { WidgetDesignData } from '@/components/vs-form-designer'
 
-const model = defineModel<WidgetDesignData<DDataTableOptions>>({ default: () => ({}) })
+const model = defineModel<WidgetDesignData<DRecursiveAreaOptions>>({ default: () => ({}) })
 </script>
 
 <template>
