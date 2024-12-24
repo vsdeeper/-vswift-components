@@ -122,6 +122,7 @@ function interceptSomeWidgetPutInAnotherWidget(
         <el-form-item
           v-if="['data-table', 'recursive-area'].includes(item.type)"
           :label="item.options?.label"
+          :rules="[{ required: item.options?.required, message: '必填项' }]"
         >
           <component
             :is="DComponent[pascal(item.type)]"
@@ -136,7 +137,11 @@ function interceptSomeWidgetPutInAnotherWidget(
           v-model="formData![item.id]"
           :design-data="item"
         />
-        <el-form-item v-else :label="item.options?.label">
+        <el-form-item
+          v-else
+          :label="item.options?.label"
+          :rules="[{ required: item.options?.required, message: '必填项' }]"
+        >
           <component
             :is="DComponent[pascal(item.type)]"
             v-model="formData![item.id]"

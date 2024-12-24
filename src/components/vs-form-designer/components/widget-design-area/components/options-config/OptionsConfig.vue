@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import { Minus, Plus } from '@element-plus/icons-vue'
 import type { OptionsConfigItem } from '.'
+import type { WidgetType } from '@/components/vs-form-designer'
+import { default as ConfigItem } from './OptionsConfigItem.vue'
 
-withDefaults(
-  defineProps<{
-    formItemProp?: string[]
-    addButtonText?: string
-  }>(),
-  {
-    formItemProp: () => [],
-    addButtonText: '新增',
-  },
-)
+defineProps<{
+  type: WidgetType
+}>()
 
 const model = defineModel<OptionsConfigItem[]>({ default: () => [] })
 
@@ -21,16 +15,20 @@ function onDelete(idx: number) {
 
 function onAdd() {
   if (!model.value) model.value = []
-  model.value.push({})
+  model.value.push({ valueType: 'number' })
 }
 
-function onChange(key: string, data?: any) {
+function onChange(key: string, data: any) {
   switch (key) {
     case 'valueType': {
-      data!.value = undefined
+      data.value = undefined
       break
     }
   }
+}
+
+function toValue(item: OptionsConfigItem) {
+  return item.valueType === 'number' ? Number(item.value) : item.value
 }
 </script>
 
@@ -41,46 +39,26 @@ function onChange(key: string, data?: any) {
       <div class="label">选项名称</div>
     </el-row>
     <el-row v-for="(item, index) in model" :key="'item' + index" align="middle">
-      <el-form-item
-        :prop="[...formItemProp, index + '', 'value']"
-        :rules="[{ required: true, message: '必填项' }]"
-        :show-message="false"
-        style="width: 200px; margin-right: 5px"
-      >
-        <el-input v-model="item.value" class="input" placeholder="请输入">
-          <template #prepend>
-            <el-select
-              v-model="item.valueType"
-              placeholder="类型"
-              style="width: 100px"
-              @change="onChange('valueType', item)"
-            >
-              <el-option label="数字" value="number" />
-              <el-option label="字符串" value="string" />
-            </el-select>
-          </template>
-        </el-input>
-      </el-form-item>
-      <el-form-item
-        :prop="[...formItemProp, index + '', 'label']"
-        :rules="[{ required: true, message: '必填项' }]"
-        :show-message="false"
-        style="flex: 1"
-      >
-        <el-input v-model="item.label" placeholder="请输入" />
-      </el-form-item>
-      <el-button
-        type="danger"
-        size="small"
-        :icon="Minus"
-        circle
-        @click="onDelete(index)"
-        style="margin-left: 8px"
-      ></el-button>
+      <el-radio v-if="type === 'radio'" :value="toValue(item)">
+        <ConfigItem
+          v-model="model[index]"
+          :index
+          @change="onChange('valueType', $event)"
+          @delete="onDelete($event)"
+        />
+      </el-radio>
+      <el-checkbox v-else-if="type === 'checkbox'" :value="toValue(item)">
+        <ConfigItem
+          v-model="model[index]"
+          :index
+          @change="onChange('valueType', $event)"
+          @delete="onDelete($event)"
+        />
+      </el-checkbox>
     </el-row>
     <div v-if="!model.length" class="nodata">暂未配置</div>
     <div class="btns">
-      <el-button type="primary" :icon="Plus" @click="onAdd"> {{ addButtonText }} </el-button>
+      <el-button type="primary" @click="onAdd"> + 新增 </el-button>
     </div>
   </div>
 </template>
@@ -88,35 +66,38 @@ function onChange(key: string, data?: any) {
 <style lang="scss" scoped>
 .options-config {
   width: 100%;
-  padding: 12px;
-  border: 2px dotted var(--el-border-color);
   box-sizing: border-box;
   .header {
     .label {
       display: flex;
       align-items: center;
-      margin-left: 5px;
+      margin-left: 25px;
+      font-size: var(--vs-form-label-font-size);
+      color: var(--vs-text-color-regular);
       &:first-child {
-        width: 200px;
+        width: 140px;
       }
     }
   }
-  .el-row + .el-row {
+  .vs-row + .vs-row {
     margin-top: 5px;
   }
   .btns {
     display: flex;
     flex-direction: column;
     margin-top: 10px;
-    .el-button + .el-button {
-      margin: 5px 0 0;
-    }
   }
-  .el-form-item {
-    margin-bottom: 0;
+  :deep(.vs-radio__label) {
+    display: flex;
+    align-items: center;
   }
-  :deep(.el-input-number .el-input__inner) {
-    text-align: left;
+  :deep(.vs-checkbox__label) {
+    display: flex;
+    align-items: center;
   }
+}
+.nodata {
+  font-size: 14px;
+  color: var(--vs-color-info);
 }
 </style>

@@ -14,6 +14,14 @@ const model = defineModel<string>()
 const options = computed<DInputOptions>(() => props.designData.options)
 const slots = useSlots()
 
+watch(
+  () => options.value.defaultValue,
+  val => {
+    model.value = val
+  },
+  { immediate: true },
+)
+
 function onChange(val: string) {
   emit('change', val)
 }

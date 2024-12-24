@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    CheckboxDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/checkbox-designer/CheckboxDesigner.vue'))['default']
     DataTableDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/data-table-designer/DataTableDesigner.vue'))['default']
     DCascader: (typeof import('./../src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-cascader/d-cascader.vue'))['default']
     DCheckbox: (typeof import('./../src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-checkbox/d-checkbox.vue'))['default']
@@ -72,6 +73,7 @@ declare module 'vue' {
     InputDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/input-designer/InputDesigner.vue'))['default']
     InputNumberDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/input-number-designer/InputNumberDesigner.vue'))['default']
     OptionsConfig: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/options-config/OptionsConfig.vue'))['default']
+    OptionsConfigItem: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/options-config/OptionsConfigItem.vue'))['default']
     RadioDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/radio-designer/RadioDesigner.vue'))['default']
     RecursiveAreaDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/recursive-area-designer/RecursiveAreaDesigner.vue'))['default']
     RouterLink: (typeof import('vue-router'))['RouterLink']

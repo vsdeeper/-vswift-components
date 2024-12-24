@@ -11,8 +11,9 @@ watch(
   res => {
     const [defVal, optionData] = res
     const defValArr = optionData?.map(e => (e.valueType === 'number' ? Number(e.value) : e.value))
-    if (defValArr?.includes(defVal)) {
-      model.value.options.defaultValue = defVal
+    const _defVal = defVal?.filter(e => defValArr?.includes(e))
+    if (_defVal?.length) {
+      model.value.options.defaultValue = _defVal
     } else {
       model.value.options.defaultValue = undefined
     }
@@ -49,17 +50,18 @@ watch(
       <template #label>
         <el-divider direction="horizontal">选项配置</el-divider>
       </template>
-      <el-radio-group v-model="defaultValue">
-        <OptionsConfig v-model="model.options.optionData" type="radio" />
-      </el-radio-group>
+      <el-checkbox-group v-model="defaultValue">
+        <OptionsConfig v-model="model.options.optionData" type="checkbox" />
+      </el-checkbox-group>
     </el-form-item>
   </el-form>
 </template>
 
 <style lang="scss" scoped>
 .vs-form-item.option-data {
-  .vs-radio-group {
+  .vs-checkbox-group {
     flex: 1;
+    line-height: 32px;
   }
   :deep(.vs-form-item__label) {
     width: 100%;

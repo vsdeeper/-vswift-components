@@ -6,12 +6,14 @@ import { widgetOptions } from './constants'
 import { genWidgetId, nanoid5 } from '../../util'
 import type {
   DCascaderOptions,
+  DCheckboxOptions,
   DDataTableOptions,
   DDatePickerOptions,
   DDatetimePickerOptions,
   DDividerOptions,
   DInputNumberOptions,
   DInputOptions,
+  DRadioOptions,
   DSelectOptions,
   DTextOptions,
   DTimePickerOptions,
@@ -56,17 +58,37 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
       return {
         label: widget.label,
         placeholder: '请输入',
+        required: true,
       } as DInputOptions
     case 'input-number': {
-      return { controls: true } as DInputNumberOptions
+      return {
+        label: widget.label,
+        placeholder: '请输入',
+        required: true,
+        controls: true,
+        controlsPosition: 'right',
+      } as DInputNumberOptions
     }
+    case 'radio':
+      return {
+        label: widget.label,
+        required: true,
+        optionData: [],
+      } as DRadioOptions
+    case 'checkbox':
+      return {
+        label: widget.label,
+        required: true,
+        optionData: [],
+      } as DCheckboxOptions
     case 'select':
-      return { label: widget.label, placeholder: '请选择' } as DSelectOptions
+      return { label: widget.label, required: true, placeholder: '请选择' } as DSelectOptions
     case 'cascader':
-      return { label: widget.label, placeholder: '请选择' } as DCascaderOptions
+      return { label: widget.label, required: true, placeholder: '请选择' } as DCascaderOptions
     case 'date-picker':
       return {
         label: widget.label,
+        required: true,
         placeholder: '请选择日期',
         startPlaceholder: '开始日期',
         endPlaceholder: '结束日期',
@@ -74,6 +96,7 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
     case 'datetime-picker':
       return {
         label: widget.label,
+        required: true,
         placeholder: '请选择日期时间',
         startPlaceholder: '开始日期时间',
         endPlaceholder: '结束日期时间',
@@ -81,14 +104,11 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
     case 'time-picker':
       return {
         label: widget.label,
+        required: true,
         placeholder: '请选择时间',
         startPlaceholder: '开始时间',
         endPlaceholder: '结束时间',
       } as DTimePickerOptions
-    case 'data-table':
-      return {
-        label: widget.label,
-      } as DDataTableOptions
     default:
       return {
         label: widget.label,

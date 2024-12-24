@@ -55,6 +55,17 @@ const showColumnWidth = (id: string) => {
         />
       </el-select>
     </el-form-item>
+    <el-form-item label="默认值" prop="options.defaultValue">
+      <el-input-number
+        v-model="model.options.defaultValue"
+        placeholder="请输入"
+        controls-position="right"
+        :max="Number.MAX_SAFE_INTEGER"
+      />
+    </el-form-item>
+    <el-form-item label="必填" prop="options.required">
+      <el-switch v-model="model.options.required" :active-value="true" :inactive-value="false" />
+    </el-form-item>
     <el-form-item label="最小值" prop="options.min">
       <el-input-number
         v-model="model.options.min"

@@ -14,6 +14,14 @@ const model = defineModel<number>()
 const options = computed<DInputNumberOptions>(() => props.designData.options)
 const slots = useSlots()
 
+watch(
+  () => options.value.defaultValue,
+  val => {
+    model.value = val
+  },
+  { immediate: true },
+)
+
 function onChange(cur?: number, prev?: number) {
   emit('change', cur, prev)
 }
@@ -29,3 +37,11 @@ function onChange(cur?: number, prev?: number) {
     </template>
   </el-input-number>
 </template>
+
+<style lang="scss" scoped>
+.vs-input-number {
+  :deep(.vs-input__inner) {
+    text-align: left;
+  }
+}
+</style>

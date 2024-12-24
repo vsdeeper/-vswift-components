@@ -27,5 +27,8 @@ const model = defineModel<WidgetDesignData<DDataTableOptions>>({ default: () => 
     <el-form-item label="标签名称" prop="options.label">
       <el-input v-model="model.options.label" placeholder="请输入" />
     </el-form-item>
+    <el-form-item label="必填" prop="options.required">
+      <el-switch v-model="model.options.required" :active-value="true" :inactive-value="false" />
+    </el-form-item>
   </el-form>
 </template>

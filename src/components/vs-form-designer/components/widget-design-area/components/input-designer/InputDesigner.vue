@@ -48,6 +48,23 @@ const showColumnWidth = (id: string) => {
         />
       </el-select>
     </el-form-item>
+    <el-form-item
+      v-if="model.options.type === 'password'"
+      label="显示切换图标"
+      prop="options.showPassword"
+    >
+      <el-switch
+        v-model="model.options.showPassword"
+        :active-value="true"
+        :inactive-value="false"
+      />
+    </el-form-item>
+    <el-form-item label="默认值" prop="options.defaultValue">
+      <el-input v-model="model.options.defaultValue" placeholder="请输入" />
+    </el-form-item>
+    <el-form-item label="必填" prop="options.required">
+      <el-switch v-model="model.options.required" :active-value="true" :inactive-value="false" />
+    </el-form-item>
     <el-form-item label="最大输入长度" prop="options.maxlength">
       <el-input-number
         v-model="model.options.maxlength as number"
