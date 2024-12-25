@@ -19,5 +19,10 @@ function onChange(val: any) {
 </script>
 
 <template>
-  <el-date-picker v-bind="options" v-model="model" @change="onChange" />
+  <el-date-picker
+    v-bind="options"
+    :type="options.type ?? 'datetime'"
+    v-model="model"
+    @change="onChange"
+  />
 </template>

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { OptionsConfigItem } from '.'
-import type { WidgetType } from '@/components/vs-form-designer'
 import { default as ConfigItem } from './OptionsConfigItem.vue'
 
 defineProps<{
-  type: WidgetType
+  type: 'radio' | 'checkbox' | 'select'
+  multiple?: boolean
 }>()
 
 const model = defineModel<OptionsConfigItem[]>({ default: () => [] })
@@ -39,7 +39,7 @@ function toValue(item: OptionsConfigItem) {
       <div class="label">选项名称</div>
     </el-row>
     <el-row v-for="(item, index) in model" :key="'item' + index" align="middle">
-      <el-radio v-if="type === 'radio'" :value="toValue(item)">
+      <el-radio v-if="type === 'radio' || (type === 'select' && !multiple)" :value="toValue(item)">
         <ConfigItem
           v-model="model[index]"
           :index
@@ -47,7 +47,10 @@ function toValue(item: OptionsConfigItem) {
           @delete="onDelete($event)"
         />
       </el-radio>
-      <el-checkbox v-else-if="type === 'checkbox'" :value="toValue(item)">
+      <el-checkbox
+        v-else-if="type === 'checkbox' || (type === 'select' && !!multiple)"
+        :value="toValue(item)"
+      >
         <ConfigItem
           v-model="model[index]"
           :index

@@ -7,8 +7,13 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    CascaderDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/cascader-designer/CascaderDesigner.vue'))['default']
     CheckboxDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/checkbox-designer/CheckboxDesigner.vue'))['default']
+    DataSourceConfig: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/options-config/DataSourceConfig.vue'))['default']
+    DataSourceEditor: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/options-config/data-source-editor.vue'))['default']
     DataTableDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/data-table-designer/DataTableDesigner.vue'))['default']
+    DatePickerDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/date-picker-designer/DatePickerDesigner.vue'))['default']
+    DatetimePickerDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/datetime-picker-designer/DatetimePickerDesigner.vue'))['default']
     DCascader: (typeof import('./../src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-cascader/d-cascader.vue'))['default']
     DCheckbox: (typeof import('./../src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-checkbox/d-checkbox.vue'))['default']
     DDataTable: (typeof import('./../src/components/vs-form-designer/components/form-design-area/components/draggable-widget/components/d-data-table/d-data-table.vue'))['default']
@@ -80,6 +85,7 @@ declare module 'vue' {
     RouterView: (typeof import('vue-router'))['RouterView']
     SCascader: (typeof import('./../src/components/vs-search/components/s-cascader/s-cascader.vue'))['default']
     SDate: (typeof import('./../src/components/vs-search/components/s-date/s-date.vue'))['default']
+    SelectDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/select-designer/SelectDesigner.vue'))['default']
     SInput: (typeof import('./../src/components/vs-search/components/s-input/s-input.vue'))['default']
     SSelect: (typeof import('./../src/components/vs-search/components/s-select/s-select.vue'))['default']
     STime: (typeof import('./../src/components/vs-search/components/s-time/s-time.vue'))['default']

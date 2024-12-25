@@ -82,16 +82,32 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
         optionData: [],
       } as DCheckboxOptions
     case 'select':
-      return { label: widget.label, required: true, placeholder: '请选择' } as DSelectOptions
+      return {
+        label: widget.label,
+        required: true,
+        placeholder: '请选择',
+        multiple: false,
+        dataSource: 'customize',
+        optionData: [],
+        map: {},
+      } as DSelectOptions
     case 'cascader':
-      return { label: widget.label, required: true, placeholder: '请选择' } as DCascaderOptions
+      return {
+        label: widget.label,
+        required: true,
+        placeholder: '请选择',
+        multiple: false,
+        dataSource: 'customize',
+        optionData: [],
+        map: { label: 'label', value: 'value' },
+      } as DCascaderOptions
     case 'date-picker':
       return {
         label: widget.label,
         required: true,
-        placeholder: '请选择日期',
-        startPlaceholder: '开始日期',
-        endPlaceholder: '结束日期',
+        placeholder: '请选择',
+        startPlaceholder: '开始',
+        endPlaceholder: '结束',
       } as DDatePickerOptions
     case 'datetime-picker':
       return {

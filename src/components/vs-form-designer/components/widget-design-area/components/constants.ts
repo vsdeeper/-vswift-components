@@ -35,6 +35,18 @@ export const INPUT_TYPE_OPTIONS = [
   { label: 'password', value: 'password' },
 ]
 
+export const DATE_PICKER_TYPE_OPTIONS = [
+  { label: 'date', value: 'date' },
+  { label: 'daterange', value: 'daterange' },
+  { label: 'month', value: 'month' },
+  { label: 'monthrange', value: 'monthrange' },
+]
+
+export const DATETIME_PICKER_TYPE_OPTIONS = [
+  { label: 'datetime', value: 'datetime' },
+  { label: 'datetimerange', value: 'datetimerange' },
+]
+
 export const PATTERN_OPTIONS = [
   { label: '数字', value: '^(0|[1-9][0-9]*)$' },
   { label: '邮编', value: '^[0-9]{6}$' },
@@ -53,3 +65,5 @@ export const PATTERN_OPTIONS = [
 ]
 
 export const CONTROLS_POSITION_OPTIONS = [{ label: 'right', value: 'right' }]
+
+export const SYSTEM_API_OPTIONS = [{ label: '示例接口', value: '/api/list' }]

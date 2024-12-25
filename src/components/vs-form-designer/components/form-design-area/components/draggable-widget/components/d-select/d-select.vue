@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { WidgetDesignData } from '@/components/vs-form-designer'
 import type { DSelectOptions } from '.'
+import type { OptionsConfigItem } from '@/components/vs-form-designer/components'
 
 const props = defineProps<{
   designData: WidgetDesignData
@@ -12,26 +13,40 @@ const emit = defineEmits<{
 
 const model = defineModel<string>()
 const options = computed<DSelectOptions>(() => props.designData.options)
+const labelKey = computed(() => options.value.map?.label ?? 'label')
+const valueKey = computed(() => options.value.map?.value ?? 'value')
 const slots = useSlots()
+
+watch(
+  () => options.value.defaultValue,
+  val => {
+    model.value = val
+  },
+  { immediate: true },
+)
 
 function onChange(val?: any) {
   emit('change', val)
+}
+
+function toValue(item: OptionsConfigItem) {
+  return item.valueType === 'number' ? Number(item[valueKey.value]) : item[valueKey.value]
 }
 </script>
 
 <template>
   <el-select
-    v-bind="options"
-    v-model="model"
     :clearable="options.clearable ?? true"
     :filterable="options.filterable ?? true"
+    v-bind="options"
+    v-model="model"
     @change="onChange"
   >
     <el-option
-      v-for="item in options.options"
-      :key="item[options.itemValue ?? 'value']"
-      :label="item[options.itemLabel ?? 'label']"
-      :value="item[options.itemValue ?? 'value']"
+      v-for="item in options.optionData"
+      :key="item[valueKey]"
+      :label="item[labelKey]"
+      :value="toValue(item)"
     />
     <template v-if="slots.header" #header>
       <slot name="header"></slot>
