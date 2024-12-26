@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { QuestionFilled } from '@element-plus/icons-vue'
-import type { DDatePickerOptions } from '../../../form-design-area'
-import { DATE_PICKER_TYPE_OPTIONS, DATETIME_PICKER_TYPE_OPTIONS } from '../constants'
+import type { DDatetimePickerOptions } from '../../../form-design-area'
+import { DATETIME_PICKER_TYPE_OPTIONS } from '../constants'
 import type { WidgetDesignData } from '@/components/vs-form-designer'
 import { useFormDesignerStore } from '@/stores'
 
-const model = defineModel<WidgetDesignData<DDatePickerOptions>>({ default: () => ({}) })
+const model = defineModel<WidgetDesignData<DDatetimePickerOptions>>({ default: () => ({}) })
 
 const showColumnWidth = (id: string) => {
   const { formDesignData } = useFormDesignerStore()
@@ -17,8 +17,8 @@ const onChange = (key: string, val: any) => {
   switch (key) {
     case 'type':
       if (val === 'daterange') {
-        model.value.options.startPlaceholder = '请选择开始日期'
-        model.value.options.endPlaceholder = '请选择结束日期'
+        model.value.options.startPlaceholder = '开始日期'
+        model.value.options.endPlaceholder = '结束日期'
       } else if (val === 'date') {
         model.value.options.placeholder = '请选择日期'
         model.value.options.startPlaceholder = undefined
@@ -28,8 +28,8 @@ const onChange = (key: string, val: any) => {
         model.value.options.startPlaceholder = undefined
         model.value.options.endPlaceholder = undefined
       } else if (val === 'monthrange') {
-        model.value.options.startPlaceholder = '请选择开始月份'
-        model.value.options.endPlaceholder = '请选择结束月份'
+        model.value.options.startPlaceholder = '开始月份'
+        model.value.options.endPlaceholder = '结束月份'
       }
       break
   }

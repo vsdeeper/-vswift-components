@@ -47,6 +47,12 @@ export const DATETIME_PICKER_TYPE_OPTIONS = [
   { label: 'datetimerange', value: 'datetimerange' },
 ]
 
+export const UPLOAD_LIST_TYPE_OPTIONS = [
+  { label: 'text', value: 'text' },
+  { label: 'picture', value: 'picture' },
+  { label: 'picture-card', value: 'picture-card' },
+]
+
 export const PATTERN_OPTIONS = [
   { label: '数字', value: '^(0|[1-9][0-9]*)$' },
   { label: '邮编', value: '^[0-9]{6}$' },

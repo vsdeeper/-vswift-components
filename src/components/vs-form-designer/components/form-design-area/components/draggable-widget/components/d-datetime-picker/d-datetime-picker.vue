@@ -10,7 +10,7 @@ const emit = defineEmits<{
   (e: 'change', val?: any): void
 }>()
 
-const model = defineModel<string>()
+const model = defineModel<number>()
 const options = computed<DDatetimePickerOptions>(() => props.designData.options)
 
 function onChange(val: any) {
@@ -20,8 +20,9 @@ function onChange(val: any) {
 
 <template>
   <el-date-picker
-    v-bind="options"
     :type="options.type ?? 'datetime'"
+    value-format="x"
+    v-bind="options"
     v-model="model"
     @change="onChange"
   />

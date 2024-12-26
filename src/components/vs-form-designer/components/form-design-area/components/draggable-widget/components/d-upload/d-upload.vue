@@ -21,6 +21,19 @@ const options = computed<DUploadOptions>(() => props.designData.options)
 const slots = useSlots()
 const previewSrcList = ref<string[]>([])
 const showImagePreview = ref(false)
+const tipArr = computed(() => {
+  const arr: string[] = []
+  if (typeof options.value.singleFileSizeLimit === 'number') {
+    arr.push(`单文件大小不超过${options.value.singleFileSizeLimit}KB`)
+  }
+  if (typeof options.value.totalFileSizeLimit === 'number') {
+    arr.push(`总文件大小不超过${options.value.totalFileSizeLimit}M`)
+  }
+  if (typeof options.value.amountLimit === 'number') {
+    arr.push(`最多允许上传${options.value.amountLimit}个文件`)
+  }
+  return arr
+})
 
 const onPreview = (uploadFile: UploadFile) => {
   previewSrcList.value = [uploadFile.url!]
@@ -68,6 +81,8 @@ defineExpose({
 <template>
   <el-upload
     ref="uploadRef"
+    class="d-upload"
+    :class="{ [options.listType || 'text']: true }"
     v-model:file-list="model"
     :on-preview="onPreview"
     :on-success="onSuccess"
@@ -76,13 +91,20 @@ defineExpose({
   >
     <template #default>
       <el-icon v-if="options.listType === 'picture-card'"><Plus /></el-icon>
-      <el-button v-else type="primary">上传</el-button>
+      <el-button v-else type="primary">选择文件</el-button>
+      <div v-if="typeof options.amountLimit === 'number'" class="limit-tip">
+        {{ model.length }}/{{ options.amountLimit }}
+      </div>
     </template>
     <template v-if="slots.trigger" #trigger>
       <slot name="trigger"></slot>
     </template>
-    <template v-if="slots.tip" #tip>
-      <slot name="tip"></slot>
+    <template #tip>
+      <slot name="tip" :options>
+        <div class="vs-upload__tip">
+          {{ tipArr.join('，') }}
+        </div>
+      </slot>
     </template>
     <template v-if="slots.file" #file>
       <slot name="file"></slot>
@@ -90,3 +112,36 @@ defineExpose({
   </el-upload>
   <el-image v-if="showImagePreview" v-bind="options.imagePreviewProps" :preview-src-list />
 </template>
+
+<style lang="scss" scoped>
+.d-upload {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--vs-border-color);
+  border-radius: var(--vs-border-radius-base);
+  :deep(.vs-upload) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .limit-tip {
+    font-size: 14px;
+    color: var(--vs-text-color-regular);
+  }
+  &.picture-card {
+    :deep(.vs-upload) {
+      position: relative;
+      justify-content: space-around;
+    }
+    .limit-tip {
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-size: 12px;
+      line-height: 1;
+      padding: 5px;
+      color: var(--vs-text-color-secondary);
+    }
+  }
+}
+</style>

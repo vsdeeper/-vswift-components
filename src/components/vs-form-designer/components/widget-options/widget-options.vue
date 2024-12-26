@@ -125,6 +125,14 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
         startPlaceholder: '开始时间',
         endPlaceholder: '结束时间',
       } as DTimePickerOptions
+    case 'upload':
+      return {
+        label: widget.label,
+        required: true,
+        singleFileSizeLimit: 500,
+        totalFileSizeLimit: 4.5,
+        amountLimit: 9,
+      }
     default:
       return {
         label: widget.label,

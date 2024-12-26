@@ -92,6 +92,8 @@ declare module 'vue' {
     STreeSelect: (typeof import('./../src/components/vs-search/components/s-tree-select/s-tree-select.vue'))['default']
     TableColumn: (typeof import('./../src/components/vs-table/table-column.vue'))['default']
     TextDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/text-designer/TextDesigner.vue'))['default']
+    TimePickerDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/time-picker-designer/TimePickerDesigner.vue'))['default']
+    UploadDesigner: (typeof import('./../src/components/vs-form-designer/components/widget-design-area/components/upload-designer/UploadDesigner.vue'))['default']
     VsFormDesigner: (typeof import('./../src/components/vs-form-designer/vs-form-designer.vue'))['default']
     VsFormDesignerTest: (typeof import('./../src/test/vs-form-designer-test.vue'))['default']
     VsSearch: (typeof import('./../src/components/vs-search/vs-search.vue'))['default']
