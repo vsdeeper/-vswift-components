@@ -1,18 +1,16 @@
 <script setup lang="ts">
 import { useFormDesignerStore } from '@/stores'
-import { storeToRefs } from 'pinia'
 import { DesignerComponent } from '.'
 import { pascal } from 'radash'
+import type { WidgetDesignData } from '../..'
 
-const { activeWidgetDesignData } = storeToRefs(useFormDesignerStore())
+const model = defineModel<WidgetDesignData>()
+const type = computed(() => useFormDesignerStore().activeWidgetDesignData?.type ?? 'unknown')
 </script>
 
 <template>
   <div class="widget-design-area">
-    <component
-      :is="DesignerComponent[pascal(activeWidgetDesignData?.type!)]"
-      v-model="activeWidgetDesignData"
-    />
+    <component :is="DesignerComponent[pascal(type)]" v-model="model" />
   </div>
 </template>
 

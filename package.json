@@ -46,6 +46,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
     "@vswift/utils": "^1.1.2",
+    "ace-builds": "^1.37.1",
     "date-fns": "^3.6.0",
     "element-plus": "^2.7.7",
     "nanoid": "^5.0.7",
@@ -54,6 +55,7 @@
     "sass-embedded": "^1.82.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
+    "vue3-ace-editor": "^2.2.4",
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {

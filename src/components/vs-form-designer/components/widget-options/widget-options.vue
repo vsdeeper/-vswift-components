@@ -7,7 +7,6 @@ import { genWidgetId, nanoid5 } from '../../util'
 import type {
   DCascaderOptions,
   DCheckboxOptions,
-  DDataTableOptions,
   DDatePickerOptions,
   DDatetimePickerOptions,
   DDividerOptions,

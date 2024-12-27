@@ -102,5 +102,6 @@ function toValue(item: OptionsConfigItem) {
 .nodata {
   font-size: 14px;
   color: var(--vs-color-info);
+  padding: 6px;
 }
 </style>

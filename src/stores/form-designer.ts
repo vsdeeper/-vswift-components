@@ -3,7 +3,10 @@ import { defineStore } from 'pinia'
 
 export default defineStore('form-designer', () => {
   const formDesignData = ref<FormDesignData>({
-    form: {},
+    form: {
+      labelWidth: 120,
+      labelPosition: 'left',
+    },
     widgetList: [],
   })
   const activeWidgetDesignData = ref<WidgetDesignData>()

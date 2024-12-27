@@ -122,16 +122,18 @@ defineExpose({
   :deep(.vs-upload) {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
   }
   .limit-tip {
     font-size: 14px;
+    line-height: 1;
     color: var(--vs-text-color-regular);
   }
   &.picture-card {
     :deep(.vs-upload) {
       position: relative;
       justify-content: space-around;
+      align-items: center;
     }
     .limit-tip {
       position: absolute;

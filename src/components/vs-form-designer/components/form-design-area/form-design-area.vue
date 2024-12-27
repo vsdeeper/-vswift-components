@@ -6,7 +6,6 @@ const formDesignData = computed(() => useFormDesignerStore().formDesignData)
 </script>
 
 <template>
-  <!-- {{ formDesignData }} -->
   <el-form
     class="form-design-area"
     v-bind="formDesignData.form"
@@ -21,8 +20,16 @@ const formDesignData = computed(() => useFormDesignerStore().formDesignData)
 <style lang="scss" scoped>
 .form-design-area {
   :deep(.widget-field) {
-    .vs-form-item__content > div[class^='vs-'] {
+    .vs-form-item__label {
       pointer-events: none;
+    }
+    .vs-form-item__content {
+      & > div[class^='vs-'] {
+        pointer-events: none;
+      }
+      & > .d-upload {
+        pointer-events: none;
+      }
     }
     .vs-date-editor,
     .vs-cascader {
