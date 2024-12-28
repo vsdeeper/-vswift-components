@@ -58,6 +58,7 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
         label: widget.label,
         placeholder: '请输入',
         required: true,
+        clearable: true,
       } as DInputOptions
     case 'input-number': {
       return {
@@ -86,6 +87,7 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
         required: true,
         placeholder: '请选择',
         multiple: false,
+        clearable: true,
         dataSource: 'customize',
         optionData: [],
         map: {},
@@ -96,6 +98,7 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
         required: true,
         placeholder: '请选择',
         multiple: false,
+        clearable: true,
         dataSource: 'customize',
         optionData: [],
         map: { label: 'label', value: 'value' },
@@ -104,6 +107,7 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
       return {
         label: widget.label,
         required: true,
+        clearable: true,
         placeholder: '请选择',
         startPlaceholder: '开始',
         endPlaceholder: '结束',
@@ -112,6 +116,7 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
       return {
         label: widget.label,
         required: true,
+        clearable: true,
         placeholder: '请选择日期时间',
         startPlaceholder: '开始日期时间',
         endPlaceholder: '结束日期时间',
@@ -120,6 +125,7 @@ function genWidgetDataOptions(widget: WidgetOptionItem) {
       return {
         label: widget.label,
         required: true,
+        clearable: true,
         placeholder: '请选择时间',
         startPlaceholder: '开始时间',
         endPlaceholder: '结束时间',

@@ -134,7 +134,6 @@ function interceptSomeWidgetPutInAnotherWidget(
         <component
           v-else-if="['text', 'divider'].includes(item.type)"
           :is="DComponent[pascal(item.type)]"
-          v-model="formData![item.id]"
           :design-data="item"
         />
         <el-form-item

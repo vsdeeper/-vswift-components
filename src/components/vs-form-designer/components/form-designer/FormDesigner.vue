@@ -44,6 +44,15 @@ const model = defineModel<FormDesign>({ default: () => ({}) })
         controls-position="right"
       />
     </el-form-item>
+    <el-form-item>
+      <template #label>
+        自动布局
+        <el-tooltip content="开启后将根据屏幕宽度自适应分栏" placement="top" effect="dark">
+          <el-icon><QuestionFilled /></el-icon>
+        </el-tooltip>
+      </template>
+      <el-switch v-model="model.autoLayout" :active-value="true" :inactive-value="false" />
+    </el-form-item>
   </el-form>
 </template>
 

@@ -29,7 +29,7 @@ const formData = defineModel<Record<string, any>[]>('formData', { default: () =>
   box-sizing: border-box;
   background-color: var(--vs-bg-color-page);
   :deep(.draggable-widget) {
-    min-height: 150px;
+    min-height: 110px;
     padding: 8px;
   }
 }

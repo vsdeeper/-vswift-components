@@ -6,6 +6,7 @@ const formDesignData = computed(() => useFormDesignerStore().formDesignData)
 </script>
 
 <template>
+  <!-- {{ formDesignData }} -->
   <el-form
     class="form-design-area"
     v-bind="formDesignData.form"

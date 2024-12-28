@@ -29,7 +29,7 @@ export type WidgetType =
   | 'upload'
 // 以下自定义组件
 
-export type FormDesign = Partial<Mutable<FormProps>>
+export type FormDesign = Partial<Mutable<FormProps>> & { autoLayout?: boolean }
 export interface WidgetDesignData<Options = Record<string, any>> {
   id: string
   type: WidgetType
