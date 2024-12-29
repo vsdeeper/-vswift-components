@@ -28,7 +28,9 @@ defineExpose({
 
 <style lang="scss" scoped>
 .form-render {
-  :deep(.vs-input-number) {
+  :deep(.vs-input-number),
+  :deep(.vs-date-editor),
+  :deep(.vs-cascader) {
     width: 100%;
   }
 }

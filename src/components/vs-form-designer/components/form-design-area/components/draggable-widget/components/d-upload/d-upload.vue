@@ -83,11 +83,11 @@ defineExpose({
     ref="uploadRef"
     class="d-upload"
     :class="{ [options.listType || 'text']: true }"
+    v-bind="options"
     v-model:file-list="model"
     :on-preview="onPreview"
     :on-success="onSuccess"
     :on-error="onError"
-    v-bind="options"
   >
     <template #default>
       <el-icon v-if="options.listType === 'picture-card'"><Plus /></el-icon>

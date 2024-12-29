@@ -5,6 +5,7 @@ export type DUploadInstance = InstanceType<typeof DUpload>
 export type DUploadOptions = Partial<UploadProps> & {
   label?: string
   required?: boolean
+  api?: string
   singleFileSizeLimit?: number
   totalFileSizeLimit?: number
   amountLimit?: number

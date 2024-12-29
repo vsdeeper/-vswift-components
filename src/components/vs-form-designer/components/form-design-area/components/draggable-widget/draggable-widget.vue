@@ -6,6 +6,7 @@ import { pascal } from 'radash'
 import { useFormDesignerStore } from '@/stores'
 import { OPERATE_OPTIONS } from './constants'
 import { genWidgetId } from '@/components/vs-form-designer/util'
+import { ElMessage } from 'element-plus'
 
 const props = defineProps<{
   where?: WidgetType // 标明被哪个widget-field组件引用，做逻辑区分
@@ -22,8 +23,7 @@ function onDragChange(...args: any[]) {
   const { added }: { added: { element: WidgetDesignData } } = args[0]
   if (added) {
     // 新增操作
-    const { formDesignData } = useFormDesignerStore()
-    if (interceptSomeWidgetPutInAnotherWidget(added.element, formDesignData, props.where)) return
+    if (interceptSomeWidgetPutInAnotherWidget(added.element, props.parentNode, props.where)) return
     setActiveWidgetDesignData(widgetList.value.find(e => e.id === added.element.id)!)
   }
 }
@@ -86,12 +86,28 @@ function recurWidgetList(data: WidgetDesignData, handler: (item: WidgetDesignDat
  */
 function interceptSomeWidgetPutInAnotherWidget(
   addedItem: WidgetDesignData,
-  formDesignData: FormDesignData,
+  parentNode?: WidgetDesignData,
   where?: WidgetType,
 ) {
+  if (!parentNode || !where) return
   switch (where) {
     case 'data-table': {
-      return false
+      const typeToMessages: [WidgetType, string][] = [
+        ['data-table', '不支持表格嵌套'],
+        ['recursive-area', '不支持递归域放入表格中'],
+        ['text', '不支持文本放入表格中'],
+        ['divider', '不支持分割线放入表格中'],
+        ['radio', '不支持单选框放入表格中'],
+        ['checkbox', '不支持多选框放入表格中'],
+        ['upload', '不支持上传放入表格中'],
+      ]
+      const messageMap = new Map(typeToMessages)
+      if (typeToMessages.some(e => e[0] === addedItem.type)) {
+        ElMessage.warning(messageMap.get(addedItem.type))
+        const index = parentNode.widgetList?.findIndex(e => e.id === addedItem.id)
+        parentNode.widgetList?.splice(index!, 1)
+        return true
+      } else return false
     }
     default: {
       return false
