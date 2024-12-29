@@ -24,26 +24,26 @@ const table = ref<VsTableProps>({
           children: [
             { label: '国家', prop: 'state' },
             { label: '城市', prop: 'city' },
-            { label: '地址', prop: 'address' }
-          ]
-        }
-      ]
-    }
+            { label: '地址', prop: 'address' },
+          ],
+        },
+      ],
+    },
   ],
   operateOptions: [
     {
       label: '新增',
       value: 'add',
       code: 'add',
-      show: (code) => permissions.value.includes(code)
+      show: code => permissions.value.includes(code!),
     },
     {
       label: '批量删除',
       value: 'batch_delete',
       code: 'delete',
       type: 'danger',
-      show: (code) => permissions.value.includes(code)
-    }
+      show: code => permissions.value.includes(code!),
+    },
   ],
   rowOperateOptions: [
     {
@@ -51,30 +51,30 @@ const table = ref<VsTableProps>({
       value: 'edit',
       code: 'edit',
       show: (code, row) => {
-        if (permissions.value.includes(code)) {
+        if (permissions.value.includes(code!)) {
           return [1, 2, 3, 4].includes(row!.status)
         } else return false
-      }
+      },
     },
     {
       label: '复制',
       value: 'copy',
       code: 'copy',
       show: (code, row) => {
-        if (permissions.value.includes(code)) {
+        if (permissions.value.includes(code!)) {
           return [1, 2, 3, 4].includes(row!.status)
         } else return false
-      }
+      },
     },
     {
       label: '权限设置',
       value: 'permission_config',
       code: 'permission_config',
       show: (code, row) => {
-        if (permissions.value.includes(code)) {
+        if (permissions.value.includes(code!)) {
           return [4].includes(row!.status)
         } else return false
-      }
+      },
     },
     {
       label: '删除',
@@ -82,12 +82,12 @@ const table = ref<VsTableProps>({
       code: 'delete',
       type: 'danger',
       show: (code, row) => {
-        if (permissions.value.includes(code)) {
+        if (permissions.value.includes(code!)) {
           return [1, 2, 3, 4].includes(row!.status)
         } else return false
-      }
-    }
-  ]
+      },
+    },
+  ],
 })
 
 async function getData() {
@@ -102,7 +102,7 @@ async function getData() {
       state: '中国',
       city: '武汉',
       address: '硚口区金地悦江时代',
-      status: 1
+      status: 1,
     },
     {
       id: 2,
@@ -111,7 +111,7 @@ async function getData() {
       state: '中国',
       city: '上海',
       address: '浦东新区张江高科',
-      status: 2
+      status: 2,
     },
     {
       id: 3,
@@ -120,7 +120,7 @@ async function getData() {
       state: '中国',
       city: '深圳',
       address: '龙华区三和大神',
-      status: 3
+      status: 3,
     },
     {
       id: 4,
@@ -129,16 +129,17 @@ async function getData() {
       state: '中国',
       city: '深圳',
       address: '龙华区三和大神',
-      status: 4
-    }
+      status: 4,
+    },
   ]
 }
 
 onMounted(() => {
-  getData().then((res) => (table.value.data = res))
+  getData().then(res => (table.value.data = res))
 })
 
-function onOperate(key: string, row?: Record<string, any>) {
+function onOperate(...args: any[]) {
+  const [key, row] = args
   switch (key) {
     case 'add': {
       console.log('onOperate ->', 'add')
